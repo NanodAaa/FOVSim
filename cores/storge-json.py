@@ -49,3 +49,8 @@ def save_data_to_json(data, json_file_path):
             json.dump(data, f)
 
             f.close()
+            
+        return
+            
+    else:
+        return -1

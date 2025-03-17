@@ -1,5 +1,5 @@
 # MinMagFactorCalculator.py
-import MinMagFactorCalculatorGUI as gui
+from gui import main_window as mw
 
 if __name__ == '__main__':
-    myGUI = gui.MinMagFactorCalculatorGUI()
+    main_window = mw.MainWindow('root')

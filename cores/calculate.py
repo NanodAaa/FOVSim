@@ -3,7 +3,7 @@
 import math
 import numpy as np
 
-def calculate_positive(data):
+def world_sensor_transform(data):
     """ 
     Data Structure:
     data = {
@@ -84,7 +84,7 @@ def calculate_positive(data):
     
     return
         
-def calculate_reverse(data):
+def sensor_world_transform(data):
     """ 
     data = {
         'world coordinates' : { 'x' : '', 'y' : '', 'z' : '' },
