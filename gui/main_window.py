@@ -66,8 +66,6 @@ class MainWindow:
     }
     
     button_widgets_position_dict = {
-        'Calculate' : {'row' : 7, 'column' : 0},
-        'Refresh' : {'row' : 7, 'column' : 1},
     }
     
     config_filename = 'config.json'
@@ -102,10 +100,16 @@ class MainWindow:
         self.help_menu.add_command(label='About', command=self._onclick_menu_help_about)
         self.menu.add_cascade(label='Help', menu=self.help_menu)
         
+        # Menu - Tools
+        self.tools_menu = tk.Menu(self.menu, tearoff=False)
+        self.tools_menu.add_command(label='Run', command=self._onclick_menu_tools_run)
+        self.tools_menu.add_command(label='Refresh', command=self._onclick_menu_tools_refresh)
+        self.menu.add_cascade(label='Tools', menu=self.tools_menu)
+        
         # Menu - Options
         self.options_menu = tk.Menu(self.menu, tearoff=False)
-        self.options_menu.add_command(label="Params", command=self._onclick_menu_options_params)
-        self.options_menu.add_command(label='Reset', command=self._onclick_menu_options_reset)
+        self.options_menu.add_command(label="Params", command=self._onclick_menu_options_params)    # Params Setting
+        self.options_menu.add_command(label='Reset', command=self._onclick_menu_options_reset)      # Reset
         self.menu.add_cascade(label='Options', menu=self.options_menu)
         
         self.root.config(menu=self.menu)
@@ -261,31 +265,6 @@ class MainWindow:
         self.world_point_f_z_entry  = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
         self.world_point_f_z_entry.grid(row=self.world_point_f_widgets_position_dict['z entry']['row'], column=self.world_point_f_widgets_position_dict['z entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
         self.world_point_f_z_entry.insert(0, self.data['world point f']['z'])
-        
-        # Calculate Button
-        self.calculate_button = tk.Button(self.root, text='Calculate', font=self.label_format_dict['font'], bg=self.button_format_dict['bg'], command=self._onclick_button_calculate)
-        self.calculate_button.grid(row=self.button_widgets_position_dict['Calculate']['row'], column=self.button_widgets_position_dict['Calculate']['column'], padx=self.button_format_dict['padx'], pady=self.button_format_dict['pady'], sticky=self.button_format_dict['sticky'])
-    
-        # Refresh Button
-        self.refresh_button = tk.Button(self.root, text='Refresh', font=self.label_format_dict['font'], bg=self.button_format_dict['bg'], command=self._onclick_button_refresh)
-        self.refresh_button.grid(row=self.button_widgets_position_dict['Refresh']['row'], column=self.button_widgets_position_dict['Refresh']['column'], padx=self.button_format_dict['padx'], pady=self.button_format_dict['pady'], sticky=self.button_format_dict['sticky'])
-  
-    def _onclick_button_calculate(self):
-        """ 
-        """
-        self.data = calculate.monitor_sensor_transform(self.data)
-        self.data = calculate.sensor_origin_point_convert(self.data)
-        self.data = calculate.sensor_world_transform(self.data)
-        js.JsonStorage(self.config_filepath).save(self.data)
-        self._refresh_data_in_gui()
-        
-        return
-    
-    def _onclick_button_refresh(self):
-        """ 
-        """
-        self.data = js.JsonStorage(self.config_filepath).load()
-        self._refresh_data_in_gui()
     
     def _refresh_data_in_gui(self):
         """ 
@@ -366,6 +345,25 @@ class MainWindow:
         self.world_point_f_x_entry.insert(0, self.data['world point f']['x'])
         self.world_point_f_y_entry.insert(0, self.data['world point f']['y'])
         self.world_point_f_z_entry.insert(0, self.data['world point f']['z'])
+        
+    def _onclick_menu_tools_run(self):
+        """ 
+        """
+        self.data = calculate.monitor_sensor_transform(self.data)
+        self.data = calculate.sensor_origin_point_convert(self.data)
+        self.data = calculate.sensor_world_transform(self.data)
+        js.JsonStorage(self.config_filepath).save(self.data)
+        self._refresh_data_in_gui()
+        
+        return
+    
+    def _onclick_menu_tools_refresh(self):
+        """ 
+        """
+        self.data = js.JsonStorage(self.config_filepath).load()
+        self._refresh_data_in_gui()
+        
+        return
         
     def _onclick_menu_help_about(self):
         return    
