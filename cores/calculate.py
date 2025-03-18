@@ -63,14 +63,14 @@ def monitor_sensor_transform(data):
     monitor_param_height = data['monitor params']['height']
     
     x_c = int(x_a * ( (sensor_param_width - 0) / (monitor_param_width - 0) ) + 0)
-    x_c_mm = round(x_c * sensor_param_pixel_size, 2)
+    x_c_mm = round(x_c * sensor_param_pixel_size, 3)
     y_c = int(y_a * ( (sensor_param_height - 0) / (monitor_param_height - 0) ) + 0)
-    y_c_mm = round(y_c * sensor_param_pixel_size, 2)
+    y_c_mm = round(y_c * sensor_param_pixel_size, 3)
     
     x_d = int(x_b * ( (sensor_param_width - 0) / (monitor_param_width - 0) ) + 0)
-    x_d_mm = round(x_d * sensor_param_pixel_size, 2)
+    x_d_mm = round(x_d * sensor_param_pixel_size, 3)
     y_d = int(y_b * ( (sensor_param_height - 0) / (monitor_param_height - 0) ) + 0)
-    y_d_mm = round(y_d * sensor_param_pixel_size, 2)
+    y_d_mm = round(y_d * sensor_param_pixel_size, 3)
     
     data['sensor point c'] = { 'x' : x_c, 'y' : y_c }
     data['sensor point c mm'] = { 'x' : x_c_mm, 'y' : y_c_mm }
@@ -97,10 +97,10 @@ def sensor_origin_point_convert(data):
     x_d_converted = int(x_d - sensor_param_width / 2)
     y_d_converted = int(y_d - sensor_param_height / 2)
     
-    x_c_mm_converted = round(x_c_converted * sensor_param_pixel_size, 2)
-    y_c_mm_converted = round(y_c_converted * sensor_param_pixel_size, 2)
-    x_d_mm_converted = round(x_d_converted * sensor_param_pixel_size, 2)
-    y_d_mm_converted = round(y_d_converted * sensor_param_pixel_size, 2)
+    x_c_mm_converted = round(x_c_converted * sensor_param_pixel_size, 3)
+    y_c_mm_converted = round(y_c_converted * sensor_param_pixel_size, 3)
+    x_d_mm_converted = round(x_d_converted * sensor_param_pixel_size, 3)
+    y_d_mm_converted = round(y_d_converted * sensor_param_pixel_size, 3)
     
     data['sensor point c converted'] = { 'x' : x_c_converted, 'y' : y_c_converted }
     data['sensor point c mm converted'] = { 'x' : x_c_mm_converted, 'y' : y_c_mm_converted }
@@ -111,7 +111,7 @@ def sensor_origin_point_convert(data):
 
 def sensor_world_transform(data):
     # Sensor coordinates to Camera coordinatess
-    data['world point e'] = w2c.sensor_world_transform(data['sensor point c mm converted'], data['fitting func coefs reverse'])['world coordinates']
-    data['world point f'] = w2c.sensor_world_transform(data['sensor point d mm converted'], data['fitting func coefs reverse'])['world coordinates']
+    data['world point e'] = w2c.sensor_world_transform(data['sensor point d mm converted'], data['fitting func coefs reverse'])['world coordinates']
+    data['world point f'] = w2c.sensor_world_transform(data['sensor point c mm converted'], data['fitting func coefs reverse'])['world coordinates']
 
     return data

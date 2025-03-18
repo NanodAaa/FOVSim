@@ -14,7 +14,7 @@ def sensor_world_transform(sensor_coordinates_mm_converted: dict, fitting_func_c
         'world coordinates' : {'x' : x_s, 'y' : y_s, 'z' : z_p },
     }
     """
-    # Pixel coordinates to Camera coordinatess
+    # Sensor coordinates to World coordinates
     x_s = sensor_coordinates_mm_converted['x']
     y_s = sensor_coordinates_mm_converted['y']
     
@@ -27,23 +27,23 @@ def sensor_world_transform(sensor_coordinates_mm_converted: dict, fitting_func_c
         fitting_func_coefs_reverse_dict['x0'],
     ]
     
-    x_w = 2000
+    x_c = 2000
     
     real_height = math.sqrt(x_s**2 + y_s**2)
     azimuth_on_sensor = (math.degrees(math.atan2(x_s, -y_s)) + 270) % 360 
     angle = np.polyval(fitting_func_coefs_reverse, real_height)
-    distance = math.tan(math.radians(angle)) * x_w # Distance from nodal point of world coordinates
-    y_c = round(distance * math.cos(math.radians(azimuth_on_sensor)), 2)
-    z_c = round(distance * math.sin(math.radians(azimuth_on_sensor)), 2)
+    distance = math.tan(math.radians(angle)) * x_c # Distance from nodal point of world coordinates
+    y_c = round(distance * math.cos(math.radians(azimuth_on_sensor)), 3)
+    z_c = round(distance * math.sin(math.radians(azimuth_on_sensor)), 3)
     
-    x_s = x_s
-    y_s = y_c
-    z_p = z_c
+    x_w = x_c
+    y_w = y_c
+    z_w = z_c
     
     # Write data to memory
     data = {
         'camera coordinates' : { 'x' : x_w, 'y' : y_c, 'z' : z_c },
-        'world coordinates' : {'x' : x_s, 'y' : y_s, 'z' : z_p },
+        'world coordinates' : {'x' : x_w, 'y' : y_w, 'z' : z_w },
     }
 
     return data
@@ -101,9 +101,9 @@ def world_sensor_transform(world_coordinates: dict, sensor_params: dict, fitting
     world_coordinates_vector_pitched_yawed = np.dot(yaw_rotate_matrix, world_coordinates_vector_pitched)
     world_coordinates_vector_pitched_yawed_rolled = np.dot(roll_rotate_matrix, world_coordinates_vector_pitched_yawed)
 
-    x_c = round(float(world_coordinates_vector_pitched_yawed_rolled[0][0]), 2)
-    y_c = round(float(world_coordinates_vector_pitched_yawed_rolled[1][0]), 2)
-    z_c = round(float(world_coordinates_vector_pitched_yawed_rolled[2][0]), 2)
+    x_c = round(float(world_coordinates_vector_pitched_yawed_rolled[0][0]), 3)
+    y_c = round(float(world_coordinates_vector_pitched_yawed_rolled[1][0]), 3)
+    z_c = round(float(world_coordinates_vector_pitched_yawed_rolled[2][0]), 3)
     
     # Camera coordinates to Pixel coordinates
     distance = math.sqrt(x_c**2 + y_c**2 + z_c**2) # Distance to nodal point
@@ -114,8 +114,8 @@ def world_sensor_transform(world_coordinates: dict, sensor_params: dict, fitting
     azimuth = (math.degrees(azimuth_radians) + 360 ) % 360
     
     pixel_size = sensor_params['pixel size']
-    x_p = round((real_height / pixel_size) * math.cos(azimuth_radians), 2)
-    y_p = round((real_height / pixel_size) * math.sin(azimuth_radians), 2)
+    x_p = round((real_height / pixel_size) * math.cos(azimuth_radians), 3)
+    y_p = round((real_height / pixel_size) * math.sin(azimuth_radians), 3)
     
     # Write data to memory
     data = {}

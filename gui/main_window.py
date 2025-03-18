@@ -16,44 +16,44 @@ class MainWindow:
         'y entry' : {'row' : 0, 'column' : 2},
     }
     monitor_point_b_widgets_position_dict = {
-        'label' : {'row' : 0, 'column' : 3}, 'x entry' : {'row' : 0, 'column' : 4}, 
-        'y entry' : {'row' : 0, 'column' : 5},
+        'label' : {'row' : 0, 'column' : 4}, 'x entry' : {'row' : 0, 'column' : 5}, 
+        'y entry' : {'row' : 0, 'column' : 6},
     }
     
     sensor_point_c_widgets_position_dict = {
         'label' : {'row' : 1, 'column' : 0}, 'x entry' : {'row' : 1, 'column' : 1}, 
         'y entry' : {'row' : 1, 'column' : 2},
     }
-    sensor_point_c_mm_widgets_position_dict = {
-        'label' : {'row' : 1, 'column' : 3}, 'x entry' : {'row' : 1, 'column' : 4}, 
-        'y entry' : {'row' : 1, 'column' : 5},
+    sensor_point_d_widgets_position_dict = {
+        'label' : {'row' : 1, 'column' : 4}, 'x entry' : {'row' : 1, 'column' : 5}, 
+        'y entry' : {'row' : 1, 'column' : 6},
     }
     
-    sensor_point_d_widgets_position_dict = {
+    sensor_point_c_mm_widgets_position_dict = {
         'label' : {'row' : 2, 'column' : 0}, 'x entry' : {'row' : 2, 'column' : 1}, 
         'y entry' : {'row' : 2, 'column' : 2},
     }
     sensor_point_d_mm_widgets_position_dict = {
-        'label' : {'row' : 2, 'column' : 3}, 'x entry' : {'row' : 2, 'column' : 4}, 
-        'y entry' : {'row' : 2, 'column' : 5},
+        'label' : {'row' : 2, 'column' : 4}, 'x entry' : {'row' : 2, 'column' : 5}, 
+        'y entry' : {'row' : 2, 'column' : 6},
     }
     
     sensor_point_c_converted_widgets_position_dict = {
         'label' : {'row' : 3, 'column' : 0}, 'x entry' : {'row' : 3, 'column' : 1}, 
         'y entry' : {'row' : 3, 'column' : 2},
     }
-    sensor_point_c_mm_converted_widgets_position_dict = {
-        'label' : {'row' : 3, 'column' : 3}, 'x entry' : {'row' : 3, 'column' : 4}, 
-        'y entry' : {'row' : 3, 'column' : 5},
+    sensor_point_d_converted_widgets_position_dict = {
+        'label' : {'row' : 3, 'column' : 4}, 'x entry' : {'row' : 3, 'column' : 5}, 
+        'y entry' : {'row' : 3, 'column' : 6},
     }
     
-    sensor_point_d_converted_widgets_position_dict = {
+    sensor_point_c_mm_converted_widgets_position_dict = {
         'label' : {'row' : 4, 'column' : 0}, 'x entry' : {'row' : 4, 'column' : 1}, 
         'y entry' : {'row' : 4, 'column' : 2},
-    }
+    } 
     sensor_point_d_mm_converted_widgets_position_dict = {
-        'label' : {'row' : 4, 'column' : 3}, 'x entry' : {'row' : 4, 'column' : 4}, 
-        'y entry' : {'row' : 4, 'column' : 5},
+        'label' : {'row' : 4, 'column' : 4}, 'x entry' : {'row' : 4, 'column' : 5}, 
+        'y entry' : {'row' : 4, 'column' : 6},
     }
     
     world_point_e_widgets_position_dict = {
@@ -150,18 +150,6 @@ class MainWindow:
         self.sensor_point_c_y_entry.grid(row=self.sensor_point_c_widgets_position_dict['y entry']['row'], column=self.sensor_point_c_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
         self.sensor_point_c_y_entry.insert(0, self.data['sensor point c']['y'])
         
-        # Sensor Point C (mm)
-        self.sensor_point_c_mm_label = tk.Label(self.root, text='SP_C (mm)', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.sensor_point_c_mm_label.grid(row=self.sensor_point_c_mm_widgets_position_dict['label']['row'], column=self.sensor_point_c_mm_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
-        
-        self.sensor_point_c_mm_x_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.sensor_point_c_mm_x_entry.grid(row=self.sensor_point_c_mm_widgets_position_dict['x entry']['row'], column=self.sensor_point_c_mm_widgets_position_dict['x entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.sensor_point_c_mm_x_entry.insert(0, self.data['sensor point c mm']['x'])
-        
-        self.sensor_point_c_mm_y_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.sensor_point_c_mm_y_entry.grid(row=self.sensor_point_c_mm_widgets_position_dict['y entry']['row'], column=self.sensor_point_c_mm_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.sensor_point_c_mm_y_entry.insert(0, self.data['sensor point c mm']['y'])
-        
         # Sensor Point D
         self.sensor_point_d_label = tk.Label(self.root, text='SP_D', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
         self.sensor_point_d_label.grid(row=self.sensor_point_d_widgets_position_dict['label']['row'], column=self.sensor_point_d_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
@@ -173,6 +161,18 @@ class MainWindow:
         self.sensor_point_d_y_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
         self.sensor_point_d_y_entry.grid(row=self.sensor_point_d_widgets_position_dict['y entry']['row'], column=self.sensor_point_d_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
         self.sensor_point_d_y_entry.insert(0, self.data['sensor point d']['y'])
+        
+        # Sensor Point C (mm)
+        self.sensor_point_c_mm_label = tk.Label(self.root, text='SP_C (mm)', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
+        self.sensor_point_c_mm_label.grid(row=self.sensor_point_c_mm_widgets_position_dict['label']['row'], column=self.sensor_point_c_mm_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        
+        self.sensor_point_c_mm_x_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
+        self.sensor_point_c_mm_x_entry.grid(row=self.sensor_point_c_mm_widgets_position_dict['x entry']['row'], column=self.sensor_point_c_mm_widgets_position_dict['x entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.sensor_point_c_mm_x_entry.insert(0, self.data['sensor point c mm']['x'])
+        
+        self.sensor_point_c_mm_y_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
+        self.sensor_point_c_mm_y_entry.grid(row=self.sensor_point_c_mm_widgets_position_dict['y entry']['row'], column=self.sensor_point_c_mm_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.sensor_point_c_mm_y_entry.insert(0, self.data['sensor point c mm']['y'])
         
         # Sensor Point D (mm)
         self.sensor_point_d_mm_label = tk.Label(self.root, text='SP_D (mm)', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
@@ -198,18 +198,6 @@ class MainWindow:
         self.sensor_point_c_converted_y_entry.grid(row=self.sensor_point_c_converted_widgets_position_dict['y entry']['row'], column=self.sensor_point_c_converted_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
         self.sensor_point_c_converted_y_entry.insert(0, self.data['sensor point c converted']['y'])
         
-        # Senssor Point C Converted (mm)
-        self.sensor_point_c_mm_converted_label = tk.Label(self.root, text='SP_C_Conv (mm)', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.sensor_point_c_mm_converted_label.grid(row=self.sensor_point_c_mm_converted_widgets_position_dict['label']['row'], column=self.sensor_point_c_mm_converted_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
-        
-        self.sensor_point_c_mm_converted_x_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.sensor_point_c_mm_converted_x_entry.grid(row=self.sensor_point_c_mm_converted_widgets_position_dict['x entry']['row'], column=self.sensor_point_c_mm_converted_widgets_position_dict['x entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.sensor_point_c_mm_converted_x_entry.insert(0, self.data['sensor point c mm converted']['x'])
-        
-        self.sensor_point_c_mm_converted_y_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.sensor_point_c_mm_converted_y_entry.grid(row=self.sensor_point_c_mm_converted_widgets_position_dict['y entry']['row'], column=self.sensor_point_c_mm_converted_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.sensor_point_c_mm_converted_y_entry.insert(0, self.data['sensor point c mm converted']['y'])
-        
         # Sensor Point D Converted
         self.sensor_point_d_converted_label = tk.Label(self.root, text='SP_D_Conv', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
         self.sensor_point_d_converted_label.grid(row=self.sensor_point_d_converted_widgets_position_dict['label']['row'], column=self.sensor_point_d_converted_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
@@ -221,6 +209,18 @@ class MainWindow:
         self.sensor_point_d_converted_y_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
         self.sensor_point_d_converted_y_entry.grid(row=self.sensor_point_d_converted_widgets_position_dict['y entry']['row'], column=self.sensor_point_d_converted_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
         self.sensor_point_d_converted_y_entry.insert(0, self.data['sensor point d converted']['y'])
+        
+        # Senssor Point C Converted (mm)
+        self.sensor_point_c_mm_converted_label = tk.Label(self.root, text='SP_C_Conv (mm)', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
+        self.sensor_point_c_mm_converted_label.grid(row=self.sensor_point_c_mm_converted_widgets_position_dict['label']['row'], column=self.sensor_point_c_mm_converted_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        
+        self.sensor_point_c_mm_converted_x_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
+        self.sensor_point_c_mm_converted_x_entry.grid(row=self.sensor_point_c_mm_converted_widgets_position_dict['x entry']['row'], column=self.sensor_point_c_mm_converted_widgets_position_dict['x entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.sensor_point_c_mm_converted_x_entry.insert(0, self.data['sensor point c mm converted']['x'])
+        
+        self.sensor_point_c_mm_converted_y_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
+        self.sensor_point_c_mm_converted_y_entry.grid(row=self.sensor_point_c_mm_converted_widgets_position_dict['y entry']['row'], column=self.sensor_point_c_mm_converted_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.sensor_point_c_mm_converted_y_entry.insert(0, self.data['sensor point c mm converted']['y'])
         
         # Sensor Point D Converted (mm)
         self.sensor_point_d_mm_converted_label = tk.Label(self.root, text='SP_D_Conv (mm)', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
@@ -352,6 +352,7 @@ class MainWindow:
         self.data = calculate.monitor_sensor_transform(self.data)
         self.data = calculate.sensor_origin_point_convert(self.data)
         self.data = calculate.sensor_world_transform(self.data)
+        
         js.JsonStorage(self.config_filepath).save(self.data)
         self._refresh_data_in_gui()
         
