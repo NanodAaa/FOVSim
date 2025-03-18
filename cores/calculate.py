@@ -1,127 +1,117 @@
 # calculate.py
+""" 
+Data structure:
+data = {
+        'monitor point a' : { 'x' : '0', 'y' : '0'},
+        'monitor point b' : { 'x' : '0', 'y' : '0'},
+        'sensor point c' : { 'x' : '0', 'y' : '0'},
+        'sensor point c converted' : { 'x' : '0', 'y' : '0'},
+        'sensor point c mm' : { 'x' : '0.0', 'y' : '0.0'},
+        'sensor point c mm converted' : { 'x' : '0.0', 'y' : '0.0'},
+        'sensor point d' : { 'x' : '0', 'y' : '0'},
+        'sensor point d converted' : { 'x' : '0', 'y' : '0'},
+        'sensor point d mm' : { 'x' : '0.0', 'y' : '0.0'},
+        'sensor point d mm converted' : { 'x' : '0.0', 'y' : '0.0'},
+        'world point e' : { 'x' : '0.0', 'y' : '0.0', 'z' : '0.0'},
+        'world point f' : { 'x' : '0.0', 'y' : '0.0', 'z' : '0.0'},
+        'fitting func coefs' : { 'x5' : '0.0', 'x4' : '0.0', 'x3' : '0.0', 'x2' : '0.0', 'x1' : '0.0', 'x0' : '0.0' },
+        'fitting func coefs reverse' : { 'x5' : '0.0', 'x4' : '0.0', 'x3' : '0.0', 'x2' : '0.0', 'x1' : '0.0', 'x0' : '0.0' },
+        'camera pose' : { 'pitch' : '0.0', 'yaw' : '0.0', 'roll' : '0.0' },
+        'sensor params' : { 'width' : '0', 'height' : '0', 'pixel size' : '0.0' },
+        'monitor params' : { 'width' : '0', 'height' : '0', 'pixel size' : '0.0' },
+    }
+"""
 
 import math
 import numpy as np
+from cores import W2CTransform as w2c
 
-def world_sensor_transform(data):
-    """ 
-    Data Structure:
-    data = {
-        'world coordinates' : { 'x' : '', 'y' : '', 'z' : '' },
-        'fitting func coefs' : { 'x5' : '', 'x4' : '', 'x3' : '', 'x2' : '', 'x1' : '', 'x0' : '' },
-        'fitting func coefs reverse' : { 'x5' : '', 'x4' : '', 'x3' : '', 'x2' : '', 'x1' : '', 'x0' : '' },
-        'camera pose' : { 'pitch' : '', 'yaw' : '', 'roll' : '' },
-        'sensor params' : { 'width' : '', 'height' : '', 'pixel size' : '' },
-        'camera coordinates' : { 'x' : '', 'y' : '', 'z' : '' },
-        'pixel coordinates' : { 'x' : '', 'y' : '' },
+data = {
+        'monitor point a' : { 'x' : '0', 'y' : '0'},
+        'monitor point b' : { 'x' : '0', 'y' : '0'},
+        'sensor point c' : { 'x' : '0', 'y' : '0'},
+        'sensor point c converted' : { 'x' : '0', 'y' : '0'},
+        'sensor point c mm' : { 'x' : '0.0', 'y' : '0.0'},
+        'sensor point c mm converted' : { 'x' : '0.0', 'y' : '0.0'},
+        'sensor point d' : { 'x' : '0', 'y' : '0'},
+        'sensor point d converted' : { 'x' : '0', 'y' : '0'},
+        'sensor point d mm' : { 'x' : '0.0', 'y' : '0.0'},
+        'sensor point d mm converted' : { 'x' : '0.0', 'y' : '0.0'},
+        'world point e' : { 'x' : '0.0', 'y' : '0.0', 'z' : '0.0'},
+        'world point f' : { 'x' : '0.0', 'y' : '0.0', 'z' : '0.0'},
+        'fitting func coefs' : { 'x5' : '0.0', 'x4' : '0.0', 'x3' : '0.0', 'x2' : '0.0', 'x1' : '0.0', 'x0' : '0.0' },
+        'fitting func coefs reverse' : { 'x5' : '0.0', 'x4' : '0.0', 'x3' : '0.0', 'x2' : '0.0', 'x1' : '0.0', 'x0' : '0.0' },
+        'camera pose' : { 'pitch' : '0.0', 'yaw' : '0.0', 'roll' : '0.0' },
+        'sensor params' : { 'width' : '0', 'height' : '0', 'pixel size' : '0.0' },
+        'monitor params' : { 'width' : '0', 'height' : '0', 'pixel size' : '0.0' },
     }
-    """
-    
-    # World coordinates to Camera coordinates
-    x_w = data['world coordinates']['x']
-    y_w = data['world coordinates']['y']
-    z_w = data['world coordinates']['z']
-    
-    world_coordinates_vector = np.array(
-        [
-            [x_w],
-            [y_w],
-            [z_w],
-        ]
-    )
-    
-    pitch_radians = math.radians(data['camera pose']['pitch'])
-    yaw_radians = math.radians(data['camera pose']['yaw'])
-    roll_radians = math.radians(data['camera pose']['roll'])
-    
-    pitch_rotate_matrix = np.array(
-        [
-            [math.cos(pitch_radians), 0, math.sin(pitch_radians)],
-            [0, 1, 0],
-            [-math.sin(pitch_radians), 0, math.cos(pitch_radians)],
-        ]
-    )
-    
-    yaw_rotate_matrix = np.array(
-        [
-            [math.cos(yaw_radians), -math.sin(yaw_radians), 0],
-            [math.sin(yaw_radians), math.cos(yaw_radians), 0],
-            [0, 0, 1],
-        ]
-    )
-    
-    roll_rotate_matrix = np.array(
-        [
-            [1, 0, 0],
-            [0, math.cos(roll_radians), -math.sin(roll_radians)],
-            [0, math.sin(roll_radians), math.cos(roll_radians)],
-        ]
-    )
-    
-    world_coordinates_vector_pitched = np.dot(pitch_rotate_matrix, world_coordinates_vector)
-    world_coordinates_vector_pitched_yawed = np.dot(yaw_rotate_matrix, world_coordinates_vector_pitched)
-    world_coordinates_vector_pitched_yawed_rolled = np.dot(roll_rotate_matrix, world_coordinates_vector_pitched_yawed)
 
-    x_c = round(float(world_coordinates_vector_pitched_yawed_rolled[0][0]), 2)
-    y_c = round(float(world_coordinates_vector_pitched_yawed_rolled[1][0]), 2)
-    z_c = round(float(world_coordinates_vector_pitched_yawed_rolled[2][0]), 2)
+def monitor_sensor_transform(data):
+    """ 
+    Transform monitor coordinates to sensor coordinates (Pixel format).
+    """
+    x_a = data['monitor point a']['x']
+    y_a = data['monitor point a']['y']
+    x_b = data['monitor point b']['x']
+    y_b = data['monitor point b']['y']
     
-    # Camera coordinates to Pixel coordinates
-    distance = math.sqrt(x_c**2 + y_c**2 + z_c**2) # Distance to nodal point
-    angle = math.degrees(math.acos(x_c / distance))
-    fitting_func_coefs = [data['fitting func coefs']['x5'], data['fitting func coefs']['x4'], data['fitting func coefs']['x3'], data['fitting func coefs']['x2'], data['fitting func coefs']['x1'], data['fitting func coefs']['x0']]
-    real_height = np.polyval(fitting_func_coefs, angle)
-    azimuth_radians = math.atan2(z_c, -y_c)
-    azimuth = (math.degrees(azimuth_radians) + 360 ) % 360
+    sensor_param_width = data['sensor params']['width']
+    sensor_param_height = data['sensor params']['height']
+    sensor_param_pixel_size = data['sensor params']['pixel size']
     
-    pixel_size = data['sensor params']['pixel size']
-    x_p = round((real_height / pixel_size) * math.cos(azimuth_radians), 2)
-    y_p = round((real_height / pixel_size) * math.sin(azimuth_radians), 2)
+    monitor_param_width = data['monitor params']['width']
+    monitor_param_height = data['monitor params']['height']
     
-    # Write data to memory
-    data['camera coordinates'] = { 'x' : x_c, 'y' : y_c, 'z' : z_c }
-    data['pixel coordinates'] = { 'x' : x_p, 'y' : y_p }
+    x_c = int(x_a * ( (sensor_param_width - 0) / (monitor_param_width - 0) ) + 0)
+    x_c_mm = round(x_c * sensor_param_pixel_size, 2)
+    y_c = int(y_a * ( (sensor_param_height - 0) / (monitor_param_height - 0) ) + 0)
+    y_c_mm = round(y_c * sensor_param_pixel_size, 2)
     
-    return
-        
+    x_d = int(x_b * ( (sensor_param_width - 0) / (monitor_param_width - 0) ) + 0)
+    x_d_mm = round(x_d * sensor_param_pixel_size, 2)
+    y_d = int(y_b * ( (sensor_param_height - 0) / (monitor_param_height - 0) ) + 0)
+    y_d_mm = round(y_d * sensor_param_pixel_size, 2)
+    
+    data['sensor point c'] = { 'x' : x_c, 'y' : y_c }
+    data['sensor point c mm'] = { 'x' : x_c_mm, 'y' : y_c_mm }
+    data['sensor point d'] = { 'x' : x_d, 'y' : y_d }
+    data['sensor point d mm'] = { 'x' : x_d_mm, 'y' : y_d_mm }
+    
+    return data
+
+def sensor_origin_point_convert(data):
+    """ 
+    Convert sensor coordinates to origin coordinates.
+    """
+    x_c = data['sensor point c']['x']
+    y_c = data['sensor point c']['y']
+    x_d = data['sensor point d']['x']
+    y_d = data['sensor point d']['y']
+    
+    sensor_param_width = data['sensor params']['width']
+    sensor_param_height = data['sensor params']['height']
+    sensor_param_pixel_size = data['sensor params']['pixel size']
+    
+    x_c_converted = int(x_c - sensor_param_width / 2)
+    y_c_converted = int(y_c - sensor_param_height / 2)
+    x_d_converted = int(x_d - sensor_param_width / 2)
+    y_d_converted = int(y_d - sensor_param_height / 2)
+    
+    x_c_mm_converted = round(x_c_converted * sensor_param_pixel_size, 2)
+    y_c_mm_converted = round(y_c_converted * sensor_param_pixel_size, 2)
+    x_d_mm_converted = round(x_d_converted * sensor_param_pixel_size, 2)
+    y_d_mm_converted = round(y_d_converted * sensor_param_pixel_size, 2)
+    
+    data['sensor point c converted'] = { 'x' : x_c_converted, 'y' : y_c_converted }
+    data['sensor point c mm converted'] = { 'x' : x_c_mm_converted, 'y' : y_c_mm_converted }
+    data['sensor point d converted'] = { 'x' : x_d_converted, 'y' : y_d_converted }
+    data['sensor point d mm converted'] = { 'x' : x_d_mm_converted, 'y' : y_d_mm_converted }
+    
+    return data
+
 def sensor_world_transform(data):
-    """ 
-    data = {
-        'world coordinates' : { 'x' : '', 'y' : '', 'z' : '' },
-        'fitting func coefs' : { 'x5' : '', 'x4' : '', 'x3' : '', 'x2' : '', 'x1' : '', 'x0' : '' },
-        'fitting func coefs reverse' : { 'x5' : '', 'x4' : '', 'x3' : '', 'x2' : '', 'x1' : '', 'x0' : '' },
-        'camera pose' : { 'pitch' : '', 'yaw' : '', 'roll' : '' },
-        'sensor params' : { 'width' : '', 'height' : '', 'pixel size' : '' },
-        'camera coordinates' : { 'x' : '', 'y' : '', 'z' : '' },
-        'pixel coordinates' : { 'x' : '', 'y' : '' },
-    }
-    """
-    # Pixel coordinates to Camera coordinatess
-    x_p = data['pixel coordinates']['x']
-    y_p = data['pixel coordinates']['y']
-    fitting_func_coefs_reverse = [
-        data['fitting func coefs reverse']['x5'], 
-        data['fitting func coefs reverse']['x4'], 
-        data['fitting func coefs reverse']['x3'], 
-        data['fitting func coefs reverse']['x2'], 
-        data['fitting func coefs reverse']['x1'], 
-        data['fitting func coefs reverse']['x0'],
-    ]
-    x_c = 2000
-    
-    real_height = math.sqrt(x_p**2 + y_p**2)
-    azimuth_on_sensor = (math.degrees(math.atan2(x_p, -y_p)) + 270) % 360 
-    angle = np.polyval(fitting_func_coefs_reverse, real_height)
-    distance = math.tan(math.radians(angle)) * x_c # Distance from nodal point of world coordinates
-    y_c = round(distance * math.cos(math.radians(azimuth_on_sensor)), 2)
-    z_c = round(distance * math.sin(math.radians(azimuth_on_sensor)), 2)
-    
-    x_p = x_c
-    y_p = y_c
-    z_p = z_c
-    
-    # Write data to memory
-    data['camera coordinates'] = { 'x' : x_c, 'y' : y_c, 'z' : z_c }
-    data['world coordinates'] = {'x' : x_p, 'y' : y_p, 'z' : z_p }
+    # Sensor coordinates to Camera coordinatess
+    data['world point e'] = w2c.sensor_world_transform(data['sensor point c mm converted'], data['fitting func coefs reverse'])
+    data['world point f'] = w2c.sensor_world_transform(data['sensor point d mm converted'], data['fitting func coefs reverse'])
 
-    return
+    return data

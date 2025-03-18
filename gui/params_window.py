@@ -2,6 +2,7 @@
 
 import tkinter as tk
 from cores import JsonStorage as js
+from cores import calculate
 import sys
 
 class ParamsWindow(tk.Toplevel):
@@ -11,11 +12,11 @@ class ParamsWindow(tk.Toplevel):
 
     monitor_point_a_widgets_position_dict = {
         'label' : {'row' : 0, 'column' : 0}, 'x entry' : {'row' : 0, 'column' : 1}, 
-        'y entry' : {'row' : 0, 'column' : 2}, 'z entry' : {'row' : 0, 'column' : 3}
+        'y entry' : {'row' : 0, 'column' : 2},
     }
     monitor_point_b_widgets_position_dict = {
         'label' : {'row' : 1, 'column' : 0}, 'x entry' : {'row' : 1, 'column' : 1}, 
-        'y entry' : {'row' : 1, 'column' : 2}, 'z entry' : {'row' : 1, 'column' : 3}
+        'y entry' : {'row' : 1, 'column' : 2},
     }
     camera_pose_widgets_position_dict = {
         'label' : {'row' : 2, 'column' : 0}, 'pitch entry' : {'row' : 2, 'column' : 1}, 
@@ -43,25 +44,7 @@ class ParamsWindow(tk.Toplevel):
         'save' : {'row' : 7, 'column' : 0},
     }
     label_widgets_position_dict = {
-        'message' : {'row' : 8, 'column' : 2}
-    }
-    
-    """ world_coordinates_widgets_postion_dict = {
-        'label' : {'row' : 0, 'column' : 0}, 'x entry' : {'row' : 0, 'column' : 1}, 'y entry' : {'row' : 0, 'column' : 2}, 'z entry' : {'row' : 0, 'column' : 3}
-    } """
-    """ camera_coordinates_widgets_position_dict = {
-        'label' : {'row' : 5, 'column' : 0}, 'x entry' : {'row' : 5, 'column' : 1}, 'y entry' : {'row' : 5, 'column' : 2}, 'z entry' : {'row' : 5, 'column' : 3}} """
-    """ pixel_coordinates_widgets_position_dict = {
-        'label' : {'row' : 6, 'column' : 0}, 'x entry' : {'row' : 6, 'column' : 1}, 'y entry' : {'row' : 6, 'column' : 2}} """
-    
-    data = {
-        'monitor point a' : { 'x' : '', 'y' : '', 'z' : '' },
-        'monitor point b' : { 'x' : '', 'y' : '', 'z' : '' },
-        'fitting func coefs' : { 'x5' : '', 'x4' : '', 'x3' : '', 'x2' : '', 'x1' : '', 'x0' : '' },
-        'fitting func coefs reverse' : { 'x5' : '', 'x4' : '', 'x3' : '', 'x2' : '', 'x1' : '', 'x0' : '' },
-        'camera pose' : { 'pitch' : '', 'yaw' : '', 'roll' : '' },
-        'sensor params' : { 'width' : '', 'height' : '', 'pixel size' : '' },
-        'monitor params' : { 'width' : '', 'height' : '', 'pixel size' : '' },
+        'message' : {'row' : 8, 'column' : 2},
     }
     
     config_filename = 'config.json'
@@ -75,25 +58,9 @@ class ParamsWindow(tk.Toplevel):
     def _init_gui(self):
     
         self.title("Parmas")
-        
-        """ # World Coordinates
-        self.world_coordinate_label = tk.Label(self, text='P_w(XYZ): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.world_coordinate_label.grid(row=self.world_coordinates_widgets_postion_dict['label']['row'], column=self.world_coordinates_widgets_postion_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
-
-        self.world_coordinate_x_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.world_coordinate_x_entry.grid(row=self.world_coordinates_widgets_postion_dict['x entry']['row'], column=self.world_coordinates_widgets_postion_dict['x entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.world_coordinate_x_entry.insert(0, self.data['world coordinates']['x'])
-        
-        self.world_coordinate_y_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.world_coordinate_y_entry.grid(row=self.world_coordinates_widgets_postion_dict['y entry']['row'], column=self.world_coordinates_widgets_postion_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.world_coordinate_y_entry.insert(0, self.data['world coordinates']['y'])
-        
-        self.world_coordinate_z_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.world_coordinate_z_entry.grid(row=self.world_coordinates_widgets_postion_dict['z entry']['row'], column=self.world_coordinates_widgets_postion_dict['z entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.world_coordinate_z_entry.insert(0, self.data['world coordinates']['z']) """
             
         # Monitor Point A Coordinates
-        self.monitor_point_a_label = tk.Label(self, text='MP_A(XYZ): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
+        self.monitor_point_a_label = tk.Label(self, text='MP_A(XY): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
         self.monitor_point_a_label.grid(row=self.monitor_point_a_widgets_position_dict['label']['row'], column=self.monitor_point_a_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
         
         self.monitor_point_a_x_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
@@ -104,12 +71,8 @@ class ParamsWindow(tk.Toplevel):
         self.monitor_point_a_y_entry.grid(row=self.monitor_point_a_widgets_position_dict['y entry']['row'], column=self.monitor_point_a_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
         self.monitor_point_a_y_entry.insert(0, self.data['monitor point a']['y'])
         
-        self.monitor_point_a_z_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.monitor_point_a_z_entry.grid(row=self.monitor_point_a_widgets_position_dict['z entry']['row'], column=self.monitor_point_a_widgets_position_dict['z entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.monitor_point_a_z_entry.insert(0, self.data['monitor point a']['z'])
-        
         # Monitor Point B Coordinates
-        self.monitor_point_b_label = tk.Label(self, text='MP_B(XYZ): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
+        self.monitor_point_b_label = tk.Label(self, text='MP_B(XY): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
         self.monitor_point_b_label.grid(row=self.monitor_point_b_widgets_position_dict['label']['row'], column=self.monitor_point_b_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
         
         self.monitor_point_b_x_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
@@ -119,10 +82,6 @@ class ParamsWindow(tk.Toplevel):
         self.monitor_point_b_y_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
         self.monitor_point_b_y_entry.grid(row=self.monitor_point_b_widgets_position_dict['y entry']['row'], column=self.monitor_point_b_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
         self.monitor_point_b_y_entry.insert(0, self.data['monitor point b']['y'])
-        
-        self.monitor_point_b_z_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.monitor_point_b_z_entry.grid(row=self.monitor_point_b_widgets_position_dict['z entry']['row'], column=self.monitor_point_b_widgets_position_dict['z entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.monitor_point_b_z_entry.insert(0, self.data['monitor point b']['z'])
         
         # Camera Pose
         self.camera_pose_label = tk.Label(self, text='Pose(PYR): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
@@ -231,10 +190,11 @@ class ParamsWindow(tk.Toplevel):
         # Save Button
         self.save_button = tk.Button(self, text='Save', bg=self.button_format_dict['bg'], width=self.button_format_dict['width'], command=self._onclick_button_save)
         self.save_button.grid(row=self.button_widgets_position_dict['save']['row'], column=self.button_widgets_position_dict['save']['column'], padx=self.button_format_dict['padx'], pady=self.button_format_dict['pady'], sticky=self.button_format_dict['sticky'])        
-        
+         
         return
     
     def _init_config_data(self):
+        self.data = calculate.data
         storage = js.JsonStorage(self.config_filepath)
         temp_data = storage.load()
         if temp_data != {}:
@@ -244,15 +204,27 @@ class ParamsWindow(tk.Toplevel):
             
     def _save_data_from_entry_to_memory(self):      
         """
-        Save data to memory. 
+        Save data from entry to memory.
         """   
-        # World Coordinates
-        self.data['world coordinates'] = { 
-            'x' : float(self.world_coordinate_x_entry.get().replace('E', 'e')), 
-            'y' : float(self.world_coordinate_y_entry.get().replace('E', 'e')), 
-            'z' : float(self.world_coordinate_z_entry.get().replace('E', 'e')) 
+        # Monitor Point A Coordinates
+        self.data['monitor point a'] = {
+            'x' : float(self.monitor_point_a_x_entry.get().replace('E', 'e')),
+            'y' : float(self.monitor_point_a_y_entry.get().replace('E', 'e')),
         }
         
+        # Monitor Point B Coordinates
+        self.data['monitor point b'] = {
+            'x' : float(self.monitor_point_b_x_entry.get().replace('E', 'e')),
+            'y' : float(self.monitor_point_b_y_entry.get().replace('E', 'e')),
+        }
+        
+        # Camera Pose
+        self.data['camera pose'] = { 
+            'pitch' : float(self.camera_pose_pitch_entry.get().replace('E', 'e')), 
+            'yaw' : float(self.camera_pose_yaw_entry.get().replace('E', 'e')), 
+            'roll' : float(self.camera_pose_roll_entry.get().replace('E', 'e')) 
+        }
+
         # Fitting Functiong Coefficients
         self.data['fitting func coefs'] = { 
             'x5' : float(self.fitting_func_coefs_x5_entry.get().replace('E', 'e')), 
@@ -273,39 +245,40 @@ class ParamsWindow(tk.Toplevel):
             'x0' : float(self.fitting_func_coefs_reverse_x0_entry.get().replace('E', 'e')),
         }
         
-        # Camera Pose
-        self.data['camera pose'] = { 
-            'pitch' : float(self.camera_pose_pitch_entry.get().replace('E', 'e')), 
-            'yaw' : float(self.camera_pose_yaw_entry.get().replace('E', 'e')), 
-            'roll' : float(self.camera_pose_roll_entry.get().replace('E', 'e')) 
-        }
-        
         # Sensor Params
         self.data['sensor params'] = { 
             'width' : int(self.sensor_params_width_entry.get()), 
             'height' : int(self.sensor_params_height_entry.get()), 
             'pixel size' : float(self.sensor_params_pixel_size_entry.get().replace('E', 'e')) 
         }       
-           
-        # Camera Coordinates
-        self.data['camera coordinates'] = {
-            'x' : float(self.camera_corrdinates_x_entry.get().replace('E', 'e')), 
-            'y' : float(self.camera_corrdinates_y_entry.get().replace('E', 'e')), 
-            'z' : float(self.camera_corrdinates_z_entry.get().replace('E', 'e'))
-        }
-           
-        # Pixel Coordinates
-        self.data['pixel coordinates'] = {
-            'x' : float(self.pixel_coordinate_x_entry.get().replace('E', 'e')), 
-            'y' : float(self.pixel_coordinate_y_entry.get().replace('E', 'e'))
+        
+        # Monitor Params
+        self.data['monitor params'] = {
+            'width' : int(self.monitor_params_width_entry.get()),
+            'height' : int(self.monitor_params_height_entry.get()),
+            'pixel size' : float(self.monitor_params_pixel_size_entry.get().replace('E', 'e'))
         }
            
         return
     
     def _refresh_data_in_gui(self):
         """ 
-        Write data from memory to entry.
+        Refresh data in GUI.
         """
+        # Monitor Point A Coordinates
+        self.monitor_point_a_x_entry.delete(0, tk.END)
+        self.monitor_point_a_y_entry.delete(0, tk.END)
+        
+        self.monitor_point_a_x_entry.insert(0, self.data['monitor point a']['x'])
+        self.monitor_point_a_y_entry.insert(0, self.data['monitor point a']['y'])
+        
+        # Monitor Point B Coordinates
+        self.monitor_point_b_x_entry.delete(0, tk.END)
+        self.monitor_point_b_y_entry.delete(0, tk.END)
+        
+        self.monitor_point_b_x_entry.insert(0, self.data['monitor point b']['x'])
+        self.monitor_point_b_y_entry.insert(0, self.data['monitor point b']['y'])
+        
         # Pose
         self.camera_pose_pitch_entry.delete(0, tk.END)
         self.camera_pose_yaw_entry.delete(0, tk.END)
@@ -354,36 +327,20 @@ class ParamsWindow(tk.Toplevel):
         self.sensor_params_height_entry.insert(0, self.data['sensor params']['height'])
         self.sensor_params_pixel_size_entry.insert(0, self.data['sensor params']['pixel size'])
         
-        # World coordinates
-        self.world_coordinate_x_entry.delete(0, tk.END)
-        self.world_coordinate_y_entry.delete(0, tk.END)
-        self.world_coordinate_z_entry.delete(0, tk.END)
+        # Monitor params
+        self.monitor_params_width_entry.delete(0, tk.END)
+        self.monitor_params_height_entry.delete(0, tk.END)
+        self.monitor_params_pixel_size_entry.delete(0, tk.END)
         
-        self.world_coordinate_x_entry.insert(0, self.data['world coordinates']['x'])
-        self.world_coordinate_y_entry.insert(0, self.data['world coordinates']['y'])
-        self.world_coordinate_z_entry.insert(0, self.data['world coordinates']['z'])
-        
-        # Camera coordinates
-        self.camera_corrdinates_x_entry.delete(0, tk.END)
-        self.camera_corrdinates_y_entry.delete(0, tk.END)
-        self.camera_corrdinates_z_entry.delete(0, tk.END)
-        
-        self.camera_corrdinates_x_entry.insert(0, self.data['camera coordinates']['x'])
-        self.camera_corrdinates_y_entry.insert(0, self.data['camera coordinates']['y'])
-        self.camera_corrdinates_z_entry.insert(0, self.data['camera coordinates']['z'])
-
-        # Pixel coordinates
-        self.pixel_coordinate_x_entry.delete(0, tk.END)
-        self.pixel_coordinate_y_entry.delete(0, tk.END)
-        
-        self.pixel_coordinate_x_entry.insert(0, self.data['pixel coordinates']['x'])
-        self.pixel_coordinate_y_entry.insert(0, self.data['pixel coordinates']['y'])
+        self.monitor_params_width_entry.insert(0, self.data['monitor params']['width'])
+        self.monitor_params_height_entry.insert(0, self.data['monitor params']['height'])
+        self.monitor_params_pixel_size_entry.insert(0, self.data['monitor params']['pixel size'])
         
         return
 
     def _onclick_button_save(self):
         self._save_data_from_entry_to_memory()
-        if js.JsonStorage(self.config_filepath).save(self.data) is -1:
+        if js.JsonStorage(self.config_filepath).save(self.data) == -1:
             sys.exit('Error: Unable to save data to file.')
         
         self._refresh_data_in_gui()
