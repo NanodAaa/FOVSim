@@ -27,23 +27,23 @@ import numpy as np
 from cores import W2CTransform as w2c
 
 data = {
-        'monitor point a' : { 'x' : '0', 'y' : '0'},
-        'monitor point b' : { 'x' : '0', 'y' : '0'},
-        'sensor point c' : { 'x' : '0', 'y' : '0'},
-        'sensor point c converted' : { 'x' : '0', 'y' : '0'},
-        'sensor point c mm' : { 'x' : '0.0', 'y' : '0.0'},
-        'sensor point c mm converted' : { 'x' : '0.0', 'y' : '0.0'},
-        'sensor point d' : { 'x' : '0', 'y' : '0'},
-        'sensor point d converted' : { 'x' : '0', 'y' : '0'},
-        'sensor point d mm' : { 'x' : '0.0', 'y' : '0.0'},
-        'sensor point d mm converted' : { 'x' : '0.0', 'y' : '0.0'},
-        'world point e' : { 'x' : '0.0', 'y' : '0.0', 'z' : '0.0'},
-        'world point f' : { 'x' : '0.0', 'y' : '0.0', 'z' : '0.0'},
-        'fitting func coefs' : { 'x5' : '0.0', 'x4' : '0.0', 'x3' : '0.0', 'x2' : '0.0', 'x1' : '0.0', 'x0' : '0.0' },
-        'fitting func coefs reverse' : { 'x5' : '0.0', 'x4' : '0.0', 'x3' : '0.0', 'x2' : '0.0', 'x1' : '0.0', 'x0' : '0.0' },
-        'camera pose' : { 'pitch' : '0.0', 'yaw' : '0.0', 'roll' : '0.0' },
-        'sensor params' : { 'width' : '0', 'height' : '0', 'pixel size' : '0.0' },
-        'monitor params' : { 'width' : '0', 'height' : '0', 'pixel size' : '0.0' },
+        'monitor point a' : { 'x' : 702, 'y' : 270 },
+        'monitor point b' : { 'x' : 19, 'y' : 270 },
+        'sensor point c' : { 'x' : 0, 'y' : 0 },
+        'sensor point c converted' : { 'x' : 0, 'y' : 0 },
+        'sensor point c mm' : { 'x' : 0.0, 'y' : 0.0 },
+        'sensor point c mm converted' : { 'x' : 0.0, 'y' : 0.0 },
+        'sensor point d' : { 'x' : 0, 'y' : 0 },
+        'sensor point d converted' : { 'x' : 0, 'y' : 0 },
+        'sensor point d mm' : { 'x' : 0.0, 'y' : 0.0 },
+        'sensor point d mm converted' : { 'x' : 0.0, 'y' : 0.0 },
+        'world point e' : { 'x' : 0.0, 'y' : 0.0, 'z' : 0.0 },
+        'world point f' : { 'x' : 0.0, 'y' : 0.0, 'z' : 0.0 },
+        'fitting func coefs' : { 'x5' : -6.84e-11, 'x4' : 5.14e-9, 'x3' : -1.12e-6, 'x2' : 4.13e-6, 'x1' : 0.0599, 'x0' : 4.95e-5 },
+        'fitting func coefs reverse' : { 'x5' : 0.0103, 'x4' : -0.0589, 'x3' : 0.215, 'x2' : -0.154, 'x1' : 16.8, 'x0' : -0.00596 },
+        'camera pose' : { 'pitch' : 0.0, 'yaw' : 0.0, 'roll' : 0.0 },
+        'sensor params' : { 'width' : 1920, 'height' : 1536, 'pixel size' : 0.003 },
+        'monitor params' : { 'width' : 720, 'height' : 540, 'pixel size' : 0.1521 },
     }
 
 def monitor_sensor_transform(data):
@@ -111,7 +111,7 @@ def sensor_origin_point_convert(data):
 
 def sensor_world_transform(data):
     # Sensor coordinates to Camera coordinatess
-    data['world point e'] = w2c.sensor_world_transform(data['sensor point c mm converted'], data['fitting func coefs reverse'])
-    data['world point f'] = w2c.sensor_world_transform(data['sensor point d mm converted'], data['fitting func coefs reverse'])
+    data['world point e'] = w2c.sensor_world_transform(data['sensor point c mm converted'], data['fitting func coefs reverse'])['world coordinates']
+    data['world point f'] = w2c.sensor_world_transform(data['sensor point d mm converted'], data['fitting func coefs reverse'])['world coordinates']
 
     return data

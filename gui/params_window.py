@@ -54,10 +54,12 @@ class ParamsWindow(tk.Toplevel):
         super().__init__(root)
         self._init_config_data()
         self._init_gui()
+        self.grab_set()
+        self.wait_window()
         
     def _init_gui(self):
     
-        self.title("Parmas")
+        self.title("Params")
             
         # Monitor Point A Coordinates
         self.monitor_point_a_label = tk.Label(self, text='MP_A(XY): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
