@@ -350,11 +350,7 @@ class MainWindow:
         """
         Calculate Horizontal Minimum Magnification Factor.
         """
-        self.data = calculate.monitor_sensor_transform(self.data)
-        self.data = calculate.sensor_origin_point_convert(self.data)
-        self.data = calculate.sensor_world_transform(self.data)
-        self.data = calculate.insert_points_into_range(self.data)
-        self.data = calculate.points_world_sensor_transform(self.data)
+        self.data = calculate.calculate_hor_min_mag_factor(self.data)
         
         js.JsonStorage(self.config_filepath).save(self.data)
         self._refresh_data_in_gui()

@@ -6,37 +6,42 @@ import numpy as np
 def coordinates_pixel_to_mm(point_coordinates: dict, pixel_size):
     x = point_coordinates['x']
     y = point_coordinates['y']
-    z = point_coordinates['z']
-    
+
     x_mm = round(x * pixel_size, 3)
     y_mm = round(y * pixel_size, 3)
-    z_mm = round(z * pixel_size, 3)
     
-    point_coordinates_mm = { 'x' : x_mm, 'y' : y_mm, 'z' : z_mm }
+    point_coordinates_mm = { 'x' : x_mm, 'y' : y_mm, }
     
     return point_coordinates_mm
 
 def coordinates_mm_to_pixel(point_coordinates: dict, pixel_size):
+    """ 
+    Converting coordinates from mm to pixel.  
+    `point_coordinates`: { 'x': x, 'y' : y, 'z' : z }  
+    `pixel_size`: pixel size.  
+    return: point_coordinates_pixel = { 'x' : x_pixel, 'y' : y_pixel, 'z' : z_pixel }  
+    """
     x = point_coordinates['x']
     y = point_coordinates['y']
-    z = point_coordinates['z']
     
     x_pixel = int(x / pixel_size)
     y_pixel = int(y / pixel_size)
-    z_pixel = int(z / pixel_size)
     
-    point_coordinates_pixel = { 'x' : x_pixel, 'y' : y_pixel, 'z' : z_pixel }
+    point_coordinates_pixel = { 'x' : x_pixel, 'y' : y_pixel, }
     
     return point_coordinates_pixel
 
-def sensor_monitor_transform(sensor_coordinates):
+def sensor_monitor_transform(sensor_coordinates_pixel: dict, sensor_params: dict, monitor_params: dict):
     """
-    Sensor coordinates transform to monitor coordinate, Pixel. 
+    Sensor coordinates transform to monitor coordinate, Pixel.  
+    `sensor_coordinates_pixel`: { 'x', 'y', 'z', }  
+    `sensor_params`: { 'width', 'height', 'pixel size', }  
+    `monitor_params`: { 'width', 'height', 'pixel size', }  
     """
-    
-    
-    
-    return
+    x_m = int(sensor_coordinates_pixel['x'] * monitor_params['width'] / sensor_params['width'])
+    y_m = int(sensor_coordinates_pixel['y'] * monitor_params['height'] / sensor_params['height'])
+
+    return { 'x' : x_m, 'y' : y_m, }
 
 def sensor_world_transform(sensor_coordinates_mm_converted: dict, fitting_func_coefs_reverse_dict: dict):
     """ 
