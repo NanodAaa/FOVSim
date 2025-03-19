@@ -56,11 +56,11 @@ class MainWindow:
         'y entry' : {'row' : 4, 'column' : 6},
     }
     
-    world_point_e_widgets_position_dict = {
+    world_point_f_widgets_position_dict = {
         'label' : {'row' : 5, 'column' : 0}, 'x entry' : {'row' : 5, 'column' : 1}, 
         'y entry' : {'row' : 5, 'column' : 2}, 'z entry' : {'row' : 5, 'column' : 3},
     }
-    world_point_f_widgets_position_dict = {
+    world_point_e_widgets_position_dict = {
         'label' : {'row' : 5, 'column' : 4}, 'x entry' : {'row' : 5, 'column' : 5}, 
         'y entry' : {'row' : 5, 'column' : 6}, 'z entry' : {'row' : 5, 'column' : 7},
     }
@@ -234,22 +234,6 @@ class MainWindow:
         self.sensor_point_d_mm_converted_y_entry.grid(row=self.sensor_point_d_mm_converted_widgets_position_dict['y entry']['row'], column=self.sensor_point_d_mm_converted_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
         self.sensor_point_d_mm_converted_y_entry.insert(0, self.data['sensor point d mm converted']['y'])
         
-        # World Point E
-        self.world_point_e_label = tk.Label(self.root, text='WP_E', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.world_point_e_label.grid(row=self.world_point_e_widgets_position_dict['label']['row'], column=self.world_point_e_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
-        
-        self.world_point_e_x_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.world_point_e_x_entry.grid(row=self.world_point_e_widgets_position_dict['x entry']['row'], column=self.world_point_e_widgets_position_dict['x entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.world_point_e_x_entry.insert(0, self.data['world point e']['x'])
-        
-        self.world_point_e_y_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.world_point_e_y_entry.grid(row=self.world_point_e_widgets_position_dict['y entry']['row'], column=self.world_point_e_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.world_point_e_y_entry.insert(0, self.data['world point e']['y'])
-        
-        self.world_point_e_z_entry  = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.world_point_e_z_entry.grid(row=self.world_point_e_widgets_position_dict['z entry']['row'], column=self.world_point_e_widgets_position_dict['z entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
-        self.world_point_e_z_entry.insert(0, self.data['world point e']['z'])
-        
         # World Point F
         self.world_point_f_label = tk.Label(self.root, text='WP_F', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
         self.world_point_f_label.grid(row=self.world_point_f_widgets_position_dict['label']['row'], column=self.world_point_f_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
@@ -265,6 +249,22 @@ class MainWindow:
         self.world_point_f_z_entry  = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
         self.world_point_f_z_entry.grid(row=self.world_point_f_widgets_position_dict['z entry']['row'], column=self.world_point_f_widgets_position_dict['z entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
         self.world_point_f_z_entry.insert(0, self.data['world point f']['z'])
+        
+        # World Point E
+        self.world_point_e_label = tk.Label(self.root, text='WP_E', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
+        self.world_point_e_label.grid(row=self.world_point_e_widgets_position_dict['label']['row'], column=self.world_point_e_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        
+        self.world_point_e_x_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
+        self.world_point_e_x_entry.grid(row=self.world_point_e_widgets_position_dict['x entry']['row'], column=self.world_point_e_widgets_position_dict['x entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.world_point_e_x_entry.insert(0, self.data['world point e']['x'])
+        
+        self.world_point_e_y_entry = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
+        self.world_point_e_y_entry.grid(row=self.world_point_e_widgets_position_dict['y entry']['row'], column=self.world_point_e_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.world_point_e_y_entry.insert(0, self.data['world point e']['y'])
+        
+        self.world_point_e_z_entry  = tk.Entry(self.root, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
+        self.world_point_e_z_entry.grid(row=self.world_point_e_widgets_position_dict['z entry']['row'], column=self.world_point_e_widgets_position_dict['z entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.world_point_e_z_entry.insert(0, self.data['world point e']['z'])
     
     def _refresh_data_in_gui(self):
         """ 
@@ -347,11 +347,14 @@ class MainWindow:
         self.world_point_f_z_entry.insert(0, self.data['world point f']['z'])
         
     def _onclick_menu_tools_run(self):
-        """ 
+        """
+        Calculate Horizontal Minimum Magnification Factor.
         """
         self.data = calculate.monitor_sensor_transform(self.data)
         self.data = calculate.sensor_origin_point_convert(self.data)
         self.data = calculate.sensor_world_transform(self.data)
+        self.data = calculate.insert_points_into_range(self.data)
+        self.data = calculate.points_world_sensor_transform(self.data)
         
         js.JsonStorage(self.config_filepath).save(self.data)
         self._refresh_data_in_gui()
@@ -371,7 +374,7 @@ class MainWindow:
     
     def _onclick_menu_options_params(self):
         params_window = pw.ParamsWindow(self.root)
-        self._onclick_button_refresh()
+        self._onclick_menu_tools_refresh()
         return
     
     def _onclick_menu_options_reset(self):

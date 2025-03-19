@@ -3,6 +3,41 @@
 import math
 import numpy as np
 
+def coordinates_pixel_to_mm(point_coordinates: dict, pixel_size):
+    x = point_coordinates['x']
+    y = point_coordinates['y']
+    z = point_coordinates['z']
+    
+    x_mm = round(x * pixel_size, 3)
+    y_mm = round(y * pixel_size, 3)
+    z_mm = round(z * pixel_size, 3)
+    
+    point_coordinates_mm = { 'x' : x_mm, 'y' : y_mm, 'z' : z_mm }
+    
+    return point_coordinates_mm
+
+def coordinates_mm_to_pixel(point_coordinates: dict, pixel_size):
+    x = point_coordinates['x']
+    y = point_coordinates['y']
+    z = point_coordinates['z']
+    
+    x_pixel = int(x / pixel_size)
+    y_pixel = int(y / pixel_size)
+    z_pixel = int(z / pixel_size)
+    
+    point_coordinates_pixel = { 'x' : x_pixel, 'y' : y_pixel, 'z' : z_pixel }
+    
+    return point_coordinates_pixel
+
+def sensor_monitor_transform(sensor_coordinates):
+    """
+    Sensor coordinates transform to monitor coordinate, Pixel. 
+    """
+    
+    
+    
+    return
+
 def sensor_world_transform(sensor_coordinates_mm_converted: dict, fitting_func_coefs_reverse_dict: dict):
     """ 
     Sensor coordinates to World coordinates.  
@@ -48,7 +83,11 @@ def sensor_world_transform(sensor_coordinates_mm_converted: dict, fitting_func_c
 
     return data
 
-def world_sensor_transform(world_coordinates: dict, sensor_params: dict, fitting_func_coefs: dict):
+def insert_point_into_range(range: tuple, points_num: int):
+    points = np.round(np.linspace(range[0], range[1], points_num), 3)
+    return points
+
+def world_sensor_transform(world_coordinates: dict, camera_pose: dict, sensor_params: dict, fitting_func_coefs: dict):
     """ 
     Transform world coordinates to sensor coordinates (Pixel format).  
     `world_coordinates`: dictionary of world coordinates.  
@@ -69,9 +108,9 @@ def world_sensor_transform(world_coordinates: dict, sensor_params: dict, fitting
         ]
     )
     
-    pitch_radians = math.radians(sensor_params['pitch'])
-    yaw_radians = math.radians(sensor_params['yaw'])
-    roll_radians = math.radians(sensor_params['roll'])
+    pitch_radians = math.radians(camera_pose['pitch'])
+    yaw_radians = math.radians(camera_pose['yaw'])
+    roll_radians = math.radians(camera_pose['roll'])
     
     pitch_rotate_matrix = np.array(
         [
@@ -114,12 +153,15 @@ def world_sensor_transform(world_coordinates: dict, sensor_params: dict, fitting
     azimuth = (math.degrees(azimuth_radians) + 360 ) % 360
     
     pixel_size = sensor_params['pixel size']
-    x_p = round((real_height / pixel_size) * math.cos(azimuth_radians), 3)
-    y_p = round((real_height / pixel_size) * math.sin(azimuth_radians), 3)
+    x_s = round((real_height) * math.cos(azimuth_radians), 3)
+    y_s = round((real_height) * math.sin(azimuth_radians), 3)
+    x_p = int((real_height / pixel_size) * math.cos(azimuth_radians))
+    y_p = int((real_height / pixel_size) * math.sin(azimuth_radians))
     
     # Write data to memory
     data = {}
-    data['camera coordinates'] = { 'x' : x_c, 'y' : y_c, 'z' : z_c }
-    data['pixel coordinates'] = { 'x' : x_p, 'y' : y_p }
+    data['camera coordinates'] = { 'x' : x_c, 'y' : y_c, 'z' : z_c, }
+    data['sensor coordinates'] = { 'x' : x_s, 'y' : y_s, }
+    data['pixel coordinates'] = { 'x' : x_p, 'y' : y_p, }
     
-    return
+    return data

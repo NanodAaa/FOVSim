@@ -1,26 +1,4 @@
 # calculate.py
-""" 
-Data structure:
-data = {
-        'monitor point a' : { 'x' : '0', 'y' : '0'},
-        'monitor point b' : { 'x' : '0', 'y' : '0'},
-        'sensor point c' : { 'x' : '0', 'y' : '0'},
-        'sensor point c converted' : { 'x' : '0', 'y' : '0'},
-        'sensor point c mm' : { 'x' : '0.0', 'y' : '0.0'},
-        'sensor point c mm converted' : { 'x' : '0.0', 'y' : '0.0'},
-        'sensor point d' : { 'x' : '0', 'y' : '0'},
-        'sensor point d converted' : { 'x' : '0', 'y' : '0'},
-        'sensor point d mm' : { 'x' : '0.0', 'y' : '0.0'},
-        'sensor point d mm converted' : { 'x' : '0.0', 'y' : '0.0'},
-        'world point e' : { 'x' : '0.0', 'y' : '0.0', 'z' : '0.0'},
-        'world point f' : { 'x' : '0.0', 'y' : '0.0', 'z' : '0.0'},
-        'fitting func coefs' : { 'x5' : '0.0', 'x4' : '0.0', 'x3' : '0.0', 'x2' : '0.0', 'x1' : '0.0', 'x0' : '0.0' },
-        'fitting func coefs reverse' : { 'x5' : '0.0', 'x4' : '0.0', 'x3' : '0.0', 'x2' : '0.0', 'x1' : '0.0', 'x0' : '0.0' },
-        'camera pose' : { 'pitch' : '0.0', 'yaw' : '0.0', 'roll' : '0.0' },
-        'sensor params' : { 'width' : '0', 'height' : '0', 'pixel size' : '0.0' },
-        'monitor params' : { 'width' : '0', 'height' : '0', 'pixel size' : '0.0' },
-    }
-"""
 
 import math
 import numpy as np
@@ -39,6 +17,9 @@ data = {
         'sensor point d mm converted' : { 'x' : 0.0, 'y' : 0.0 },
         'world point e' : { 'x' : 0.0, 'y' : 0.0, 'z' : 0.0 },
         'world point f' : { 'x' : 0.0, 'y' : 0.0, 'z' : 0.0 },
+        'points within ef' : [],
+        'points within ef sensor' : [],
+        'points within ef monitor' : [],
         'fitting func coefs' : { 'x5' : -6.84e-11, 'x4' : 5.14e-9, 'x3' : -1.12e-6, 'x2' : 4.13e-6, 'x1' : 0.0599, 'x0' : 4.95e-5 },
         'fitting func coefs reverse' : { 'x5' : 0.0103, 'x4' : -0.0589, 'x3' : 0.215, 'x2' : -0.154, 'x1' : 16.8, 'x0' : -0.00596 },
         'camera pose' : { 'pitch' : 0.0, 'yaw' : 0.0, 'roll' : 0.0 },
@@ -79,6 +60,10 @@ def monitor_sensor_transform(data):
     
     return data
 
+def sensor_monitor_transform(data):
+    
+    return
+
 def sensor_origin_point_convert(data):
     """ 
     Convert sensor coordinates to origin coordinates.
@@ -114,4 +99,26 @@ def sensor_world_transform(data):
     data['world point e'] = w2c.sensor_world_transform(data['sensor point d mm converted'], data['fitting func coefs reverse'])['world coordinates']
     data['world point f'] = w2c.sensor_world_transform(data['sensor point c mm converted'], data['fitting func coefs reverse'])['world coordinates']
 
+    return data
+
+def insert_points_into_range(data):
+    points = w2c.insert_point_into_range((data['world point e']['y'], data['world point f']['y']), 20)
+    points_within_ef = []
+    for point in points:
+        points_within_ef.append({ 'x' : data['world point e']['x'], 'y' : point, 'z' : data['world point e']['z'], })
+    
+    data['points within ef'] = tuple(points_within_ef)
+    return data
+
+def points_world_sensor_transform(data):
+    """ 
+    """
+    points = data['points within ef']
+    points_sensor = []
+    for point in points:
+        point_sensor = w2c.world_sensor_transform(point, data['camera pose'], data['sensor params'], data['fitting func coefs'])['sensor coordinates']
+        points_sensor.append(point_sensor)
+    
+    data['points within ef sensor'] = points_sensor
+    
     return data

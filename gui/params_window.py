@@ -41,7 +41,6 @@ class ParamsWindow(tk.Toplevel):
         'height entry' : {'row' : 6, 'column' : 2}, 'pixel size entry' : {'row' : 6, 'column' : 3}
     }
     button_widgets_position_dict = {
-        'save' : {'row' : 7, 'column' : 0},
     }
     label_widgets_position_dict = {
         'message' : {'row' : 8, 'column' : 2},
@@ -60,6 +59,11 @@ class ParamsWindow(tk.Toplevel):
     def _init_gui(self):
     
         self.title("Params")
+            
+        # Menu
+        self.menu = tk.Menu(self)
+        self.menu.add_command(label='Save', command=self._onclick_menu_save)
+        self.config(menu=self.menu)
             
         # Monitor Point A Coordinates
         self.monitor_point_a_label = tk.Label(self, text='MP_A(XY): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
@@ -188,11 +192,7 @@ class ParamsWindow(tk.Toplevel):
         self.monitor_params_pixel_size_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
         self.monitor_params_pixel_size_entry.grid(row=self.monitor_params_widgets_position_dict['pixel size entry']['row'], column=self.monitor_params_widgets_position_dict['pixel size entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
         self.monitor_params_pixel_size_entry.insert(0, self.data['monitor params']['pixel size'])
-                
-        # Save Button
-        self.save_button = tk.Button(self, text='Save', bg=self.button_format_dict['bg'], width=self.button_format_dict['width'], command=self._onclick_button_save)
-        self.save_button.grid(row=self.button_widgets_position_dict['save']['row'], column=self.button_widgets_position_dict['save']['column'], padx=self.button_format_dict['padx'], pady=self.button_format_dict['pady'], sticky=self.button_format_dict['sticky'])        
-         
+            
         return
     
     def _init_config_data(self):
@@ -340,7 +340,7 @@ class ParamsWindow(tk.Toplevel):
         
         return
 
-    def _onclick_button_save(self):
+    def _onclick_menu_save(self):
         self._save_data_from_entry_to_memory()
         if js.JsonStorage(self.config_filepath).save(self.data) == -1:
             sys.exit('Error: Unable to save data to file.')
