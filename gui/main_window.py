@@ -3,6 +3,7 @@
 import tkinter as tk
 from gui import params_window as pw
 from gui import selection_window as sw
+from gui import points_table_window as ptw
 from cores import JsonStorage as js
 from cores import calculate
 
@@ -104,6 +105,8 @@ class MainWindow:
         self.tools_menu = tk.Menu(self.menu, tearoff=False)
         self.tools_menu.add_command(label='Run', command=self._onclick_menu_tools_run)
         self.tools_menu.add_command(label='Refresh', command=self._onclick_menu_tools_refresh)
+        self.tools_menu.add_command(label='Show Table', command=self._onclick_menu_tools_show_table)
+        self.tools_menu.add_command(label='Show Plot', command=self._onclick_menu_tools_show_plot)
         self.menu.add_cascade(label='Tools', menu=self.tools_menu)
         
         # Menu - Options
@@ -345,6 +348,21 @@ class MainWindow:
         self.world_point_f_x_entry.insert(0, self.data['world point f']['x'])
         self.world_point_f_y_entry.insert(0, self.data['world point f']['y'])
         self.world_point_f_z_entry.insert(0, self.data['world point f']['z'])
+        
+    def _onclick_menu_tools_show_table(self):
+        """ 
+        Show table of points with ef.
+        """
+        points_table_window = ptw.PointsTableWindow(self.root)
+        
+        return
+        
+    def _onclick_menu_tools_show_plot(self):
+        """ 
+        """
+        calculate.show_plot(self.data)
+        
+        return
         
     def _onclick_menu_tools_run(self):
         """

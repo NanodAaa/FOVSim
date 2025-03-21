@@ -2,7 +2,9 @@
 
 import math
 import numpy as np
+import matplotlib.pyplot as plt
 from cores import W2CTransform as w2c
+from cores import plot
 
 data = {
         'monitor point a' : { 'x' : 702, 'y' : 270 },
@@ -203,3 +205,56 @@ def _points_world_sensor_transform(data):
     data['points within ef sensor converted mm'] = points_sensor
     
     return data
+
+""" 
+Show plots
+"""
+
+def show_plot(data):
+    """ 
+    """
+    points_x = []
+    points_y = []
+    for point in data['points within ef monitor pixel']:
+        points_x.append(point['x'])
+        points_y.append(point['y'])
+        
+    points_monitor_pixel = data['points within ef monitor pixel']
+    points_monitor_pixel_x = []
+    for point in points_monitor_pixel:
+        points_monitor_pixel_x.append(point['x'])
+        
+    points_monitor_pixel_x_dist = [abs(round(x - points_monitor_pixel_x[0], 3)) for x in points_monitor_pixel_x]
+    
+    points_world = data['points within ef']
+    points_world_y = []
+    for point in points_world:
+        points_world_y.append(point['y'])
+        
+    points_world_y_dist = [abs(round(y - points_world_y[0], 3)) for y in points_world_y]
+    
+    # 5 Degrees Ploynomial fitting
+    degree = 5
+    poly_coeffs = np.polyfit(points_world_y_dist, points_monitor_pixel_x_dist, degree)
+    poly_func = np.poly1d(poly_coeffs)
+    deriv_poly = np.polyder(poly_func)  # 1th Step Dervivated Func
+    x_fit = points_world_y_dist
+    y_fit = poly_func(x_fit)
+    y_fit_deriv = deriv_poly(x_fit)
+    y_fit_deriv_ = y_fit_deriv * 0.887058824
+    
+    
+    plt.figure(figsize=(12, 8))
+    plt.subplot(2, 2, 1)
+    plt.scatter(points_world_y_dist, points_monitor_pixel_x_dist, color='red')
+    plt.plot(x_fit, y_fit, color='blue', linestyle='-.')
+
+    plt.subplot(2, 2, 2)
+    plt.scatter(x_fit, y_fit_deriv_)
+
+    plt.subplot(2, 2, 3)
+    plt.scatter(points_x, points_y)
+
+    plt.show()    
+    
+    return
