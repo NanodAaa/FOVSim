@@ -244,15 +244,28 @@ def show_plot(data):
     y_fit_deriv_ = y_fit_deriv * 0.887058824
     
     
-    plt.figure(figsize=(12, 8))
+    plt.figure(figsize=(12, 12))
+    
+    # Points distance from MP_A
     plt.subplot(2, 2, 1)
+    plt.title(label='Points distance from MP_A', fontweight="bold")
+    plt.xlabel(xlabel='Point distance from WP_F (mm)')
+    plt.ylabel(ylabel='Point distance from MP_A')
     plt.scatter(points_world_y_dist, points_monitor_pixel_x_dist, color='red')
     plt.plot(x_fit, y_fit, color='blue', linestyle='-.')
 
+    # Magnification Factors
     plt.subplot(2, 2, 2)
+    plt.title(label='Magnification Factors of points', fontweight="bold")
+    plt.xlabel(xlabel='Point distance from WP_F (mm)')
+    plt.ylabel(ylabel='Maginification Factor')
     plt.scatter(x_fit, y_fit_deriv_)
 
+    # Points position on monitor
     plt.subplot(2, 2, 3)
+    plt.title(label='Points position on monitor', fontweight="bold")
+    plt.xlabel(xlabel='Width')
+    plt.ylabel(ylabel='Height')
     plt.scatter(points_x, points_y)
 
     plt.show()    

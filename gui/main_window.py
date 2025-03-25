@@ -384,7 +384,7 @@ class MainWindow:
         return
         
     def _onclick_menu_help_about(self):
-        return    
+        return
     
     def _onclick_menu_options_params(self):
         params_window = pw.ParamsWindow(self.root)
