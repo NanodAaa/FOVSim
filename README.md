@@ -1,125 +1,55 @@
-# 最小放大倍率-工作笔记
+# 最小放大倍率计算工具
 
-Date: February 27, 2025
-Last edited time: March 17, 2025 3:30 PM
+## 简介
 
-# 基础信息:
+该工具用于计算 CMS 系统的最小放大倍率, 在参数界面中输入 CMS 系统的各项参数后点击运行即可输出计算的结果以及各图表.
 
-### 平均放大倍率:
+## 工具界面
 
-![image.png](/images/WorkNotes/image.png)
+### 主界面 - 显示 Monitor → World 坐标的计算结果
 
----
+![image.png](./README/image%206.png)
 
-# 最小放大倍率测试:
+**各标签定义**
 
-## 测试方法:
+Monitor, Sensor 默认以左上角为原点.
 
-![image.png](/images/WorkNotes/image%201.png)
+- MP_A, MP_B: Monitor 中点 A, B 的像素坐标.
+- SP_C, SP_D: Sensor 中点 C, D 的像素坐标, (mm) 为 相对原点的毫米单位的坐标.
+- SP_C_Conv, SP_D_Conv: 将点 C, D 的坐标原点转换为 Sensor 中心点后的坐标, (mm) 为 相对原点的毫米单位的坐标.
+- WP_E, F: 转换后的世界坐标, E, F 两点的 Y 坐标将作为计算最小放大倍率的输入范围值 (E, F).
 
-## 测试信息记录:
+### 参数设置界面
 
-左边缘(原图): 左2
+![image.png](./README/image%207.png)
 
-右边缘: 右
+**各标签定义**
 
-相机距离图像: 75mm
+- MP_A, MP_B: Monitor 中点 A, B 的像素坐标.
+- Pose: 相机的姿态 (Pitch, Yaw, Roll).
+- FitCoe: 真实相高 (Real Height) vs. 入射角 (Angle) 的 5 阶多项式拟合函数的参数 x^5 → x^0.
+- FitCoeR: 入射角 (Angle) vs. 真实相高 (Real Height) 的 5 阶多项式拟合函数的参数 x^5 → x^0.
+- SenPrms: Sensor 的各项参数 (Width, Height, Pixel Size).
+- MonPrms: Monitor 的各项参数 (Width, Height, Pixel Size).
 
-中点线像素 x 坐标: 图像左→右
+### 最小放大倍率计算结果表格
 
-显示器像素尺寸: 0.1521 mm
+![image.png](./README/image%208.png)
 
-显示器像素坐标:
-19 40 63 86 111 137 165 192 222 251 283 314 347 379 411 444 476 507 538 568 597 625 651 678 702
+此界面展示 WP_E, WP_F 范围内均匀分布的 20 个点经 World → Monitor 变换后各阶段的值.
 
----
+### 最小放大倍率计算结果图表
 
-# 最小放大倍率计算:
+![image.png](./README/image%209.png)
 
-## 计算方法:
+**各图表定义**
 
-![image.png](/images/WorkNotes/image%202.png)
-
-![最小放大倍率.png](/images/WorkNotes/%E6%9C%80%E5%B0%8F%E6%94%BE%E5%A4%A7%E5%80%8D%E7%8E%87.png)
-
-1. 显示屏幕边缘的两个点AB，映射到Sensor平面点CD
-2. Sensor平面两个点映射到墙面点EF
-3. EF之间平均分布插入20个点
-4. 将20个点重新投影到屏幕平面
-5. 通过这20个点计算最小放大倍数
-
-## 1. Monitor 点 A,B → Sensor 平面点 C,D:
-
-[屏幕点 A,B → Sensor 平面点 C,D 草稿](https://www.notion.so/A-B-Sensor-C-D-1a79e6730e5f8024bde8f19d7d1dc0ee?pvs=21)
-
-通过映射算法将 A, B 点像素坐标映射为 C, D 点像素坐标.
-
-Sensor 平面坐标原点为左上角
-
-### **参数:**
-
-- Sensor 分辨率: 1920 * 1536
-- 显示器分辨率: 720 * 540
-- A 点像素坐标: (702, 270)
-- B 点像素 X 坐标: (19, 270)
-
-### **映射算法:**
-
-![image.png](/images/WorkNotes/image%203.png)
-
-![image.png](/images/WorkNotes/image%204.png)
-
-### 计算结果:
-
-- C 点像素坐标: (1872, 768)
-- D 点像素坐标: (51, 768)
-
-## 2. Sensor 平面点 C,D → 墙面点 E,F :
-
-### 像素坐标→世界坐标, 其中:
-
-- Sensor 平面 与 E,F 所在平面 的距离:
-- 显示器像素尺寸: 0.1521 mm
-- Sensor像素尺寸: 0.003 mm
-- Angle vs Real Height 拟合函数的各阶参数: ?
-- C 点像素 X 坐标: 1872
-- D 点像素 X 坐标: 51
-- C→F, D→E
-
-详情见: [世界坐标与Sensor坐标互换](https://www.notion.so/Sensor-1a79e6730e5f8033afa4dfbe98c4ae14?pvs=21) 
-
-<aside>
-💡
-
-使用 图像坐标 → 相机坐标工具, **注意: 此工具反转计算时, 输入的Sensor坐标以Sensor中心为原点! 使用时需进行坐标变换.**
-
-</aside>
-
-$$
-x'=x−960
-$$
-
-![image.png](/images/WorkNotes/image%205.png)
-
-- 坐标变换后 C 点像素 X 坐标为 (912, 0), 图像 X 坐标为 (2.736, 0)
-- 坐标变换后 D 点像素 X 坐标为 (-909, 0), 图像 X 坐标为 (-2.727, 0)
-
-### 计算结果:
-
-- F 坐标 (0, 2181.7, 2000)
-- E 坐标 (0, -2168.79, 2000)
-
-## 3. EF之间平均分布插入20个点:
-
-- 输入: 范围 [E, F]
-- 输出: [E, F] 范围内 20 个点的坐标
-
-## 4. 将20个点重新投影到屏幕平面:
-
-1. 输入: [E, F] 范围内 20 个点的坐标
-2. 对 20 个点分别应用:
-    1. 世界坐标 (mm) → Sensor 坐标 (像素).
-    2. Sensor 坐标进行线性变换, 使原点位置从 Sensor 中心变为 Sensor 左上角.
-    3. Sensor 坐标 (像素) → 显示器坐标 (mm).
-
-## 5. 计算最小放大倍率
+- **Points distance from MP_A**: 显示 (WP_F, WP_E) 范围内 20 个点 Y 坐标距 WP_F 的 Y 坐标的距离 (mm).
+    - Point distance from WP_F: 该点转换前的 Y 坐标距 WP_F 的 Y 坐标的距离 (mm).
+    - Point distance from MP_A: 该点转换后的 X 坐标距 MP_A 的 X 坐标的距离 (pixel).
+- **Magnification Factors of Points**: 显示 (WP_F, WP_E) 范围内 20 个点的经镜头后的放大倍率. 此图中的最小值即为 CMS 的最小放大倍率.
+    - Point distance from WP_F: 该点转换前的 Y 坐标距 WP_F 的 Y 坐标的距离 (mm).
+    - Magnification Factor: 放大倍率.
+- **Points position on monitor**: (WP_F, WP_E) 范围内 20 个点变换后在 Monitor 上的位置.
+    - Width: X 坐标.
+    - Height: Y 坐标.
