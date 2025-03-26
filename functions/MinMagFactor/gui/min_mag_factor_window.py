@@ -74,12 +74,11 @@ class MinMagFactorWindow(tk.Toplevel):
         }
     
     def __init__(self, root):
-        super().__init__(root)
+        self.root = root
+        super().__init__(self.root)
         self._init_config_data()
         self._init_gui()
-        self.grab_set()
-        self.wait_window()
-        
+        self.protocol('WM_DELETE_WINDOW', self._onclose)
         return
         
     def _init_config_data(self):
@@ -96,11 +95,6 @@ class MinMagFactorWindow(tk.Toplevel):
         
         # Menu
         self.menu = tk.Menu(self)
-        
-        # Menu - Help
-        self.help_menu = tk.Menu(self.menu, tearoff=False)
-        self.help_menu.add_command(label='About', command=self._onclick_menu_help_about)
-        self.menu.add_cascade(label='Help', menu=self.help_menu)
         
         # Menu - Tools
         self.tools_menu = tk.Menu(self.menu, tearoff=False)
@@ -354,15 +348,13 @@ class MinMagFactorWindow(tk.Toplevel):
         """ 
         Show table of points with ef.
         """
-        points_table_window = ptw.PointsTableWindow(self)
-        
+        points_table_window = ptw.PointsTableWindow(self)      
         return
         
     def _onclick_menu_tools_show_plot(self):
         """ 
         """
-        functions.show_plot(self.data)
-        
+        functions.show_plot(self.data)     
         return
         
     def _onclick_menu_tools_run(self):
@@ -373,7 +365,6 @@ class MinMagFactorWindow(tk.Toplevel):
         
         js.JsonStorage(self.config_filepath).save(self.data)
         self._refresh_data_in_gui()
-        
         return
     
     def _onclick_menu_tools_refresh(self):
@@ -381,10 +372,6 @@ class MinMagFactorWindow(tk.Toplevel):
         """
         self.data = js.JsonStorage(self.config_filepath).load()
         self._refresh_data_in_gui()
-        
-        return
-        
-    def _onclick_menu_help_about(self):
         return
     
     def _onclick_menu_options_params(self):
@@ -420,3 +407,7 @@ class MinMagFactorWindow(tk.Toplevel):
             return
         
         return
+    
+    def _onclose(self):
+        self.destroy()
+        self.root.deiconify()

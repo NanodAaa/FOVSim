@@ -20,13 +20,25 @@ class MainWindow(tk.Tk):
         self.tools_menu.add_command(label='MinMagFactor Calculator', command=self._onclick_menu_tools_min_mag_factor_calculator)
         self.menu.add_cascade(label='Tools', menu=self.tools_menu)
         
+        # Menu - Help
+        self.help_menu = tk.Menu(self.menu, tearoff=False)
+        self.help_menu.add_command(label='About', command=self._onclick_menu_help_about)
+        self.menu.add_cascade(label='Help', menu=self.help_menu)
+        
         self.config(menu=self.menu)
         
     def _start(self):
         self.mainloop()
         return
     
+    def _hide(self):
+        self.withdraw()
+      
     def _onclick_menu_tools_min_mag_factor_calculator(self):
+        self._hide()
         min_mag_factor_window = mafw.MinMagFactorWindow(self)
-        
         return
+    
+    def _onclick_menu_help_about(self):
+        return
+    
