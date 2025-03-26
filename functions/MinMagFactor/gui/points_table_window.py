@@ -2,19 +2,19 @@
 
 import tkinter as tk
 from tkinter import ttk
-from cores import calculate
+from functions import functions
 from cores import JsonStorage as js
+from assets.styles.tkinter_style import TkinterStyle
 
 class PointsTableWindow(tk.Toplevel):
     """ 
     """
-    config_filename = 'config.json'
-    config_filepath = f'./{config_filename}'
+    config_filepath = functions.CONFIG_FILEPATH
     
-    label_format_dict = { 'font' : ('consolas', 11), 'padx' : 5, 'pady' : 5, 'sticky' : 'w', 'width' : 14 }
-    entry_format_dict = { 'font' : ('consolas', 12), 'padx' : 5, 'pady' : 5, 'sticky' : 'ew', 'width' : 13 }
-    button_format_dict = { 'bg' : 'lightblue', 'padx' : 5, 'pady' : 5, 'sticky' : 'ewsn', 'width' : 13 }
-    tree_format_dict = { 'column width' : 100, 'column anchor' : 'center', }
+    label_format_dict = TkinterStyle.label_format_dict
+    entry_format_dict = TkinterStyle.entry_format_dict
+    button_format_dict = TkinterStyle.button_format_dict    
+    tree_format_dict = TkinterStyle.tree_format_dict
     
     tree_columns = ('World_mm', 'Sensor_Conv_mm', 'Sensor_Conv_pixel', 'Sensor_mm', 'Sensor_pixel', 'Monitor_mm', 'Monitor_pixel')
     
@@ -27,7 +27,7 @@ class PointsTableWindow(tk.Toplevel):
         self.wait_window()
         
     def _init_config_data(self):
-        self.data = calculate.data
+        self.data = functions.data
         storage = js.JsonStorage(self.config_filepath)
         temp_data = storage.load()
         if temp_data != {}:

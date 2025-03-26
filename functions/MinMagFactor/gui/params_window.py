@@ -2,14 +2,15 @@
 
 import tkinter as tk
 from cores import JsonStorage as js
-from cores import calculate
+from functions import functions
+from assets.styles.tkinter_style import TkinterStyle
 import sys
 
 class ParamsWindow(tk.Toplevel):
-    label_format_dict = { 'font' : ('consolas', 11), 'padx' : 5, 'pady' : 5, 'sticky' : 'w', 'width' : 14 }
-    entry_format_dict = { 'font' : ('consolas', 12), 'padx' : 5, 'pady' : 5, 'sticky' : 'ew', 'width' : 13 }
-    button_format_dict = { 'bg' : 'lightblue', 'padx' : 5, 'pady' : 5, 'sticky' : 'ewsn', 'width' : 13 }
-
+    label_format_dict = TkinterStyle.label_format_dict
+    entry_format_dict = TkinterStyle.entry_format_dict
+    button_format_dict = TkinterStyle.button_format_dict
+    
     monitor_point_a_widgets_position_dict = {
         'label' : {'row' : 0, 'column' : 0}, 'x entry' : {'row' : 0, 'column' : 1}, 
         'y entry' : {'row' : 0, 'column' : 2},
@@ -46,8 +47,7 @@ class ParamsWindow(tk.Toplevel):
         'message' : {'row' : 8, 'column' : 2},
     }
     
-    config_filename = 'config.json'
-    config_filepath = f'./{config_filename}'
+    config_filepath = functions.CONFIG_FILEPATH
     
     def __init__(self, root):
         super().__init__(root)
@@ -196,7 +196,7 @@ class ParamsWindow(tk.Toplevel):
         return
     
     def _init_config_data(self):
-        self.data = calculate.data
+        self.data = functions.data
         storage = js.JsonStorage(self.config_filepath)
         temp_data = storage.load()
         if temp_data != {}:

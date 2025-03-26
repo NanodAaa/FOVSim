@@ -33,6 +33,9 @@ data = {
         'monitor params' : { 'width' : 720, 'height' : 540, 'pixel size' : 0.1521 },
     }
 
+CONFIG_FILENAME = 'config.json'
+CONFIG_FILEPATH = f'./assets/{CONFIG_FILENAME}'
+
 def calculate_hor_min_mag_factor(data):
     data = _monitor_sensor_transform(data)
     data = _sensor_origin_point_convert(data)

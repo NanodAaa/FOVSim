@@ -1,4 +1,4 @@
-# MinMagFactorCalculator.py
+# CMSSim.py
 from gui import main_window as mw
 
 if __name__ == '__main__':
