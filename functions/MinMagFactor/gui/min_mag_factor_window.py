@@ -1,6 +1,7 @@
 # MinMagFactorCalculatorGUI.py
 
 import tkinter as tk
+from functions.MinMagFactor.data.data import Data
 from functions.MinMagFactor.gui import params_window as pw
 from gui import selection_window as sw
 from functions.MinMagFactor.gui import points_table_window as ptw
@@ -13,7 +14,7 @@ class MinMagFactorWindow(tk.Toplevel):
     entry_format_dict = TkinterStyle.entry_format_dict
     button_format_dict = TkinterStyle.button_format_dict
     
-    config_filepath = functions.CONFIG_FILEPATH
+    config_filepath = Data.config_filepath
     
     class WidgetsPosition():
         monitor_point_a_widgets_position_dict = {

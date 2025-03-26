@@ -2,6 +2,7 @@
 
 import tkinter as tk
 from tkinter import ttk
+from functions.MinMagFactor.data.data import Data
 from functions import functions
 from cores import JsonStorage as js
 from assets.styles.tkinter_style import TkinterStyle
@@ -9,7 +10,7 @@ from assets.styles.tkinter_style import TkinterStyle
 class PointsTableWindow(tk.Toplevel):
     """ 
     """
-    config_filepath = functions.CONFIG_FILEPATH
+    config_filepath = Data.config_filepath
     
     label_format_dict = TkinterStyle.label_format_dict
     entry_format_dict = TkinterStyle.entry_format_dict

@@ -1,12 +1,15 @@
 # options_window.py
 
 import tkinter as tk
+from functions.MinMagFactor.data.data import Data
 from cores import JsonStorage as js
 from functions import functions
 from assets.styles.tkinter_style import TkinterStyle
 import sys
 
 class ParamsWindow(tk.Toplevel):
+    config_filepath = Data.config_filepath
+    
     label_format_dict = TkinterStyle.label_format_dict
     entry_format_dict = TkinterStyle.entry_format_dict
     button_format_dict = TkinterStyle.button_format_dict
@@ -46,8 +49,6 @@ class ParamsWindow(tk.Toplevel):
     label_widgets_position_dict = {
         'message' : {'row' : 8, 'column' : 2},
     }
-    
-    config_filepath = functions.CONFIG_FILEPATH
     
     def __init__(self, root):
         super().__init__(root)
