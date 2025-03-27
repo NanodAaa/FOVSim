@@ -38,9 +38,9 @@ class W2CTransform(tk.Toplevel):
     label_widgets_position_dict = {
         'message' : {'row' : 8, 'column' : 2}}
     
-    def __init__(self, master):
-        self.master = master
-        super().__init__(self.master)
+    def __init__(self, root):
+        self.root = root
+        super().__init__(self.root)
         self.calculate_mode_positive = True
         self.lock_mode = True
         self._init_config_data()
@@ -611,4 +611,4 @@ class W2CTransform(tk.Toplevel):
         
     def _onclose(self):
         self.destroy()
-        self.deiconify(self.master)
+        self.root.deiconify()
