@@ -8,6 +8,7 @@ from gui.selection_window import SelectionWindow
 from ..gui.setting_window import SettingWindow
 from matplotlib.figure import Figure
 from dataclasses import dataclass
+from ..models.config_model import ConfigModel
 
 class FOVSimWindow(tk.Toplevel):
     @dataclass
@@ -36,6 +37,7 @@ class FOVSimWindow(tk.Toplevel):
     def __init__(self, root: tk.Tk):
         super().__init__(root)
         self.root = root
+        self.config_model = ConfigModel()
         self.controller = FovSimController()
         self.show_canvas_params = self.ShowCanvasParams()
         self.show_canvas_params.x_label = 'Width'
@@ -79,7 +81,20 @@ class FOVSimWindow(tk.Toplevel):
         """
         Run Fov simulation. 
         """
-    
+        LOGGER.info('User clicked menu-run.')
+        # Get regulation points.
+        data = self.controller.read_data_from_json()
+        LOGGER.debug(f'Done getting data. Data: {data}')
+        regulation_points = self.controller.get_regulation_points_ep(data[self.config_model.Keys.CAMERA_POSITION.value], data[self.config_model.Keys.DISTANCE_CAM_CARBODY.value], data[self.config_model.Keys.DISTANCE_CAM_GROUND.value])
+        LOGGER.debug(f'Done getting regulation points. Points: {regulation_points}')
+        
+        # Transform regulation points from EP coordinates to Camera coordinates.
+        regulation_points_camera_coordinates = self.controller.transfrom_regulation_points_into_cam_coordinates(data[self.config_model.Keys.CAMERA_POSITION.value], regulation_points)
+        LOGGER.debug(f'Done gettingb regulation points\' coordinates relative to camera. Data: {regulation_points_camera_coordinates}')
+        
+        # Applying World->Monitor transform to 'regulation_points_camera_coordinates'
+        
+        
     def _onclose(self):
         self.destroy()
         self.root.deiconify()
