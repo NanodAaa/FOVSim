@@ -1,8 +1,8 @@
 # main_windows.py
 
-from functions.MinMagFactor.gui import min_mag_factor_window as mafw
-from functions.W2CTransform.gui import w2ctransform_window as w2cw
-from functions.FOV_Sim.gui import fov_sim_window as fsw
+from tools.MinMagFactor.gui import min_mag_factor_window as mafw
+from tools.W2CTransform.gui import w2ctransform_window as w2cw
+from tools.FOV_Sim.gui import fov_sim_window as fsw
 import tkinter as tk
 
 class MainWindow(tk.Tk):
