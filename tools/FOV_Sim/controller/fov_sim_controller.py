@@ -140,3 +140,14 @@ class FovSimController:
         elif result == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
             LOGGER.error('Error when write data into json! - File not found.')
             return self.ReturnCode.FILE_NOT_FOUND
+        
+    def coordinates_transform(self, point: list, old_original_point: list, new_original_point) -> list:
+        data = self.cal_model.point_transform_coordinates(point, old_original_point, new_original_point)
+        if data == self.cal_model.ReturnCode.TYPE_ERROR:
+            LOGGER.error(f'Input data type error - point, old_original_point, new_original_point. Data: {point}, {old_original_point}, {new_original_point}.')
+            return self.ReturnCode.DATA_TYPE_ERROR
+        elif data == self.cal_model.ReturnCode.VALUE_ERROR:
+            LOGGER.error(f'Input data value error - length of point, old_original_point, new_original_point is not equal. Data: {point}, {old_original_point}, {new_original_point}.')
+            return self.ReturnCode.DATA_VALUE_ERROR
+        
+        return data

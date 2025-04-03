@@ -37,3 +37,20 @@ class CalculateModel:
         
         B_convert = [B[0] - A[0], B[1] - A[1], B[2] - A[2]]
         return B_convert
+    
+    def point_transform_coordinates(self, point: list, old_original_point: list, new_original_point) -> list:
+        """
+        Transform point from old_original_point to new_original_point.  
+        """
+        if not isinstance(point, list) or not isinstance(old_original_point, list) or not isinstance(new_original_point, list):
+            return self.ReturnCode.TYPE_ERROR
+        
+        if not len(point) == len(old_original_point) == len(new_original_point):
+            return self.ReturnCode.VALUE_ERROR
+        
+        point_convert = [
+            point[0] - (new_original_point[0] - old_original_point[0]),
+            point[1] - (new_original_point[1] - old_original_point[1]),
+        ]
+
+        return point_convert        

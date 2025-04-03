@@ -13,17 +13,24 @@ from matplotlib.patches import Rectangle
 class FOVSimWindow(tk.Toplevel):
     @dataclass
     class ShowCanvasParams:
-        title: str = None
-        x_label: str = None
-        y_label: str = None
-        row: int = None
-        column: int = None
-        x_data: list = None
-        y_data: list = None
-        data_label: str = None
+        canvas0_title: str = None
+        canvas0_x_label: str = None
+        canvas0_y_label: str = None
+        canvas0_x_data: list = None
+        canvas0_y_data: list = None
+        canvas0_data_label: str = None
         crop_region: list = None
-        width: int = None
-        height: int = None
+        sensor_width: int = None
+        sensor_height: int = None
+        
+        canvas1_title: str = None
+        canvas1_x_label: str = None
+        canvas1_y_label: str = None
+        canvas1_x_data: list = None
+        canvas1_y_data: list = None
+        canvas1_data_label: str = None
+        monitor_width: int = None
+        monitor_height: int = None
     
     label_format_dict = TkinterStyle.label_format_dict
     entry_format_dict = TkinterStyle.entry_format_dict
@@ -45,12 +52,14 @@ class FOVSimWindow(tk.Toplevel):
         
         # Initialize canvas params.
         self.show_canvas_params = self.ShowCanvasParams()
-        self.show_canvas_params.x_label = 'Width'
-        self.show_canvas_params.y_label = 'Height'
-        self.show_canvas_params.title = 'Fov Sim'
-        self.show_canvas_params.row = 0
-        self.show_canvas_params.column = 0
-        
+        self.show_canvas_params.canvas0_x_label = 'Width'
+        self.show_canvas_params.canvas0_y_label = 'Height'
+        self.show_canvas_params.canvas0_title = 'Sensor'
+
+        self.show_canvas_params.canvas1_x_label = 'Width'
+        self.show_canvas_params.canvas1_y_label = 'Height'
+        self.show_canvas_params.canvas1_title = 'Monitor'
+
         self._init_setting_data()
         self._init_gui()
         self.protocol('WM_DELETE_WINDOW', self._onclose)
@@ -135,12 +144,38 @@ class FOVSimWindow(tk.Toplevel):
         LOGGER.debug(f'Done transforming regulation points from world into monitor coordinates. Data: {regulation_points_sensor_coordinates}\n')
         
         # Show canvas
-        self.show_canvas_params.width = data[self.config_model.Keys.SENSOR_PARAMS.value][0]
-        self.show_canvas_params.height = data[self.config_model.Keys.SENSOR_PARAMS.value][1]
+        # Sensor canvas.
+        self.show_canvas_params.sensor_width = data[self.config_model.Keys.SENSOR_PARAMS.value][0]
+        self.show_canvas_params.sensor_height = data[self.config_model.Keys.SENSOR_PARAMS.value][1]
         self.show_canvas_params.crop_region = data[self.config_model.Keys.CROP_REGION.value]
-        self.show_canvas_params.x_data = [point[0] for point in regulation_points_sensor_coordinates]
-        self.show_canvas_params.y_data = [point[1] for point in regulation_points_sensor_coordinates]
-        self.show_canvas_params.data_label = 'Regulation points'
+        self.show_canvas_params.canvas0_x_data = [point[0] for point in regulation_points_sensor_coordinates]
+        self.show_canvas_params.canvas0_y_data = [point[1] for point in regulation_points_sensor_coordinates]
+        self.show_canvas_params.canvas0_data_label = 'Regulation points'
+        
+        # Get monitor params.
+        regulation_points_sensor_coordinates_converted = []
+        for point in regulation_points_sensor_coordinates:
+            point_converted = self.controller.coordinates_transform(point, [0, 0], [self.show_canvas_params.crop_region[0], self.show_canvas_params.crop_region[1]])
+            if point_converted == self.controller.ReturnCode.DATA_TYPE_ERROR:
+                LOGGER.error('\nError when transforming regulation points!\n')
+                error_window = SelectionWindow(self)
+                error_window.set_label_text(f'Input data type error - A, B.')
+                return
+            
+            elif point_converted == self.controller.ReturnCode.DATA_VALUE_ERROR:
+                LOGGER.error('\nError when transforming regulation points!\n')
+                error_window = SelectionWindow(self)
+                error_window.set_label_text(f'Input data value error - length of A and B is not equal.')
+                return
+            
+            regulation_points_sensor_coordinates_converted.append(point_converted)
+        
+        # Monitor canvas.
+        self.show_canvas_params.monitor_width = data[self.config_model.Keys.MONITOR_PARAMS.value][0]
+        self.show_canvas_params.monitor_height = data[self.config_model.Keys.MONITOR_PARAMS.value][1]
+        self.show_canvas_params.canvas1_x_data = [point[0] for point in regulation_points_sensor_coordinates_converted]
+        self.show_canvas_params.canvas1_y_data = [point[1] for point in regulation_points_sensor_coordinates_converted]
+        self.show_canvas_params.canvas1_data_label = 'Regulation points'
         
         LOGGER.debug(f'Showing canvas. Data: {self.show_canvas_params}')
         
@@ -154,36 +189,63 @@ class FOVSimWindow(tk.Toplevel):
         """ 
         Show canvas
         """        
-        if params.title is None or params.x_label is None or params.y_label is None or params.row is None or params.column is None:
+        # Create Matplotlib figure.
+        fig = Figure(figsize=(10, 4), dpi=100)
+        
+        if params.canvas0_title is None or params.canvas0_x_label is None or params.canvas0_y_label is None:
             error_window = SelectionWindow(self)
-            error_window.set_label_text('Please set the title, xlabel, ylabel, row, column')
+            error_window.set_label_text('Please set the canvas0 title, xlabel, ylabel, row, column')
             return
         
-        # Create Matplotlib figure.
-        fig = Figure()
-        axes = fig.add_subplot(1, 1, 1)
-        axes.set_title(params.title)
-        axes.set_xlabel(params.x_label)
-        axes.set_ylabel(params.y_label)
-        axes.invert_yaxis()
+        # Sensor canvas.
+        axes_sensor = fig.add_subplot(1, 2, 1)
+        axes_sensor.set_title(params.canvas0_title)
+        axes_sensor.set_xlabel(params.canvas0_x_label)
+        axes_sensor.set_ylabel(params.canvas0_y_label)
+        axes_sensor.invert_yaxis()
 
-        if params.width and params.height:
-            axes.set_xlim(0, params.width)
-            axes.set_ylim(params.height, 0)
+        if params.sensor_width and params.sensor_height:
+            axes_sensor.set_xlim(0, params.sensor_width)
+            axes_sensor.set_ylim(params.sensor_height, 0)
         else:
-            LOGGER.debug('Width and height are not set.')
+            LOGGER.debug('Canvas0 Width and height are not set.')
         
         if params.crop_region:
             rect = Rectangle((params.crop_region[0], params.crop_region[1]), params.crop_region[2], params.crop_region[3], linewidth=1, edgecolor='r', facecolor='none')
-            axes.add_patch(rect)
+            axes_sensor.add_patch(rect)
         else:
             LOGGER.debug('Crop region is not set.')
         
-        if params.x_data and params.y_data and params.data_label:
-            axes.scatter(params.x_data, params.y_data, label=params.data_label)
-            axes.legend()
+        if params.canvas0_x_data and params.canvas0_y_data and params.canvas0_data_label:
+            axes_sensor.scatter(params.canvas0_x_data, params.canvas0_y_data, label=params.canvas0_data_label)
+            axes_sensor.legend()
         else:
-            LOGGER.debug('X data, Y data or data label is not set.')
+            LOGGER.debug('Canvas0 X data, Y data or data label is not set.')
+        
+        # Monitor canvas.
+        axes_monitor = fig.add_subplot(1, 2, 2)
+        
+        if params.canvas1_title is None or params.canvas1_x_label is None or params.canvas1_y_label is None:
+            error_window = SelectionWindow(self)
+            error_window.set_label_text('Please set the canvas1 title, xlabel, ylabel, row, column')
+            return
+        
+        axes_monitor.set_title(params.canvas1_title)
+        axes_monitor.set_xlabel(params.canvas1_x_label)
+        axes_monitor.set_ylabel(params.canvas1_y_label)
+        axes_monitor.invert_yaxis()
+        
+        if params.monitor_width and params.monitor_height:
+            axes_monitor.set_xlim(0, params.monitor_width)
+            axes_monitor.set_ylim(params.monitor_height, 0)
+        else:
+            LOGGER.debug('Canvas1 Width and height are not set.')
+
+        if params.canvas1_x_data and params.canvas1_y_data and params.canvas1_data_label:
+            axes_monitor.scatter(params.canvas1_x_data, params.canvas1_y_data, label=params.canvas1_data_label)
+            axes_monitor.legend()
+        else:
+            LOGGER.debug('Canvas1 X data, Y data or data label is not set.')
         
         # Bind figure to tkinter's canvas.
         canvas = FigureCanvasTkAgg(fig, master=self)

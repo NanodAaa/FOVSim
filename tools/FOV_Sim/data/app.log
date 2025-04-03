@@ -599,3 +599,399 @@ User clicked menu-run.
 2025-04-03 11:30:58,879 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
 
 2025-04-03 11:30:58,880 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(title='Fov Sim', x_label='Width', y_label='Height', row=0, column=0, x_data=[1499, 1502, 1490, 1503], y_data=[-652, -651, -628, -624], data_label='Regulation points', crop_region=[0, 0, 720, 540], width=1920, height=1536)
+2025-04-03 11:55:10,941 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 11:55:10,943 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 11:55:10,945 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 11:55:42,100 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 11:55:42,102 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 11:55:42,104 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 11:55:42,132 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 11:55:42,133 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 13:49:19,762 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 13:49:19,769 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 13:49:19,771 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 13:49:19,816 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 13:49:19,817 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 13:50:08,897 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 13:50:08,917 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 13:50:08,921 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 13:50:08,968 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 13:50:08,970 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 13:50:31,618 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 13:50:31,620 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 13:50:31,623 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 13:50:31,651 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 13:50:31,656 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 13:50:46,008 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 13:50:46,012 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 13:50:46,013 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 13:50:46,067 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 13:50:46,069 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 13:51:06,221 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 13:51:06,226 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 13:51:06,227 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 13:51:06,260 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 13:51:06,261 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 13:51:19,751 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 13:51:19,752 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 13:51:19,754 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 13:51:19,754 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 13:51:19,755 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 13:51:19,756 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 13:51:19,757 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 13:51:19,760 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 13:51:19,762 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_row=0, canvas0_column=0, canvas0_x_data=None, canvas0_y_data=None, canvas0_data_label=None, crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_row=0, canvas1_column=1, canvas1_x_data=None, canvas1_y_data=None, canvas1_data_label=None, monitor_width=None, monitor_height=None)
+2025-04-03 13:51:19,791 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 13:51:19,827 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 13:51:19,827 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 14:26:36,913 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 14:26:36,917 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 14:26:36,918 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 14:26:36,983 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 14:26:36,986 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 14:26:38,324 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:26:38,325 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:26:38,326 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:26:38,327 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:26:38,328 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:26:38,329 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:26:38,329 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:26:38,334 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:27:13,690 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 14:27:13,691 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 14:27:13,693 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 14:27:13,719 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 14:27:13,720 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 14:27:15,037 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:27:15,040 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:27:15,041 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:27:15,042 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:27:15,042 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:27:15,043 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:27:15,044 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:27:15,048 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:29:54,651 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 14:29:54,663 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 14:29:54,667 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 14:29:54,723 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 14:29:54,727 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 14:29:56,160 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:29:56,162 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:29:56,163 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:29:56,165 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:29:56,166 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:29:56,167 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:29:56,168 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:29:56,171 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:30:21,156 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 14:30:21,157 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 14:30:21,160 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 14:30:21,185 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 14:30:21,187 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 14:30:23,919 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:30:23,920 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:30:23,921 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:30:23,922 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:30:23,923 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:30:23,924 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:30:23,926 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:30:23,927 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:31:50,606 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 14:31:50,607 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 14:31:50,610 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 14:31:50,640 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 14:31:50,641 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 14:31:51,723 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:31:51,727 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:31:51,728 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:31:51,729 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:31:51,730 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:31:51,732 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:31:51,733 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:31:51,736 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:33:17,930 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 14:33:17,932 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 14:33:17,933 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 14:33:17,967 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 14:33:17,969 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 14:33:19,220 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:33:19,222 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:33:19,223 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:33:19,226 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:33:19,226 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:33:19,228 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:33:19,229 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:33:19,232 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:33:19,234 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:14,563 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:14,564 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:14,565 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:14,565 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:14,566 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:14,567 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:14,567 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:14,569 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:14,570 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:20,277 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:20,280 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:20,280 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:20,286 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:20,287 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:20,288 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:20,290 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:20,291 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:20,292 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:20,796 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:20,797 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:20,798 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:20,798 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:20,800 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:20,801 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:20,802 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:20,804 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:20,805 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:21,126 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:21,128 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:21,130 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:21,131 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:21,132 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:21,133 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:21,134 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:21,135 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:21,135 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:21,442 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:21,443 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:21,445 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:21,445 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:21,446 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:21,447 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:21,447 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:21,448 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:21,449 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:21,764 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:21,767 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:21,768 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:21,768 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:21,769 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:21,770 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:21,770 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:21,777 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:21,779 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:22,156 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:22,159 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:22,160 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:22,161 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:22,161 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:22,162 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:22,163 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:22,164 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:22,165 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:22,563 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:22,565 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:22,565 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:22,566 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:22,567 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:22,567 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:22,569 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:22,570 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:22,573 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:22,988 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:22,989 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:22,990 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:22,991 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:22,992 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:22,993 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:22,993 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:22,995 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:22,996 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:23,417 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:23,419 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:23,420 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:23,420 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:23,421 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:23,422 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:23,424 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:23,426 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:23,428 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:23,848 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:23,849 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:23,850 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:23,850 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:23,852 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:23,853 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:23,854 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:23,855 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:23,856 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:24,334 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:24,335 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:24,336 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:24,337 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:24,339 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:24,339 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:24,340 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:24,343 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:24,344 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:24,791 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:24,792 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:24,793 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:24,794 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:24,796 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:24,797 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:24,798 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:24,800 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:24,802 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:25,231 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:25,232 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:25,233 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:25,234 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:25,235 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:25,235 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:25,236 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:25,238 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:25,240 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
+2025-04-03 14:36:27,004 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-03 14:36:27,006 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-03 14:36:27,007 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-03 14:36:27,037 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-03 14:36:27,039 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-03 14:36:28,732 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-03 14:36:28,733 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [10.0, 100.0, 200.0], 'distance cam carbody': 10.0, 'distance cam ground': 100.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1920, 1536, 0.003], 'monitor params': [720, 540, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [0, 0, 720, 540]}
+
+2025-04-03 14:36:28,734 - DEBUG - logger.py:37 - Getting regulation points coordinates relative to E.P...
+2025-04-03 14:36:28,735 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -90.0, -300.0], [4, -91.0, -300.0], [30, -90.0, -300.0], [30, -95.0, -300.0]]
+
+2025-04-03 14:36:28,736 - DEBUG - logger.py:37 - Transforming regulation points from relative to E.P. into relative to camera...
+2025-04-03 14:36:28,736 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[-6.0, -190.0, -500.0], [-6.0, -191.0, -500.0], [20.0, -190.0, -500.0], [20.0, -195.0, -500.0]]
+
+2025-04-03 14:36:28,737 - DEBUG - logger.py:37 - Transforming regulation points from world into monitor coordinates...
+2025-04-03 14:36:28,739 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[1499, -652], [1502, -651], [1490, -628], [1503, -624]]
+
+2025-04-03 14:36:28,739 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[1499, 1502, 1490, 1503], canvas0_y_data=[-652, -651, -628, -624], canvas0_data_label='Regulation points', crop_region=[0, 0, 720, 540], sensor_width=1920, sensor_height=1536, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[1499, 1502, 1490, 1503], canvas1_y_data=[-652, -651, -628, -624], canvas1_data_label='Regulation points', monitor_width=720, monitor_height=540)
