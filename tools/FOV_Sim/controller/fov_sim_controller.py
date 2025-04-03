@@ -30,9 +30,24 @@ class FovSimController:
     def get_regulation_points_II_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
         """ 
         Get 4 regulation points relative to EP.
+        `camera_coordinates`: Camera coordinates relative to E.P. [x, y, z].    
+        `distance_camera_carbody`: Distance between camera and carbody. y.  
+        `distance_camera_ground`: Distance between camera and ground. z.  
+        Return list of 4 Points coordinates.  
+        Return DATA_TYPE_ERROR when input data type is error.  
+        Return DATA_VALUE_ERROR when input data value is error.  
         """
+        if not isinstance(camera_coordinates, list) or not isinstance(distance_camera_carbody, float) or not isinstance(distance_camera_ground, float):
+            LOGGER.error(f'Input data type error - camera_coordinates, distance_camera_carbody, distance_camera_ground. Data: {camera_coordinates}, {distance_camera_carbody}, {distance_camera_ground}.')
+            return self.ReturnCode.DATA_TYPE_ERROR
+        
+        if not len(camera_coordinates) == 3:
+            LOGGER.error(f'Input data value error - camera_coordinates should be a list of 3 elements. Data: {camera_coordinates}.')
+            return self.ReturnCode.DATA_VALUE_ERROR
+        
         regulation_points = self.cal_model.get_regulation_points_II(camera_coordinates, distance_camera_carbody, distance_camera_ground)
         if regulation_points == self.cal_model.ReturnCode.TYPE_ERROR:
+            LOGGER.error(f'Input data type error - camera_coordinates, distance_camera_carbody, distance_camera_ground. Data: {camera_coordinates}, {distance_camera_carbody}, {distance_camera_ground}.')
             return self.ReturnCode.DATA_TYPE_ERROR
 
         return regulation_points
@@ -42,17 +57,24 @@ class FovSimController:
         Transform regulation points from E.P. coordinates into camera coordinates.  
         `camera_coordinates`: Camera coordinates.  
         `regulation_points`: List of regulation points - [A, B, C, D]  
+        Return list of regulation points coordinates relative to camera.  
+        Return DATA_TYPE_ERROR when input data type is error.  
+        Return DATA_VALUE_ERROR when input data value is error.  
         """
         if not isinstance(camera_coordinates, list) or not isinstance(regulation_points, list):
+            LOGGER.error(f'Input data type error - camera_coordinates, regulation_points. Data: {camera_coordinates}, {regulation_points}.')
             return self.ReturnCode.DATA_TYPE_ERROR
         
+        # Transfroming regulation points from E.P. coordinates into camera coordinates.
         regulation_points_camera_coordinates = []
         for point in regulation_points:
             point_camera_coordinates = self.cal_model.coordinate_transform(camera_coordinates, point)
             if point_camera_coordinates == self.cal_model.ReturnCode.TYPE_ERROR: 
+                LOGGER.error(f'Input data type error - camera_coordinates, point. Data: {camera_coordinates}, {point}.')
                 return self.ReturnCode.DATA_TYPE_ERROR
+            
             elif point_camera_coordinates == self.cal_model.ReturnCode.VALUE_ERROR:
-                LOGGER.error('Input data value error - length of A and B is not equal.')
+                LOGGER.error(f'Input data value error - length of A and B is not equal. Data: {camera_coordinates}, {point}.')
                 return self.ReturnCode.DATA_VALUE_ERROR
             
             regulation_points_camera_coordinates.append(point_camera_coordinates)

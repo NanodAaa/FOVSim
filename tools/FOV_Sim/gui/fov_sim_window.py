@@ -42,6 +42,8 @@ class FOVSimWindow(tk.Toplevel):
         self.root = root
         self.config_model = ConfigModel()
         self.controller = FovSimController()
+        
+        # Initialize canvas params.
         self.show_canvas_params = self.ShowCanvasParams()
         self.show_canvas_params.x_label = 'Width'
         self.show_canvas_params.y_label = 'Height'
@@ -84,24 +86,53 @@ class FOVSimWindow(tk.Toplevel):
         """
         Run Fov simulation. 
         """
-        LOGGER.info('User clicked menu-run.')
+        LOGGER.info('\nUser clicked menu-run.\n')
         
         # Get regulation points.
         data = self.controller.read_data_from_json()
-        LOGGER.debug(f'Done getting data. Data: {data}')
+        LOGGER.debug(f'Done getting data. Data: {data}\n')
         
         # Getting regulation points coordinates relative to E.P.
+        LOGGER.debug('Getting regulation points coordinates relative to E.P...')
         regulation_points = self.controller.get_regulation_points_II_ep(data[self.config_model.Keys.CAMERA_POSITION.value], data[self.config_model.Keys.DISTANCE_CAM_CARBODY.value], data[self.config_model.Keys.DISTANCE_CAM_GROUND.value])
-        LOGGER.debug(f'Done getting regulation points. Points: {regulation_points}')
+        if regulation_points == self.controller.ReturnCode.DATA_TYPE_ERROR:
+            LOGGER.error('\nError when getting regulation points!\n')
+            error_window = SelectionWindow(self)
+            error_window.set_label_text('Input data type error - camera_coordinates, distance_camera_carbody, distance_camera_ground.')
+            return
         
-        # Transform regulation points from EP coordinates to Camera coordinates.
+        elif regulation_points == self.controller.ReturnCode.DATA_VALUE_ERROR:
+            LOGGER.error('\nError when getting regulation points!\n')
+            error_window = SelectionWindow(self)
+            error_window.set_label_text('Input data value error - camera_coordinates, distance_camera_carbody, distance_camera_ground.')
+            return
+        
+        LOGGER.debug(f'Done getting regulation points. Points: {regulation_points}\n')
+        
+        # Transform regulation points from relative to EP into relative to camera.
+        LOGGER.debug('Transforming regulation points from relative to E.P. into relative to camera...')
         regulation_points_camera_coordinates = self.controller.transfrom_regulation_points_into_cam_coordinates(data[self.config_model.Keys.CAMERA_POSITION.value], regulation_points)
-        LOGGER.debug(f'Done gettingb regulation points\' coordinates relative to camera. Data: {regulation_points_camera_coordinates}')
+        if regulation_points_camera_coordinates == self.controller.ReturnCode.DATA_TYPE_ERROR:
+            LOGGER.error('\nError when transforming regulation points!\n')
+            error_window = SelectionWindow(self)
+            error_window.set_label_text(f'Input data type error - camera_coordinates, regulation_points.')
+            return
+        
+        elif regulation_points_camera_coordinates == self.controller.ReturnCode.DATA_VALUE_ERROR:
+            LOGGER.error('\nError when transforming regulation points!\n')
+            error_window = SelectionWindow(self)
+            error_window.set_label_text(f'Input data value error - camera_coordinates should be a list of 3 elements.')
+            return
+        
+        LOGGER.debug(f'Done getting regulation points\' coordinates relative to camera. Data: {regulation_points_camera_coordinates}\n')
         
         # Applying World->Sensor transform to 'regulation_points_camera_coordinates'
-        data = self.controller.read_data_from_json()
+        LOGGER.debug('Transforming regulation points from world into monitor coordinates...')
+        
+        data = self.controller.read_data_from_json()    # Get data from json file.
+        
         regulation_points_sensor_coordinates = self.controller.regulation_points_world_sensor_transform(regulation_points_camera_coordinates, data[self.config_model.Keys.CAMERA_POSE.value], data[self.config_model.Keys.SENSOR_PARAMS.value], data[self.config_model.Keys.MONITOR_PARAMS.value], data[self.config_model.Keys.FITTING_FUNC_COEFS.value])
-        LOGGER.debug(f'Done transforming regulation points from world into monitor coordinates. Data: {regulation_points_sensor_coordinates}')
+        LOGGER.debug(f'Done transforming regulation points from world into monitor coordinates. Data: {regulation_points_sensor_coordinates}\n')
         
         # Show canvas
         self.show_canvas_params.width = data[self.config_model.Keys.SENSOR_PARAMS.value][0]
@@ -110,6 +141,8 @@ class FOVSimWindow(tk.Toplevel):
         self.show_canvas_params.x_data = [point[0] for point in regulation_points_sensor_coordinates]
         self.show_canvas_params.y_data = [point[1] for point in regulation_points_sensor_coordinates]
         self.show_canvas_params.data_label = 'Regulation points'
+        
+        LOGGER.debug(f'Showing canvas. Data: {self.show_canvas_params}')
         
         self._show_canvas(self.show_canvas_params)
         
