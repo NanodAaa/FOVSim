@@ -3,12 +3,14 @@ from ..models.config_model import ConfigModel
 from ..models.config_model import LOGGER
 from enum import Enum, auto
 from ..models.calculate_model import CalculateModel
+from cores import functions
 
 class FovSimController:
     class ReturnCode(Enum):
         OK = 0
         FILE_NOT_FOUND = auto()
         DATA_TYPE_ERROR = auto()
+        DATA_VALUE_ERROR = auto()
 
     def __init__(self):
         self.cal_model = CalculateModel()
@@ -25,11 +27,11 @@ class FovSimController:
             if self.json_save_model.create_empty_json_file(self.config_model.setting_filepath, self.config_model.default_setting) == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
                 return self.ReturnCode.FILE_NOT_FOUND
             
-    def get_regulation_points_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+    def get_regulation_points_II_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
         """ 
         Get 4 regulation points relative to EP.
         """
-        regulation_points = self.cal_model.get_regulation_points(camera_coordinates, distance_camera_carbody, distance_camera_ground)
+        regulation_points = self.cal_model.get_regulation_points_II(camera_coordinates, distance_camera_carbody, distance_camera_ground)
         if regulation_points == self.cal_model.ReturnCode.TYPE_ERROR:
             return self.ReturnCode.DATA_TYPE_ERROR
 
@@ -47,9 +49,44 @@ class FovSimController:
         regulation_points_camera_coordinates = []
         for point in regulation_points:
             point_camera_coordinates = self.cal_model.coordinate_transform(camera_coordinates, point)
+            if point_camera_coordinates == self.cal_model.ReturnCode.TYPE_ERROR: 
+                return self.ReturnCode.DATA_TYPE_ERROR
+            elif point_camera_coordinates == self.cal_model.ReturnCode.VALUE_ERROR:
+                LOGGER.error('Input data value error - length of A and B is not equal.')
+                return self.ReturnCode.DATA_VALUE_ERROR
+            
             regulation_points_camera_coordinates.append(point_camera_coordinates)
             
         return regulation_points_camera_coordinates
+        
+    def regulation_points_world_sensor_transform(self, regulation_points: list, camera_pose: list, sensor_params: list, monitor_params: list, fitting_func_coefs: list) -> list:
+        """ 
+        Transform regulation points which relative to camera into monitor coordinates.  
+        regulation_points: List of regulation points coordinates.  [A, B, C, D...]
+        """
+        # Make params from list into dict
+        camera_pose_dict = { 'pitch' : camera_pose[0], 'yaw' : camera_pose[1], 'roll' : camera_pose[2], }
+        sensor_params_dict = { 'width' : sensor_params[0], 'height' : sensor_params[1], 'pixel size' : sensor_params[2], }
+        monitor_params_dict = { 'width' : monitor_params[0], 'height' : monitor_params[1], 'pixel size' : monitor_params[2], }
+        fitting_func_coefs_dict = { 'x5' : fitting_func_coefs[0], 'x4' : fitting_func_coefs[1], 'x3' : fitting_func_coefs[2], 'x2' : fitting_func_coefs[3], 'x1' : fitting_func_coefs[4], 'x0' : fitting_func_coefs[5], }
+        
+        # Transform point from world into sensor coordinates.
+        regulation_points_sensor_pixel_coordinates = []
+        for point in regulation_points:
+            point = { 'x' : point[0], 'y' : point[1], 'z' : point[2], } # Point from list to dict
+            point_sensor_pixel = functions.world_sensor_transform(point, camera_pose_dict, sensor_params_dict, fitting_func_coefs_dict)['pixel coordinates']
+            point_sensor_pixel = [point_sensor_pixel['x'], point_sensor_pixel['y']]
+            regulation_points_sensor_pixel_coordinates.append(point_sensor_pixel)
+            
+        # Move points' original point from center to leftop.
+        regulation_points_sensor_pixel_coordinates_leftop = []
+        for point in regulation_points_sensor_pixel_coordinates:
+            point_converted = functions.move_orignal_point_center_to_leftop(point, sensor_params[0], sensor_params[1])
+            regulation_points_sensor_pixel_coordinates_leftop.append(point_converted)
+            
+        
+        
+        return regulation_points_sensor_pixel_coordinates_leftop
         
     def read_data_from_json(self) -> dict:
         """ 

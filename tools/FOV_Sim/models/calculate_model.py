@@ -7,7 +7,7 @@ class CalculateModel:
         TYPE_ERROR = auto()
         VALUE_ERROR = auto()
     
-    def get_regulation_points(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+    def get_regulation_points_II(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
         """
         Get coordinates of 4 regulation points relative to E.P.  
         `camera_coordinates': camera_coordinates relative to E.P.  
@@ -18,7 +18,7 @@ class CalculateModel:
             return self.ReturnCode.TYPE_ERROR
         
         z = -abs(camera_coordinates[2] + distance_camera_ground)
-        A = [4, -abs(camera_coordinates[1] - distance_camera_carbody), camera_coordinates[2], z]
+        A = [4, -abs(camera_coordinates[1] - distance_camera_carbody), z]
         B = [4, -(abs(camera_coordinates[1] - distance_camera_carbody) + 1), z]
         C = [30, -abs(camera_coordinates[1] - distance_camera_carbody), z]
         D = [30, -(abs(camera_coordinates[1] - distance_camera_carbody) + 5), z]
@@ -37,4 +37,3 @@ class CalculateModel:
         
         B_convert = [B[0] - A[0], B[1] - A[1], B[2] - A[2]]
         return B_convert
-        

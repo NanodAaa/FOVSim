@@ -1,1 +1,1 @@
-{"camera position": [321.0, 321.0, 123.0], "distance cam carbody": 123.0, "distance cam ground": 321.0}
+{"camera position": [10.0, 100.0, 200.0], "distance cam carbody": 10.0, "distance cam ground": 100.0, "camera pose": [0.0, 0.0, 0.0], "sensor params": [1920, 1536, 0.003], "monitor params": [720, 540, 0.1521], "fitting func coefs": [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], "fitting func coefs reverse": [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], "crop region": [0, 0, 720, 540]}

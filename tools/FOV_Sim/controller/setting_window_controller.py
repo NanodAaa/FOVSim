@@ -23,7 +23,7 @@ class SettingWindowController:
             return self.ReturnCode.FILE_NOT_FOUND
         
         # If data is empty or {} write default data.
-        if data is None or data == {}:
+        if data is None or data == {} or not isinstance(data, dict):
             result = self.json_save_model.save(filepath=self.config_model.setting_filepath, data=self.config_model.default_setting)
             if result == self.json_save_model.ReturnCode.DATA_TYPE_INVALID:
                 LOGGER.error('Error when write data into json! - Data type error')

@@ -178,3 +178,13 @@ def world_sensor_transform(world_coordinates: dict, camera_pose: dict, sensor_pa
     data['pixel coordinates'] = { 'x' : x_p, 'y' : y_p, }
     
     return data
+
+def move_orignal_point_center_to_leftop(point: list, width: int, height: int) -> list:
+    """ 
+    Move point coordinate original point from center to lefttop.  
+    """
+    if not isinstance(point, list) or not isinstance(width, int) or not isinstance(height, int):
+        return -1
+    
+    point_converted = [point[0] + int(width / 2), point[1] + int(height / 2)]
+    return point_converted
