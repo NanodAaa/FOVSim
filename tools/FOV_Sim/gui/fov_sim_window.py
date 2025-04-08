@@ -9,6 +9,9 @@ from matplotlib.figure import Figure
 from dataclasses import dataclass
 from ..models.config_model import ConfigModel
 from matplotlib.patches import Rectangle
+from ..gui.edit_simulation_points_window import EditSimulationPointsWindow
+from tkinter import ttk
+from enum import Enum, auto
 
 class FOVSimWindow(tk.Toplevel):
     @dataclass
@@ -42,6 +45,10 @@ class FOVSimWindow(tk.Toplevel):
     
     canvas_position_dict = {
         'row' : 0, 'column' : 0,
+    }
+    
+    result_table_position_dict = {
+        'row' : 1, 'column' : 0,
     }
     
     def __init__(self, root: tk.Tk):
@@ -80,6 +87,7 @@ class FOVSimWindow(tk.Toplevel):
         # Menu - Tools
         self.tools_menu = tk.Menu(self.menu, tearoff=0)
         self.tools_menu.add_command(label='Settings', command=self._onclick_menu_tools_settings)
+        self.tools_menu.add_command(label='Edit simulation points', command=self._onclick_menu_tools_edit_simulation_points)
         self.menu.add_cascade(label='Tools', menu=self.tools_menu)
         
         self.config(menu=self.menu)
@@ -88,8 +96,23 @@ class FOVSimWindow(tk.Toplevel):
         # Create Matplotlib figure.
         self._show_canvas(self.show_canvas_params)
         
+        self._init_result_table()
+        
+    def _init_result_table(self):
+        self.result_table = ttk.Treeview(self, columns=self.config_model.result_table_column, show='headings')
+        
+        for column in self.config_model.result_table_column:
+            self.result_table.heading(column, text=column)
+            self.result_table.column(column, anchor=self.config_model.table_format_dict[self.config_model.TableFormatKeys.ANCHOR.value], width=self.config_model.table_format_dict[self.config_model.TableFormatKeys.WIDTH.value])
+        
+        self.result_table.grid(row=self.result_table_position_dict['row'], column=self.result_table_position_dict['column'], sticky=self.config_model.table_format_dict[self.config_model.TableFormatKeys.STICKY.value])
+        
+        
     def _onclick_menu_tools_settings(self):
         setting_window = SettingWindow(self)
+    
+    def _onclick_menu_tools_edit_simulation_points(self):
+        edit_simulation_points_window = EditSimulationPointsWindow(self)
     
     def _onclick_menu_run(self):
         """
@@ -153,6 +176,7 @@ class FOVSimWindow(tk.Toplevel):
         self.show_canvas_params.canvas0_data_label = 'Regulation points'
         
         # Get monitor params.
+        # Getting coordinates after transforming original point into new original point.
         regulation_points_sensor_coordinates_converted = []
         for point in regulation_points_sensor_coordinates:
             point_converted = self.controller.coordinates_transform(point, [0, 0], [self.show_canvas_params.crop_region[0], self.show_canvas_params.crop_region[1]])
@@ -170,16 +194,56 @@ class FOVSimWindow(tk.Toplevel):
             
             regulation_points_sensor_coordinates_converted.append(point_converted)
         
+        # Getting monitor params by converting coordinates from sensor size to monitor size.
+        regulation_points_monitor_coordinates = []
+        for point in regulation_points_sensor_coordinates_converted:
+            point_converted = self.controller.sensor_monitor_transform(point, data[self.config_model.Keys.SENSOR_PARAMS.value], data[self.config_model.Keys.MONITOR_PARAMS.value])
+            if point_converted == self.controller.ReturnCode.DATA_TYPE_ERROR:
+                LOGGER.error('\nError when transforming regulation points!\n')
+                error_window = SelectionWindow(self)
+                error_window.set_label_text(f'Input data type error - A, B.')
+                return
+            
+            elif point_converted == self.controller.ReturnCode.DATA_VALUE_ERROR:
+                LOGGER.error('\nError when transforming regulation points!\n')
+                error_window = SelectionWindow(self)
+                error_window.set_label_text(f'Input data value error - length of A and B is not equal.')
+                return
+            
+            regulation_points_monitor_coordinates.append(point_converted)
+        
         # Monitor canvas.
         self.show_canvas_params.monitor_width = data[self.config_model.Keys.MONITOR_PARAMS.value][0]
         self.show_canvas_params.monitor_height = data[self.config_model.Keys.MONITOR_PARAMS.value][1]
-        self.show_canvas_params.canvas1_x_data = [point[0] for point in regulation_points_sensor_coordinates_converted]
-        self.show_canvas_params.canvas1_y_data = [point[1] for point in regulation_points_sensor_coordinates_converted]
+        self.show_canvas_params.canvas1_x_data = [point[0] for point in regulation_points_monitor_coordinates]
+        self.show_canvas_params.canvas1_y_data = [point[1] for point in regulation_points_monitor_coordinates]
         self.show_canvas_params.canvas1_data_label = 'Regulation points'
         
         LOGGER.debug(f'Showing canvas. Data: {self.show_canvas_params}')
         
         self._show_canvas(self.show_canvas_params)
+        
+        # Update result table.
+        points_name = ['A', 'B', 'C', 'D']
+        for index in range(0, 4):
+            if regulation_points_sensor_coordinates[index][0] in range(data[self.config_model.Keys.CROP_REGION.value][0], data[self.config_model.Keys.CROP_REGION.value][0] + data[self.config_model.Keys.CROP_REGION.value][2]) and regulation_points_sensor_coordinates[index][1] in range(data[self.config_model.Keys.CROP_REGION.value][1], data[self.config_model.Keys.CROP_REGION.value][1] + data[self.config_model.Keys.CROP_REGION.value][3]):
+                result = 'OK'
+            else:
+                result = 'NG'
+
+            values = []
+            values.append(regulation_points_camera_coordinates[index][0]) # X_mm
+            values.append(regulation_points_camera_coordinates[index][1]) # Y_mm
+            values.append(regulation_points_camera_coordinates[index][2]) # Z_mm
+            values.append(regulation_points_sensor_coordinates_converted[index][0]) # Sensor_x
+            values.append(regulation_points_sensor_coordinates_converted[index][1]) # Sensor_y
+            values.append(regulation_points_monitor_coordinates[index][0]) # Monitor_x
+            values.append(regulation_points_monitor_coordinates[index][1]) # Monitor_y
+            values.append(points_name[index]) # Name
+            values.append(result) # Result
+            
+            self.result_table.insert('', 'end', values=values)
+        
         
     def _onclose(self):
         self.destroy()

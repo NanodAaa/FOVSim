@@ -1,0 +1,4 @@
+
+
+class EditSimulationPointsWindowController:
+    pass

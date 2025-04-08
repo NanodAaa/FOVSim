@@ -54,3 +54,15 @@ class CalculateModel:
         ]
 
         return point_convert        
+    
+    def sensor_monitor_transform(self, sensor_coordinates_pixel: list, sensor_params: list, monitor_params: list):
+        """
+        Sensor coordinates transform to monitor coordinate, Pixel.  
+        `sensor_coordinates_pixel`: [x, y, z]
+        `sensor_params`: [witdh, height, pixel size]
+        `monitor_params`: [width, height, pixel size]  
+        """
+        x_m = int(sensor_coordinates_pixel[0] * monitor_params[0] / sensor_params[0])
+        y_m = int(sensor_coordinates_pixel[1] * monitor_params[1] / sensor_params[1])
+        
+        return [x_m, y_m]

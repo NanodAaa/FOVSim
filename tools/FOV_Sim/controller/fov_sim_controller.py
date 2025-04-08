@@ -151,3 +151,20 @@ class FovSimController:
             return self.ReturnCode.DATA_VALUE_ERROR
         
         return data
+    
+    def sensor_monitor_transform(self, sensor_coordinates_pixel: list, sensor_params: list, monitor_params: list):
+        """
+        Sensor coordinates transform to monitor coordinate, Pixel.  
+        `sensor_coordinates_pixel`: [x, y, z]
+        `sensor_params`: [witdh, height, pixel size]
+        `monitor_params`: [width, height, pixel size]  
+        """
+        data = self.cal_model.sensor_monitor_transform(sensor_coordinates_pixel, sensor_params, monitor_params)
+        if data == self.cal_model.ReturnCode.TYPE_ERROR:
+            LOGGER.error(f'Input data type error - sensor_coordinates_pixel, sensor_params, monitor_params. Data: {sensor_coordinates_pixel}, {sensor_params}, {monitor_params}.')
+            return self.ReturnCode.DATA_TYPE_ERROR
+        elif data == self.cal_model.ReturnCode.VALUE_ERROR:
+            LOGGER.error(f'Input data value error - length of sensor_coordinates_pixel, sensor_params, monitor_params is not equal. Data: {sensor_coordinates_pixel}, {sensor_params}, {monitor_params}.')
+            return self.ReturnCode.DATA_VALUE_ERROR
+        
+        return data
