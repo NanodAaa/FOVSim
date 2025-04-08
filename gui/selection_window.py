@@ -6,6 +6,12 @@ from enum import Enum, auto
 
 class SelectionWindow(tk.Toplevel):
     """ 
+    Create a selection window with two buttons and a label.  
+    The window is modal and will wait for user input before proceeding.  
+    When user clicks a button, the window will close and return the button status.  
+    class ButtonStatus(Enum):
+        LEFT = auto()
+        RIGHT = auto()
     """
     class ButtonStatus(Enum):
         LEFT = auto()
