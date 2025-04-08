@@ -120,7 +120,6 @@ class FOVSimWindow(tk.Toplevel):
         """
         LOGGER.info('\nUser clicked menu-run.\n')
         
-        # Get regulation points.
         data = self.controller.read_data_from_json()
         LOGGER.debug(f'Done getting data. Data: {data}\n')
         
@@ -194,7 +193,7 @@ class FOVSimWindow(tk.Toplevel):
             
             regulation_points_sensor_coordinates_converted.append(point_converted)
         
-        # Getting monitor params by converting coordinates from sensor size to monitor size.
+        """ # Getting monitor params by converting coordinates from sensor size to monitor size.
         regulation_points_monitor_coordinates = []
         for point in regulation_points_sensor_coordinates_converted:
             point_converted = self.controller.sensor_monitor_transform(point, data[self.config_model.Keys.SENSOR_PARAMS.value], data[self.config_model.Keys.MONITOR_PARAMS.value])
@@ -211,12 +210,12 @@ class FOVSimWindow(tk.Toplevel):
                 return
             
             regulation_points_monitor_coordinates.append(point_converted)
-        
+         """
         # Monitor canvas.
         self.show_canvas_params.monitor_width = data[self.config_model.Keys.MONITOR_PARAMS.value][0]
         self.show_canvas_params.monitor_height = data[self.config_model.Keys.MONITOR_PARAMS.value][1]
-        self.show_canvas_params.canvas1_x_data = [point[0] for point in regulation_points_monitor_coordinates]
-        self.show_canvas_params.canvas1_y_data = [point[1] for point in regulation_points_monitor_coordinates]
+        self.show_canvas_params.canvas1_x_data = [point[0] for point in regulation_points_sensor_coordinates_converted]
+        self.show_canvas_params.canvas1_y_data = [point[1] for point in regulation_points_sensor_coordinates_converted]
         self.show_canvas_params.canvas1_data_label = 'Regulation points'
         
         LOGGER.debug(f'Showing canvas. Data: {self.show_canvas_params}')
@@ -225,6 +224,8 @@ class FOVSimWindow(tk.Toplevel):
         
         # Update result table.
         points_name = ['A', 'B', 'C', 'D']
+        
+        self._clear_result_table()
         for index in range(0, 4):
             if regulation_points_sensor_coordinates[index][0] in range(data[self.config_model.Keys.CROP_REGION.value][0], data[self.config_model.Keys.CROP_REGION.value][0] + data[self.config_model.Keys.CROP_REGION.value][2]) and regulation_points_sensor_coordinates[index][1] in range(data[self.config_model.Keys.CROP_REGION.value][1], data[self.config_model.Keys.CROP_REGION.value][1] + data[self.config_model.Keys.CROP_REGION.value][3]):
                 result = 'OK'
@@ -235,10 +236,10 @@ class FOVSimWindow(tk.Toplevel):
             values.append(regulation_points_camera_coordinates[index][0]) # X_mm
             values.append(regulation_points_camera_coordinates[index][1]) # Y_mm
             values.append(regulation_points_camera_coordinates[index][2]) # Z_mm
-            values.append(regulation_points_sensor_coordinates_converted[index][0]) # Sensor_x
-            values.append(regulation_points_sensor_coordinates_converted[index][1]) # Sensor_y
-            values.append(regulation_points_monitor_coordinates[index][0]) # Monitor_x
-            values.append(regulation_points_monitor_coordinates[index][1]) # Monitor_y
+            values.append(regulation_points_sensor_coordinates[index][0]) # Sensor_x
+            values.append(regulation_points_sensor_coordinates[index][1]) # Sensor_y
+            values.append(regulation_points_sensor_coordinates_converted[index][0]) # Monitor_x
+            values.append(regulation_points_sensor_coordinates_converted[index][1]) # Monitor_y
             values.append(points_name[index]) # Name
             values.append(result) # Result
             
@@ -315,3 +316,10 @@ class FOVSimWindow(tk.Toplevel):
         canvas = FigureCanvasTkAgg(fig, master=self)
         canvas.draw()
         canvas.get_tk_widget().grid(row=self.canvas_position_dict['row'], column=self.canvas_position_dict['column'])        
+
+    def _clear_result_table(self):
+        """ 
+        Clear result table.
+        """
+        for item in self.result_table.get_children():
+            self.result_table.delete(item)
