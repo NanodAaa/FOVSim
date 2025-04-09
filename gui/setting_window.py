@@ -7,6 +7,7 @@ from controller.setting_window_controller import SettingWindowController
 from gui.selection_window import SelectionWindow
 from models.config_model import ConfigModel
 from models.config_model import LOGGER
+from gui.help_window import HelpWindow
 
 class SettingWindow(tk.Toplevel):    
     label_format_dict = TkinterStyle.label_format_dict
@@ -58,144 +59,145 @@ class SettingWindow(tk.Toplevel):
         
         self.title('Settings')
         self._init_gui()
-#        self.grab_set()        # Set Modal
-#        self.wait_window()
+        #self._set_modal()
         
     def _init_setting_data(self):
         self.swc.init_setting_data()
+        
     def _init_gui(self):
         # Menu
         self.menu = tk.Menu(self)
         self.menu.add_command(label='Save', command=self._onclick_menu_save)    
         self.menu.add_command(label='Reset', command=self._onclick_menu_reset)
+        self.menu.add_command(label='Help', command=self._onclick_menu_help)
     
         self.config(menu=self.menu)
         
         # Camera coordinates relative to E.P.
-        self.camera_position_label = tk.Label(self, text='Camera position', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.camera_position_label.grid(row=self.camera_position_widgets_position_dict['label']['row'], column=self.camera_position_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        self.camera_position_label = self._create_description_label('Cam Position: ')
+        self._grid_description_label(self.camera_position_label, **self.camera_position_widgets_position_dict['label'])
         
-        self.camera_position_x_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.camera_position_x_entry.grid(row=self.camera_position_widgets_position_dict['x entry']['row'], column=self.camera_position_widgets_position_dict['x entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.camera_position_x_entry = self._create_entry()
+        self._grid_entry(self.camera_position_x_entry, **self.camera_position_widgets_position_dict['x entry'])
         
-        self.camera_position_y_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.camera_position_y_entry.grid(row=self.camera_position_widgets_position_dict['y entry']['row'], column=self.camera_position_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.camera_position_y_entry = self._create_entry()
+        self._grid_entry(self.camera_position_y_entry, **self.camera_position_widgets_position_dict['y entry'])
         
-        self.camera_position_z_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.camera_position_z_entry.grid(row=self.camera_position_widgets_position_dict['z entry']['row'], column=self.camera_position_widgets_position_dict['z entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.camera_position_z_entry = self._create_entry()
+        self._grid_entry(self.camera_position_z_entry, **self.camera_position_widgets_position_dict['z entry'])
 
         # Distance between camera & car body.
-        self.distance_cam_carbody_label = tk.Label(self, text='Cam-CarBody', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.distance_cam_carbody_label.grid(row=self.distance_cam_carbody_position_dict['label']['row'], column=self.distance_cam_carbody_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        self.distance_cam_carbody_label = self._create_description_label('Cam-Carbody: ')
+        self._grid_description_label(self.distance_cam_carbody_label, **self.distance_cam_carbody_position_dict['label'])
         
-        self.distance_cam_carbody_y_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.distance_cam_carbody_y_entry.grid(row=self.distance_cam_carbody_position_dict['y entry']['row'], column=self.distance_cam_carbody_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.distance_cam_carbody_y_entry = self._create_entry()
+        self._grid_entry(self.distance_cam_carbody_y_entry, **self.distance_cam_carbody_position_dict['y entry'])
 
         # Distance between camera & ground.
-        self.distance_cam_ground_label = tk.Label(self, text='Cam-Ground', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.distance_cam_ground_label.grid(row=self.distance_cam_ground_position_dict['label']['row'], column=self.distance_cam_ground_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        self.distance_cam_ground_label = self._create_description_label('Cam-Ground: ')
+        self._grid_description_label(self.distance_cam_ground_label, **self.distance_cam_ground_position_dict['label'])
         
-        self.distance_cam_ground_z_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.distance_cam_ground_z_entry.grid(row=self.distance_cam_ground_position_dict['y entry']['row'], column=self.distance_cam_ground_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.distance_cam_ground_z_entry = self._create_entry()
+        self._grid_entry(self.distance_cam_ground_z_entry, **self.distance_cam_ground_position_dict['y entry'])
 
         # Camera Pose
-        self.camera_pose_label = tk.Label(self, text='Pose(PYR): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.camera_pose_label.grid(row=self.camera_pose_widgets_position_dict['label']['row'], column=self.camera_pose_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        self.camera_pose_label = self._create_description_label('Camera Pose: ')
+        self._grid_description_label(self.camera_pose_label, **self.camera_pose_widgets_position_dict['label'])
         
-        self.camera_pose_pitch_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.camera_pose_pitch_entry.grid(row=self.camera_pose_widgets_position_dict['pitch entry']['row'], column=self.camera_pose_widgets_position_dict['pitch entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.camera_pose_pitch_entry = self._create_entry()
+        self._grid_entry(self.camera_pose_pitch_entry, **self.camera_pose_widgets_position_dict['pitch entry'])
                
-        self.camera_pose_yaw_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.camera_pose_yaw_entry.grid(row=self.camera_pose_widgets_position_dict['yaw entry']['row'], column=self.camera_pose_widgets_position_dict['yaw entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.camera_pose_yaw_entry = self._create_entry()
+        self._grid_entry(self.camera_pose_yaw_entry, **self.camera_pose_widgets_position_dict['yaw entry'])
         
-        self.camera_pose_roll_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.camera_pose_roll_entry.grid(row=self.camera_pose_widgets_position_dict['roll entry']['row'], column=self.camera_pose_widgets_position_dict['roll entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.camera_pose_roll_entry = self._create_entry()
+        self._grid_entry(self.camera_pose_roll_entry, **self.camera_pose_widgets_position_dict['roll entry'])
         
         # Fitting Function Coefficients
-        self.fitting_func_coefs_label = tk.Label(self, text='FitCoe(X5>0): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.fitting_func_coefs_label.grid(row=self.fitting_func_coefs_widgets_position_dict['label']['row'], column=self.fitting_func_coefs_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        self.fitting_func_coefs_label = self._create_description_label('FitCoe: ')
+        self._grid_description_label(self.fitting_func_coefs_label, **self.fitting_func_coefs_widgets_position_dict['label'])
         
-        self.fitting_func_coefs_x5_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_x5_entry.grid(row=self.fitting_func_coefs_widgets_position_dict['x5 entry']['row'], column=self.fitting_func_coefs_widgets_position_dict['x5 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])        
+        self.fitting_func_coefs_x5_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_x5_entry, **self.fitting_func_coefs_widgets_position_dict['x5 entry'])
         
-        self.fitting_func_coefs_x4_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_x4_entry.grid(row=self.fitting_func_coefs_widgets_position_dict['x4 entry']['row'], column=self.fitting_func_coefs_widgets_position_dict['x4 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])       
+        self.fitting_func_coefs_x4_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_x4_entry, **self.fitting_func_coefs_widgets_position_dict['x4 entry'])
         
-        self.fitting_func_coefs_x3_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_x3_entry.grid(row=self.fitting_func_coefs_widgets_position_dict['x3 entry']['row'], column=self.fitting_func_coefs_widgets_position_dict['x3 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.fitting_func_coefs_x3_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_x3_entry, **self.fitting_func_coefs_widgets_position_dict['x3 entry'])
         
-        self.fitting_func_coefs_x2_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_x2_entry.grid(row=self.fitting_func_coefs_widgets_position_dict['x2 entry']['row'], column=self.fitting_func_coefs_widgets_position_dict['x2 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.fitting_func_coefs_x2_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_x2_entry, **self.fitting_func_coefs_widgets_position_dict['x2 entry'])
         
-        self.fitting_func_coefs_x1_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_x1_entry.grid(row=self.fitting_func_coefs_widgets_position_dict['x1 entry']['row'], column=self.fitting_func_coefs_widgets_position_dict['x1 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.fitting_func_coefs_x1_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_x1_entry, **self.fitting_func_coefs_widgets_position_dict['x1 entry'])
         
-        self.fitting_func_coefs_x0_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_x0_entry.grid(row=self.fitting_func_coefs_widgets_position_dict['x0 entry']['row'], column=self.fitting_func_coefs_widgets_position_dict['x0 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.fitting_func_coefs_x0_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_x0_entry, **self.fitting_func_coefs_widgets_position_dict['x0 entry'])
         
         # Fitting Function Coefficients Reverse
-        self.fitting_func_coefs_reverse_label = tk.Label(self, text='FitCoeR(X5>0): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.fitting_func_coefs_reverse_label.grid(row=self.fitting_func_coefs_reverse_widgets_position_dict['label']['row'], column=self.fitting_func_coefs_reverse_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        self.fitting_func_coefs_reverse_label = self._create_description_label('FitCoeR: ')
+        self._grid_description_label(self.fitting_func_coefs_reverse_label, **self.fitting_func_coefs_reverse_widgets_position_dict['label'])
         
-        self.fitting_func_coefs_reverse_x5_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_reverse_x5_entry.grid(row=self.fitting_func_coefs_reverse_widgets_position_dict['x5 entry']['row'], column=self.fitting_func_coefs_reverse_widgets_position_dict['x5 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.fitting_func_coefs_reverse_x5_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_reverse_x5_entry, **self.fitting_func_coefs_reverse_widgets_position_dict['x5 entry'])
         
-        self.fitting_func_coefs_reverse_x4_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_reverse_x4_entry.grid(row=self.fitting_func_coefs_reverse_widgets_position_dict['x4 entry']['row'], column=self.fitting_func_coefs_reverse_widgets_position_dict['x4 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.fitting_func_coefs_reverse_x4_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_reverse_x4_entry, **self.fitting_func_coefs_reverse_widgets_position_dict['x4 entry'])
         
-        self.fitting_func_coefs_reverse_x3_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_reverse_x3_entry.grid(row=self.fitting_func_coefs_reverse_widgets_position_dict['x3 entry']['row'], column=self.fitting_func_coefs_reverse_widgets_position_dict['x3 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.fitting_func_coefs_reverse_x3_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_reverse_x3_entry, **self.fitting_func_coefs_reverse_widgets_position_dict['x3 entry'])
         
-        self.fitting_func_coefs_reverse_x2_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_reverse_x2_entry.grid(row=self.fitting_func_coefs_reverse_widgets_position_dict['x2 entry']['row'], column=self.fitting_func_coefs_reverse_widgets_position_dict['x2 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.fitting_func_coefs_reverse_x2_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_reverse_x2_entry, **self.fitting_func_coefs_reverse_widgets_position_dict['x2 entry'])
         
-        self.fitting_func_coefs_reverse_x1_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_reverse_x1_entry.grid(row=self.fitting_func_coefs_reverse_widgets_position_dict['x1 entry']['row'], column=self.fitting_func_coefs_reverse_widgets_position_dict['x1 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.fitting_func_coefs_reverse_x1_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_reverse_x1_entry, **self.fitting_func_coefs_reverse_widgets_position_dict['x1 entry'])
         
-        self.fitting_func_coefs_reverse_x0_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.fitting_func_coefs_reverse_x0_entry.grid(row=self.fitting_func_coefs_reverse_widgets_position_dict['x0 entry']['row'], column=self.fitting_func_coefs_reverse_widgets_position_dict['x0 entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.fitting_func_coefs_reverse_x0_entry = self._create_entry()
+        self._grid_entry(self.fitting_func_coefs_reverse_x0_entry, **self.fitting_func_coefs_reverse_widgets_position_dict['x0 entry'])
         
         # Sensor Params
-        self.sensor_params_label = tk.Label(self, text='SenPrms(WHP): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.sensor_params_label.grid(row=self.sensor_params_widgets_position_dict['label']['row'], column=self.sensor_params_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        self.sensor_params_label = self._create_description_label('SensorPrms: ')
+        self._grid_description_label(self.sensor_params_label, **self.sensor_params_widgets_position_dict['label'])
         
-        self.sensor_params_width_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.sensor_params_width_entry.grid(row=self.sensor_params_widgets_position_dict['width entry']['row'], column=self.sensor_params_widgets_position_dict['width entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.sensor_params_width_entry = self._create_entry()
+        self._grid_entry(self.sensor_params_width_entry, **self.sensor_params_widgets_position_dict['width entry'])
         
-        self.sensor_params_height_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.sensor_params_height_entry.grid(row=self.sensor_params_widgets_position_dict['height entry']['row'], column=self.sensor_params_widgets_position_dict['height entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.sensor_params_height_entry = self._create_entry()
+        self._grid_entry(self.sensor_params_height_entry, **self.sensor_params_widgets_position_dict['height entry'])
         
-        self.sensor_params_pixel_size_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.sensor_params_pixel_size_entry.grid(row=self.sensor_params_widgets_position_dict['pixel size entry']['row'], column=self.sensor_params_widgets_position_dict['pixel size entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.sensor_params_pixel_size_entry = self._create_entry()
+        self._grid_entry(self.sensor_params_pixel_size_entry, **self.sensor_params_widgets_position_dict['pixel size entry'])
             
         # Monitor Params
-        self.monitor_params_label = tk.Label(self, text='MonPrms(WHP): ', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.monitor_params_label.grid(row=self.monitor_params_widgets_position_dict['label']['row'], column=self.monitor_params_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        self.monitor_params_label = self._create_description_label('MonitorPrms: ')
+        self._grid_description_label(self.monitor_params_label, **self.monitor_params_widgets_position_dict['label'])
         
-        self.monitor_params_width_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.monitor_params_width_entry.grid(row=self.monitor_params_widgets_position_dict['width entry']['row'], column=self.monitor_params_widgets_position_dict['width entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.monitor_params_width_entry = self._create_entry()
+        self._grid_entry(self.monitor_params_width_entry, **self.monitor_params_widgets_position_dict['width entry'])
         
-        self.monitor_params_height_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.monitor_params_height_entry.grid(row=self.monitor_params_widgets_position_dict['height entry']['row'], column=self.monitor_params_widgets_position_dict['height entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.monitor_params_height_entry = self._create_entry()
+        self._grid_entry(self.monitor_params_height_entry, **self.monitor_params_widgets_position_dict['height entry'])
         
-        self.monitor_params_pixel_size_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.monitor_params_pixel_size_entry.grid(row=self.monitor_params_widgets_position_dict['pixel size entry']['row'], column=self.monitor_params_widgets_position_dict['pixel size entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.monitor_params_pixel_size_entry = self._create_entry()
+        self._grid_entry(self.monitor_params_pixel_size_entry, **self.monitor_params_widgets_position_dict['pixel size entry'])
 
         # Crop Region
-        self.crop_region_label = tk.Label(self, text='Crop Region', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
-        self.crop_region_label.grid(row=self.crop_region_widgets_position_dict['label']['row'], column=self.crop_region_widgets_position_dict['label']['column'], padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
+        self.crop_region_label = self._create_description_label('Crop Region: ')
+        self._grid_description_label(self.crop_region_label, **self.crop_region_widgets_position_dict['label'])
         
-        self.crop_region_x_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.crop_region_x_entry.grid(row=self.crop_region_widgets_position_dict['x entry']['row'], column=self.crop_region_widgets_position_dict['x entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.crop_region_x_entry = self._create_entry()
+        self._grid_entry(self.crop_region_x_entry, **self.crop_region_widgets_position_dict['x entry']) 
         
-        self.crop_region_y_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.crop_region_y_entry.grid(row=self.crop_region_widgets_position_dict['y entry']['row'], column=self.crop_region_widgets_position_dict['y entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.crop_region_y_entry = self._create_entry()
+        self._grid_entry(self.crop_region_y_entry, **self.crop_region_widgets_position_dict['y entry'])
         
-        self.crop_region_width_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.crop_region_width_entry.grid(row=self.crop_region_widgets_position_dict['width entry']['row'], column=self.crop_region_widgets_position_dict['width entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.crop_region_width_entry = self._create_entry()
+        self._grid_entry(self.crop_region_width_entry, **self.crop_region_widgets_position_dict['width entry'])
         
-        self.crop_region_height_entry = tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'])
-        self.crop_region_height_entry.grid(row=self.crop_region_widgets_position_dict['height entry']['row'], column=self.crop_region_widgets_position_dict['height entry']['column'], padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'])
+        self.crop_region_height_entry = self._create_entry()
+        self._grid_entry(self.crop_region_height_entry, **self.crop_region_widgets_position_dict['height entry'])
 
         self._refresh_entrys()
         
@@ -356,3 +358,30 @@ class SettingWindow(tk.Toplevel):
             self.crop_region_height_entry.insert(0, data[key][3])
         else:
             LOGGER.warning(f'The key "{key}" is missing in the json file, the refresh process of these entrys is skipped.')
+            
+    def _set_modal(self):
+        """
+        Set the window as modal.
+        """
+        self.grab_set()
+        self.wait_window()
+        
+    def _onclick_menu_help(self):
+        """
+        Open help window.
+        """
+        LOGGER.info('User clicked menu-help')
+        help_window = HelpWindow(self)
+        help_window.set_modal()
+        
+    def _create_description_label(self, text: str, **kwargs) -> tk.Label:
+        return tk.Label(self, text=text, font=self.label_format_dict['font'], width=self.label_format_dict['width'], anchor='e',**kwargs)
+    
+    def _grid_description_label(self, label: tk.Label, row: int, column: int, **kwargs) -> None:
+        label.grid(row=row, column=column, padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'], **kwargs)
+    
+    def _create_entry(self, **kwargs) -> tk.Entry:
+        return tk.Entry(self, font=self.entry_format_dict['font'], width=self.entry_format_dict['width'], **kwargs)
+    
+    def _grid_entry(self, entry: tk.Entry, row: int, column: int, **kwargs) -> None:
+        entry.grid(row=row, column=column, padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'], **kwargs)

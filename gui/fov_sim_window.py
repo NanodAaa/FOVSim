@@ -104,7 +104,6 @@ class FOVSimWindow(tk.Tk):
         
         self.result_table.grid(row=self.result_table_position_dict['row'], column=self.result_table_position_dict['column'], sticky=self.config_model.table_format_dict[self.config_model.TableFormatKeys.STICKY.value])
         
-        
     def _onclick_menu_settings(self):
         setting_window = SettingWindow(self)
     
@@ -121,14 +120,12 @@ class FOVSimWindow(tk.Tk):
         LOGGER.debug(f'Done getting data. Data: {data}\n')
         
         # Getting regulation points coordinates relative to E.P.
-        LOGGER.debug('Getting regulation points coordinates relative to E.P...')
         regulation_points = self.controller.get_regulation_points_II_ep(data[self.config_model.Keys.CAMERA_POSITION.value], data[self.config_model.Keys.DISTANCE_CAM_CARBODY.value], data[self.config_model.Keys.DISTANCE_CAM_GROUND.value])
         if regulation_points == self.controller.ReturnCode.DATA_TYPE_ERROR:
             LOGGER.error('\nError when getting regulation points!\n')
             error_window = SelectionWindow(self)
             error_window.set_label_text('Input data type error - camera_coordinates, distance_camera_carbody, distance_camera_ground.')
-            return
-        
+            return        
         elif regulation_points == self.controller.ReturnCode.DATA_VALUE_ERROR:
             LOGGER.error('\nError when getting regulation points!\n')
             error_window = SelectionWindow(self)
@@ -138,14 +135,12 @@ class FOVSimWindow(tk.Tk):
         LOGGER.debug(f'Done getting regulation points. Points: {regulation_points}\n')
         
         # Transform regulation points from relative to EP into relative to camera.
-        LOGGER.debug('Transforming regulation points from relative to E.P. into relative to camera...')
         regulation_points_camera_coordinates = self.controller.transfrom_regulation_points_into_cam_coordinates(data[self.config_model.Keys.CAMERA_POSITION.value], regulation_points)
         if regulation_points_camera_coordinates == self.controller.ReturnCode.DATA_TYPE_ERROR:
             LOGGER.error('\nError when transforming regulation points!\n')
             error_window = SelectionWindow(self)
             error_window.set_label_text(f'Input data type error - camera_coordinates, regulation_points.')
-            return
-        
+            return   
         elif regulation_points_camera_coordinates == self.controller.ReturnCode.DATA_VALUE_ERROR:
             LOGGER.error('\nError when transforming regulation points!\n')
             error_window = SelectionWindow(self)
@@ -154,11 +149,7 @@ class FOVSimWindow(tk.Tk):
         
         LOGGER.debug(f'Done getting regulation points\' coordinates relative to camera. Data: {regulation_points_camera_coordinates}\n')
         
-        # Applying World->Sensor transform to 'regulation_points_camera_coordinates'
-        LOGGER.debug('Transforming regulation points from world into monitor coordinates...')
-        
-        data = self.controller.read_data_from_json()    # Get data from json file.
-        
+        # Applying World->Sensor transform to 'regulation_points_camera_coordinates'        
         regulation_points_sensor_coordinates = self.controller.regulation_points_world_sensor_transform(regulation_points_camera_coordinates, data[self.config_model.Keys.CAMERA_POSE.value], data[self.config_model.Keys.SENSOR_PARAMS.value], data[self.config_model.Keys.MONITOR_PARAMS.value], data[self.config_model.Keys.FITTING_FUNC_COEFS.value])
         LOGGER.debug(f'Done transforming regulation points from world into monitor coordinates. Data: {regulation_points_sensor_coordinates}\n')
         
@@ -180,8 +171,7 @@ class FOVSimWindow(tk.Tk):
                 LOGGER.error('\nError when transforming regulation points!\n')
                 error_window = SelectionWindow(self)
                 error_window.set_label_text(f'Input data type error - A, B.')
-                return
-            
+                return       
             elif point_converted == self.controller.ReturnCode.DATA_VALUE_ERROR:
                 LOGGER.error('\nError when transforming regulation points!\n')
                 error_window = SelectionWindow(self)
@@ -208,6 +198,7 @@ class FOVSimWindow(tk.Tk):
             
             regulation_points_monitor_coordinates.append(point_converted)
          """
+         
         # Monitor canvas.
         self.show_canvas_params.monitor_width = data[self.config_model.Keys.MONITOR_PARAMS.value][0]
         self.show_canvas_params.monitor_height = data[self.config_model.Keys.MONITOR_PARAMS.value][1]
@@ -220,9 +211,8 @@ class FOVSimWindow(tk.Tk):
         self._show_canvas(self.show_canvas_params)
         
         # Update result table.
-        points_name = ['A', 'B', 'C', 'D']
-        
         self._clear_result_table()
+        points_name = ['A', 'B', 'C', 'D']
         for index in range(0, 4):
             if regulation_points_sensor_coordinates[index][0] in range(data[self.config_model.Keys.CROP_REGION.value][0], data[self.config_model.Keys.CROP_REGION.value][0] + data[self.config_model.Keys.CROP_REGION.value][2]) and regulation_points_sensor_coordinates[index][1] in range(data[self.config_model.Keys.CROP_REGION.value][1], data[self.config_model.Keys.CROP_REGION.value][1] + data[self.config_model.Keys.CROP_REGION.value][3]):
                 result = 'OK'
@@ -240,8 +230,7 @@ class FOVSimWindow(tk.Tk):
             values.append(points_name[index]) # Name
             values.append(result) # Result
             
-            self.result_table.insert('', 'end', values=values)
-        
+            self.result_table.insert('', 'end', values=values)  
         
     def _onclose(self):
         self.destroy()

@@ -14,13 +14,20 @@ class ConfigModel:
         MONITOR_PARAMS = 'monitor params'
         CROP_REGION = 'crop region'
         REGULATION_POINTS = 'regulation points'
+        CAMERA_CLASS = 'camera class'
+        CAMERA_SIDE = 'camera side'
         
     class TableFormatKeys(Enum):
         WIDTH = 'width'
         ANCHOR = 'anchor'
         STICKY = 'sticky'
+        
+    class CameraSideStatus(Enum):
+        DRIVER = auto()
+        PASSENGER = auto()
     
     def __init__(self):
+        # Default setting values.
         self.default_setting = {
             self.Keys.CAMERA_POSITION.value : [0.01, -0.01, -0.01],
             self.Keys.DISTANCE_CAM_CARBODY.value : 0.01,
@@ -34,9 +41,11 @@ class ConfigModel:
             self.Keys.REGULATION_POINTS.value : {}, # Regulation Points relative to camera coordinates.
         }
 
+        # Setting file name & path.
         self.setting_filename = 'setting.json'
         self.setting_filepath = f'./data/{self.setting_filename}'
         
+        # Log file name & path.
         self.log_filename = 'app.log'
         self.log_filepath = f'./data/{self.log_filename}'
         
@@ -45,7 +54,7 @@ class ConfigModel:
             self.TableFormatKeys.ANCHOR.value : 'center',
             self.TableFormatKeys.STICKY.value : 'nsew',
         }
+        
         self.result_table_column = ['X_mm', 'Y_mm', 'Z_mm', 'Sensor_x', 'Sensor_y', 'Monitor_x', 'Monitor_y', 'Name', 'Result']
-        
-        
+         
 LOGGER = Logger(os.path.dirname(ConfigModel().log_filepath), ConfigModel().log_filename)  
