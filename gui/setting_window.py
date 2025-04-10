@@ -8,6 +8,7 @@ from gui.selection_window import SelectionWindow
 from models.config_model import ConfigModel
 from models.config_model import LOGGER
 from gui.help_window import HelpWindow
+from tkinter import ttk
 
 class SettingWindow(tk.Toplevel):    
     label_format_dict = TkinterStyle.label_format_dict
@@ -50,21 +51,34 @@ class SettingWindow(tk.Toplevel):
         'y entry' : {'row' : 8, 'column' : 2}, 'width entry' : {'row' : 8, 'column' : 3}, 
         'height entry' : {'row' : 8, 'column' : 4}
     }
+    profile_selection_widgets_position_dict = {
+        'label' : {'row' : 9, 'column' : 0}, 'combobox' : {'row' : 9, 'column' : 1}
+    }
     
-    def __init__(self, root):
+    def __init__(self, root, profile_list: list, profile_var: tk.StringVar):
         super().__init__(root)
         self.root = root
         self.swc = SettingWindowController()
         self.config_model = ConfigModel()
-        
-        self.title('Settings')
+
+        if not isinstance(profile_list, list):
+            raise TypeError('profile_list should be a list')
+        if not isinstance(profile_var, tk.StringVar):
+            raise TypeError('profile_var should be a StringVar')
+
+        self.profile_list = profile_list
+        self.profile_var = profile_var
+
         self._init_gui()
         #self._set_modal()
+        #self.protocol('WM_DELETE_WINDOW', self._onclick_close)
         
     def _init_setting_data(self):
         self.swc.init_setting_data()
         
     def _init_gui(self):
+        self.title('Settings')
+        
         # Menu
         self.menu = tk.Menu(self)
         self.menu.add_command(label='Save', command=self._onclick_menu_save)    
@@ -199,6 +213,14 @@ class SettingWindow(tk.Toplevel):
         self.crop_region_height_entry = self._create_entry()
         self._grid_entry(self.crop_region_height_entry, **self.crop_region_widgets_position_dict['height entry'])
 
+        # Profile Selection
+        self.profile_selection_label = self._create_description_label('Profile: ')
+        self._grid_description_label(self.profile_selection_label, **self.profile_selection_widgets_position_dict['label'])
+        
+        self.profile_selection_combobox = ttk.Combobox(self, textvariable=self.profile_var, values=self.profile_list, **self.config_model.profile_selection_combobox_format_dict)
+        self.profile_selection_combobox.bind('<<ComboboxSelected>>', self._onclick_profile_selection_combobox)
+        self.profile_selection_combobox.grid(**self.profile_selection_widgets_position_dict['combobox'])
+
         self._refresh_entrys()
         
     def _onclick_menu_save(self):
@@ -215,7 +237,7 @@ class SettingWindow(tk.Toplevel):
         data[self.config_model.Keys.CROP_REGION.value] = [int(self.crop_region_x_entry.get()), int(self.crop_region_y_entry.get()), int(self.crop_region_width_entry.get()), int(self.crop_region_height_entry.get())]
         
         # Save data using controller.
-        result = self.swc.save_data_to_json(data)
+        result = self.swc.save_data_to_json(data, self.profile_var.get())
         if result == self.swc.ReturnCode.FILE_NOT_FOUND:
             error_window = SelectionWindow()
             error_window.set_label_text('File not found!')
@@ -239,7 +261,7 @@ class SettingWindow(tk.Toplevel):
         button_status = selection_window.get_button_status()
         if button_status == selection_window.ButtonStatus.LEFT:
             LOGGER.info('User confirmed to reset setting.')
-            self.swc.save_data_to_json(self.config_model.default_setting)
+            self.swc.reset_default_setting(self.profile_var.get())
             self._refresh_entrys()
             
         elif button_status == selection_window.ButtonStatus.RIGHT:
@@ -250,7 +272,17 @@ class SettingWindow(tk.Toplevel):
         """
         Refresh values in entrys.  
         """
-        data = self.swc.read_data_from_json()
+        data = self.swc.read_data_from_json(self.profile_var.get())
+        if data == self.swc.ReturnCode.FILE_NOT_FOUND:
+            LOGGER.error('Error when load data from json! - File not Found.')
+            error_window = SelectionWindow(self)
+            error_window.set_label_text('File not found!')
+            error_window.set_button_left_text('OK')
+            error_window.set_button_right_text('Cancel')
+            error_window.set_modal()
+            return
+        
+        
         keys = data.keys()
         key = self.config_model.Keys.CAMERA_POSITION.value
         # If the key which represent the entry is exist in the json file, then refresh this bunch of entrys.
@@ -385,3 +417,10 @@ class SettingWindow(tk.Toplevel):
     
     def _grid_entry(self, entry: tk.Entry, row: int, column: int, **kwargs) -> None:
         entry.grid(row=row, column=column, padx=self.entry_format_dict['padx'], pady=self.entry_format_dict['pady'], sticky=self.entry_format_dict['sticky'], **kwargs)
+        
+    def _onclick_profile_selection_combobox(self, event):
+        """
+        When the profile selection combobox is clicked, refresh the entrys.
+        """
+        LOGGER.info('User clicked profile selection combobox')
+        self._refresh_entrys()

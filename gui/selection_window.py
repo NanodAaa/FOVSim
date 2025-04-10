@@ -37,8 +37,9 @@ class SelectionWindow(tk.Toplevel):
     
     def _init_gui(self):
         self.title('Warning')
+        self.geometry('300x100')
         
-        self.label = tk.Label(self, text='label', font=self.label_format_dict['font'], width=self.label_format_dict['width'])
+        self.label = tk.Label(self, text='label', font=self.label_format_dict['font'])
         self.label.grid(row=self.label_widgets_position_dict['label']['row'], column=self.label_widgets_position_dict['label']['column'], columnspan=2, padx=self.label_format_dict['padx'], pady=self.label_format_dict['pady'], sticky=self.label_format_dict['sticky'])
         
         self.button_left = tk.Button(self, text='left button', bg=self.button_format_dict['bg'], width=self.button_format_dict['width'], command=self._onclick_button_left)

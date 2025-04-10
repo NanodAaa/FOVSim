@@ -6,7 +6,7 @@ class CalculateModel:
         TYPE_ERROR = auto()
         VALUE_ERROR = auto()
     
-    def get_regulation_points_II(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+    def get_regulation_points_II_driver(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
         """
         Get coordinates of 4 regulation points relative to E.P.  
         `camera_coordinates': camera_coordinates relative to E.P.  
@@ -16,12 +16,30 @@ class CalculateModel:
         if not isinstance(camera_coordinates, list) or not isinstance(distance_camera_carbody, float) or not isinstance(distance_camera_ground, float):
             return self.ReturnCode.TYPE_ERROR
         
-        z = -abs(camera_coordinates[2] + distance_camera_ground)
-        A = [4, -abs(camera_coordinates[1] - distance_camera_carbody), z]
-        B = [4, -(abs(camera_coordinates[1] - distance_camera_carbody) + 1), z]
-        C = [30, -abs(camera_coordinates[1] - distance_camera_carbody), z]
-        D = [30, -(abs(camera_coordinates[1] - distance_camera_carbody) + 5), z]
+        z = distance_camera_ground - camera_coordinates[2]
+        A = [4, -abs(distance_camera_carbody), z]
+        B = [4, -(abs(distance_camera_carbody) + 1), z]
+        C = [30, -abs(distance_camera_carbody), z]
+        D = [30, -(abs(distance_camera_carbody) + 5), z]
         
+        return [A, B, C, D]
+    
+    def get_regulation_points_II_passanger(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+        """
+        Get coordinates of 4 regulation points relative to E.P.  
+        `camera_coordinates': camera_coordinates relative to E.P.  
+        'distance_camera_carbody': distance between camera and carbody.    
+        Return list of 4 Points coordinates.  
+        """
+        if not isinstance(camera_coordinates, list) or not isinstance(distance_camera_carbody, float) or not isinstance(distance_camera_ground, float):
+            return self.ReturnCode.TYPE_ERROR
+        
+        z = distance_camera_ground - camera_coordinates[2]
+        A = [4, distance_camera_carbody, z]
+        B = [4, distance_camera_carbody + 1, z]
+        C = [30, distance_camera_carbody, z]
+        D = [30, distance_camera_carbody + 5, z]
+                
         return [A, B, C, D]
                 
     def coordinate_transform(self, A: list, B: list) -> list:

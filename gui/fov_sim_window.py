@@ -55,16 +55,11 @@ class FOVSimWindow(tk.Tk):
         self.root = root
         self.config_model = ConfigModel()
         self.controller = FovSimController()
-        
-        # Initialize canvas params.
         self.show_canvas_params = self.ShowCanvasParams()
-        self.show_canvas_params.canvas0_x_label = 'Width'
-        self.show_canvas_params.canvas0_y_label = 'Height'
-        self.show_canvas_params.canvas0_title = 'Sensor'
-
-        self.show_canvas_params.canvas1_x_label = 'Width'
-        self.show_canvas_params.canvas1_y_label = 'Height'
-        self.show_canvas_params.canvas1_title = 'Monitor'
+        
+        # Profile value & variable to transfer to setting window.
+        self.profile_list = self.config_model.profile_selection_combobox_values
+        self.profile_var = tk.StringVar(value=self.profile_list[0])
 
         self._init_setting_data()
         self._init_gui()
@@ -91,6 +86,13 @@ class FOVSimWindow(tk.Tk):
 
         # Canvas
         # Create Matplotlib figure.
+        self.show_canvas_params.canvas0_x_label = 'Width'
+        self.show_canvas_params.canvas0_y_label = 'Height'
+        self.show_canvas_params.canvas0_title = 'Sensor'
+
+        self.show_canvas_params.canvas1_x_label = 'Width'
+        self.show_canvas_params.canvas1_y_label = 'Height'
+        self.show_canvas_params.canvas1_title = 'Monitor'
         self._show_canvas(self.show_canvas_params)
         
         self._init_result_table()
@@ -105,7 +107,7 @@ class FOVSimWindow(tk.Tk):
         self.result_table.grid(row=self.result_table_position_dict['row'], column=self.result_table_position_dict['column'], sticky=self.config_model.table_format_dict[self.config_model.TableFormatKeys.STICKY.value])
         
     def _onclick_menu_settings(self):
-        setting_window = SettingWindow(self)
+        setting_window = SettingWindow(self, self.profile_list, self.profile_var)
     
     def _onclick_menu_edit_simulation_points(self):
         edit_simulation_points_window = EditSimulationPointsWindow(self)
@@ -116,11 +118,19 @@ class FOVSimWindow(tk.Tk):
         """
         LOGGER.info('\nUser clicked menu-run.\n')
         
-        data = self.controller.read_data_from_json()
+        data = self.controller.read_data_from_json(self.profile_var.get())
+        if data is None or data == {}:
+            LOGGER.error(f'\nError when getting data from json file! Data: {data}\n')
+            error_window = SelectionWindow(self)
+            error_window.set_label_text('Error when getting data from json file!')
+            error_window.set_button_left_text('OK')
+            error_window.set_button_right_text('Cancel')
+            return
+        
         LOGGER.debug(f'Done getting data. Data: {data}\n')
         
         # Getting regulation points coordinates relative to E.P.
-        regulation_points = self.controller.get_regulation_points_II_ep(data[self.config_model.Keys.CAMERA_POSITION.value], data[self.config_model.Keys.DISTANCE_CAM_CARBODY.value], data[self.config_model.Keys.DISTANCE_CAM_GROUND.value])
+        regulation_points = self.controller.get_regulation_points(data[self.config_model.Keys.CAMERA_POSITION.value], data[self.config_model.Keys.DISTANCE_CAM_CARBODY.value], data[self.config_model.Keys.DISTANCE_CAM_GROUND.value], self.profile_var.get())
         if regulation_points == self.controller.ReturnCode.DATA_TYPE_ERROR:
             LOGGER.error('\nError when getting regulation points!\n')
             error_window = SelectionWindow(self)
@@ -130,6 +140,13 @@ class FOVSimWindow(tk.Tk):
             LOGGER.error('\nError when getting regulation points!\n')
             error_window = SelectionWindow(self)
             error_window.set_label_text('Input data value error - camera_coordinates, distance_camera_carbody, distance_camera_ground.')
+            return
+        elif regulation_points is None or regulation_points == []:
+            LOGGER.error(f'\nError when getting regulation points! Data: {regulation_points} \n')
+            error_window = SelectionWindow(self)
+            error_window.set_label_text('Error when getting regulation points!')
+            error_window.set_button_left_text('OK')
+            error_window.set_button_right_text('Cancel')
             return
         
         LOGGER.debug(f'Done getting regulation points. Points: {regulation_points}\n')
@@ -242,12 +259,12 @@ class FOVSimWindow(tk.Tk):
         # Create Matplotlib figure.
         fig = Figure(figsize=(10, 4), dpi=100)
         
+        # Sensor canvas.
         if params.canvas0_title is None or params.canvas0_x_label is None or params.canvas0_y_label is None:
             error_window = SelectionWindow(self)
             error_window.set_label_text('Please set the canvas0 title, xlabel, ylabel, row, column')
             return
         
-        # Sensor canvas.
         axes_sensor = fig.add_subplot(1, 2, 1)
         axes_sensor.set_title(params.canvas0_title)
         axes_sensor.set_xlabel(params.canvas0_x_label)
@@ -255,12 +272,14 @@ class FOVSimWindow(tk.Tk):
         axes_sensor.invert_yaxis()
         axes_sensor.grid(True, linestyle='--')  # Add grid lines
 
+        # Set axis limits based on sensor size, if is set.
         if params.sensor_width and params.sensor_height:
             axes_sensor.set_xlim(0, params.sensor_width)
             axes_sensor.set_ylim(params.sensor_height, 0)
         else:
             LOGGER.debug('Canvas0 Width and height are not set.')
         
+        # Draw crop region rectangle if crop region is set.
         if params.crop_region:
             rect = Rectangle((params.crop_region[0], params.crop_region[1]), params.crop_region[2], params.crop_region[3], linewidth=1, edgecolor='r', facecolor='none')
             axes_sensor.add_patch(rect)
@@ -274,13 +293,12 @@ class FOVSimWindow(tk.Tk):
             LOGGER.debug('Canvas0 X data, Y data or data label is not set.')
         
         # Monitor canvas.
-        axes_monitor = fig.add_subplot(1, 2, 2)
-        
         if params.canvas1_title is None or params.canvas1_x_label is None or params.canvas1_y_label is None:
             error_window = SelectionWindow(self)
             error_window.set_label_text('Please set the canvas1 title, xlabel, ylabel, row, column')
             return
         
+        axes_monitor = fig.add_subplot(1, 2, 2)
         axes_monitor.set_title(params.canvas1_title)
         axes_monitor.set_xlabel(params.canvas1_x_label)
         axes_monitor.set_ylabel(params.canvas1_y_label)

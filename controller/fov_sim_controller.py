@@ -18,16 +18,86 @@ class FovSimController:
         self.config_model = ConfigModel()
 
     def init_setting_data(self):
-        data = self.json_save_model.load(self.config_model.setting_filepath)
-        if data == JsonStorageModel.ReturnCode.FILE_NOT_FOUND:
-            if self.json_save_model.create_empty_json_file(self.config_model.setting_filepath, self.config_model.default_setting) == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
+        # Class II - Driver side.
+        data = self.json_save_model.load(self.config_model.setting_2_driver_filepath)
+        if data == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
+            LOGGER.error('Error when load data from json! - File not Found.')
+            return self.ReturnCode.FILE_NOT_FOUND
+        
+        # If data is empty or {} write default data.
+        if data is None or data == {} or not isinstance(data, dict):
+            result = self.json_save_model.save(filepath=self.config_model.setting_2_driver_filepath, data=self.config_model.default_setting_2_driver)
+            if result == self.json_save_model.ReturnCode.DATA_TYPE_INVALID:
+                LOGGER.error('Error when write data into json! - Data type error')
+                return self.ReturnCode.DATA_TYPE_ERROR
+            elif result == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
+                LOGGER.error('Error when write data into json! - File not found.')
                 return self.ReturnCode.FILE_NOT_FOUND
             
-        elif data == {}:
-            if self.json_save_model.create_empty_json_file(self.config_model.setting_filepath, self.config_model.default_setting) == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
+        # Class II - Passenger side.
+        data = self.json_save_model.load(self.config_model.setting_2_passanger_filepath)
+        if data == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
+            LOGGER.error('Error when load data from json! - File not Found.')
+            return self.ReturnCode.FILE_NOT_FOUND
+        
+        # If data is empty or {} write default data.
+        if data is None or data == {} or not isinstance(data, dict):
+            result = self.json_save_model.save(filepath=self.config_model.setting_2_passanger_filepath, data=self.config_model.default_setting_2_passanger)
+            if result == self.json_save_model.ReturnCode.DATA_TYPE_INVALID:
+                LOGGER.error('Error when write data into json! - Data type error')
+                return self.ReturnCode.DATA_TYPE_ERROR
+            elif result == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
+                LOGGER.error('Error when write data into json! - File not found.')
+                return self.ReturnCode.FILE_NOT_FOUND
+        
+        # Class IV - Driver side.
+        data = self.json_save_model.load(self.config_model.setting_4_driver_filepath)
+        if data == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
+            LOGGER.error('Error when load data from json! - File not Found.')
+            return self.ReturnCode.FILE_NOT_FOUND
+        
+        # If data is empty or {} write default data.
+        if data is None or data == {} or not isinstance(data, dict):
+            result = self.json_save_model.save(filepath=self.config_model.setting_4_driver_filepath, data=self.config_model.default_setting_4_driver)
+            if result == self.json_save_model.ReturnCode.DATA_TYPE_INVALID:
+                LOGGER.error('Error when write data into json! - Data type error')
+                return self.ReturnCode.DATA_TYPE_ERROR
+            elif result == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
+                LOGGER.error('Error when write data into json! - File not found.')
                 return self.ReturnCode.FILE_NOT_FOUND
             
-    def get_regulation_points_II_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+        # Class IV - Passenger side.
+        data = self.json_save_model.load(self.config_model.setting_4_passanger_filepath)
+        if data == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
+            LOGGER.error('Error when load data from json! - File not Found.')
+            return self.ReturnCode.FILE_NOT_FOUND
+        
+        # If data is empty or {} write default data.
+        if data is None or data == {} or not isinstance(data, dict):
+            result = self.json_save_model.save(filepath=self.config_model.setting_4_passanger_filepath, data=self.config_model.default_setting_4_passanger)
+            if result == self.json_save_model.ReturnCode.DATA_TYPE_INVALID:
+                LOGGER.error('Error when write data into json! - Data type error')
+                return self.ReturnCode.DATA_TYPE_ERROR
+            elif result == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
+                LOGGER.error('Error when write data into json! - File not found.')
+                return self.ReturnCode.FILE_NOT_FOUND
+    
+    def get_regulation_points(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float, profile: str) -> list:
+        """ 
+        """
+        if profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_II_DRIVER.value:
+            return self._get_regulation_points_II_driver_ep(camera_coordinates, distance_camera_carbody, distance_camera_ground)
+        elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_II_PASSANGER.value:
+            return self._get_regulation_points_II_passanger_ep(camera_coordinates, distance_camera_carbody, distance_camera_ground)
+        elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_IV_DRIVER.value:
+            return self.get_regulation_points_IV_driver_ep(camera_coordinates, distance_camera_carbody, distance_camera_ground)
+        elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_IV_PASSANGER.value:
+            return self.get_regulation_points_IV_passanger_ep(camera_coordinates, distance_camera_carbody, distance_camera_ground)
+        else:
+            LOGGER.error('Error when get regulation points! - Profile not found.')
+            return None
+        
+    def _get_regulation_points_II_driver_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
         """ 
         Get 4 regulation points relative to EP.
         `camera_coordinates`: Camera coordinates relative to E.P. [x, y, z].    
@@ -45,12 +115,43 @@ class FovSimController:
             LOGGER.error(f'Input data value error - camera_coordinates should be a list of 3 elements. Data: {camera_coordinates}.')
             return self.ReturnCode.DATA_VALUE_ERROR
         
-        regulation_points = self.cal_model.get_regulation_points_II(camera_coordinates, distance_camera_carbody, distance_camera_ground)
+        regulation_points = self.cal_model.get_regulation_points_II_driver(camera_coordinates, distance_camera_carbody, distance_camera_ground)
         if regulation_points == self.cal_model.ReturnCode.TYPE_ERROR:
             LOGGER.error(f'Input data type error - camera_coordinates, distance_camera_carbody, distance_camera_ground. Data: {camera_coordinates}, {distance_camera_carbody}, {distance_camera_ground}.')
             return self.ReturnCode.DATA_TYPE_ERROR
 
         return regulation_points
+    
+    def _get_regulation_points_II_passanger_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+        """ 
+        Get 4 regulation points relative to EP.
+        `camera_coordinates`: Camera coordinates relative to E.P. [x, y, z].    
+        `distance_camera_carbody`: Distance between camera and carbody. y.  
+        `distance_camera_ground`: Distance between camera and ground. z.  
+        Return list of 4 Points coordinates.  
+        Return DATA_TYPE_ERROR when input data type is error.  
+        Return DATA_VALUE_ERROR when input data value is error.  
+        """
+        if not isinstance(camera_coordinates, list) or not isinstance(distance_camera_carbody, float) or not isinstance(distance_camera_ground, float):
+            LOGGER.error(f'Input data type error - camera_coordinates, distance_camera_carbody, distance_camera_ground. Data: {camera_coordinates}, {distance_camera_carbody}, {distance_camera_ground}.')
+            return self.ReturnCode.DATA_TYPE_ERROR
+        
+        if not len(camera_coordinates) == 3:
+            LOGGER.error(f'Input data value error - camera_coordinates should be a list of 3 elements. Data: {camera_coordinates}.')
+            return self.ReturnCode.DATA_VALUE_ERROR
+        
+        regulation_points = self.cal_model.get_regulation_points_II_passanger(camera_coordinates, distance_camera_carbody, distance_camera_ground)
+        if regulation_points == self.cal_model.ReturnCode.TYPE_ERROR:
+            LOGGER.error(f'Input data type error - camera_coordinates, distance_camera_carbody, distance_camera_ground. Data: {camera_coordinates}, {distance_camera_carbody}, {distance_camera_ground}.')
+            return self.ReturnCode.DATA_TYPE_ERROR
+        
+        return regulation_points
+    
+    def get_regulation_points_IV_driver_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+        pass
+    
+    def get_regulation_points_IV_passanger_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+        pass
         
     def transfrom_regulation_points_into_cam_coordinates(self, camera_coordinates: list, regulation_points: list) -> list:
         """ 
@@ -106,24 +207,33 @@ class FovSimController:
             point_converted = functions.move_orignal_point_center_to_leftop(point, sensor_params[0], sensor_params[1])
             regulation_points_sensor_pixel_coordinates_leftop.append(point_converted)
             
-        
-        
         return regulation_points_sensor_pixel_coordinates_leftop
         
-    def read_data_from_json(self) -> dict:
+    def read_data_from_json(self, profile: str) -> dict:
         """ 
         Read data from json.  
         Return FILE_NOT_FOUND when json file does not exist.  
         Return data when success.  
         """
-        data = self.json_save_model.load(self.config_model.setting_filepath)
+        if profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_II_DRIVER.value:
+            data = self.json_save_model.load(self.config_model.setting_2_driver_filepath)
+        elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_II_PASSANGER.value:
+            data = self.json_save_model.load(self.config_model.setting_2_passanger_filepath)
+        elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_IV_DRIVER.value:
+            data = self.json_save_model.load(self.config_model.setting_4_driver_filepath)
+        elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_IV_PASSANGER.value:
+            data = self.json_save_model.load(self.config_model.setting_4_passanger_filepath)
+        else:
+            LOGGER.error('Error when load data from json! - Profile not found.')
+            return self.ReturnCode.FILE_NOT_FOUND
+        
         if data == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
             LOGGER.error('Error when load data from json! - File not Found.')
             return self.ReturnCode.FILE_NOT_FOUND
-
+        
         return data
     
-    def save_data_to_json(self, data: dict):
+    def save_data_to_json(self, data: dict, profile: str):
         """ 
         Receive data from view and save it to json file.
         """
@@ -131,14 +241,36 @@ class FovSimController:
         if not isinstance(data, dict):
             LOGGER.error('data_list should be a dict!')
             return self.ReturnCode.DATA_TYPE_ERROR
+        
+        """ # Check data in data_list.
+        for data in data_list:
+            if not isinstance(data, dict):
+                LOGGER.error('data in data_list should be a dict!')
+                raise TypeError('data in data_list should be a dict!')
+            
+            if not len(list(data.keys())) == 1:
+                LOGGER.error('data in data_list can have only 1 key!')
+                raise ValueError('data in data_list can have only 1 key!')
+                
+            if not len(list(data.values())) == 1:
+                LOGGER.error('data in data_list can have only 1 value!')
+                raise ValueError('data in data_list can have only 1 value!')
+                
+            if not isinstance(next(iter(data.values())), list):
+                LOGGER.error('value in data should be a list!')
+                raise TypeError('value in data should be a list!') """
 
         # Write data into json
-        result = self.json_save_model.save(filepath=self.config_model.setting_filepath, data=data)
-        if result == self.json_save_model.ReturnCode.DATA_TYPE_INVALID:
-            LOGGER.error('Error when write data into json! - Data type error')
-            return self.ReturnCode.DATA_TYPE_ERROR
-        elif result == self.json_save_model.ReturnCode.FILE_NOT_FOUND:
-            LOGGER.error('Error when write data into json! - File not found.')
+        if profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_II_DRIVER.value:
+            result = self.json_save_model.save(filepath=self.config_model.setting_2_driver_filepath, data=data)
+        elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_II_PASSANGER.value:
+            result = self.json_save_model.save(filepath=self.config_model.setting_2_passanger_filepath, data=data)
+        elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_IV_DRIVER.value:
+            result = self.json_save_model.save(filepath=self.config_model.setting_4_driver_filepath, data=data)
+        elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_IV_PASSANGER.value:
+            result = self.json_save_model.save(filepath=self.config_model.setting_4_passanger_filepath, data=data)
+        else:
+            LOGGER.error('Error when write data into json! - Profile not found.')
             return self.ReturnCode.FILE_NOT_FOUND
         
     def coordinates_transform(self, point: list, old_original_point: list, new_original_point) -> list:
