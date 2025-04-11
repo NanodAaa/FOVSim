@@ -16,7 +16,7 @@ class CalculateModel:
         if not isinstance(camera_coordinates, list) or not isinstance(distance_camera_carbody, float) or not isinstance(distance_camera_ground, float):
             return self.ReturnCode.TYPE_ERROR
         
-        z = distance_camera_ground - camera_coordinates[2]
+        z = round(distance_camera_ground - camera_coordinates[2], 2)
         A = [4, -abs(distance_camera_carbody), z]
         B = [4, -(abs(distance_camera_carbody) + 1), z]
         C = [30, -abs(distance_camera_carbody), z]
@@ -34,13 +34,51 @@ class CalculateModel:
         if not isinstance(camera_coordinates, list) or not isinstance(distance_camera_carbody, float) or not isinstance(distance_camera_ground, float):
             return self.ReturnCode.TYPE_ERROR
         
-        z = distance_camera_ground - camera_coordinates[2]
+        z = round(distance_camera_ground - camera_coordinates[2], 2)
         A = [4, distance_camera_carbody, z]
         B = [4, distance_camera_carbody + 1, z]
         C = [30, distance_camera_carbody, z]
         D = [30, distance_camera_carbody + 5, z]
                 
         return [A, B, C, D]
+    
+    def get_regulation_points_IV_driver(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+        """
+        Get coordinates of 4 regulation points relative to E.P.  
+        `camera_coordinates': camera_coordinates relative to E.P.  
+        'distance_camera_carbody': distance between camera and carbody.    
+        Return list of regulation points coordinates.  
+        """
+        if not isinstance(camera_coordinates, list) or not isinstance(distance_camera_carbody, float) or not isinstance(distance_camera_ground, float):
+            return self.ReturnCode.TYPE_ERROR
+        
+        z = round(distance_camera_ground - camera_coordinates[2], 2)
+        A = [1.5, -abs(distance_camera_carbody), z]
+        B = [25, -abs(distance_camera_carbody), z]
+        C = [1.5, -(abs(distance_camera_carbody) + 4.5), z]
+        D = [10, -(abs(distance_camera_carbody) + 15), z]
+        E = [25, -(abs(distance_camera_carbody) + 15), z]
+                
+        return [A, B, C, D, E]
+    
+    def get_regulation_points_IV_passanger(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+        """
+        Get coordinates of 4 regulation points relative to E.P.  
+        `camera_coordinates': camera_coordinates relative to E.P.  
+        'distance_camera_carbody': distance between camera and carbody.    
+        Return list of regulation points coordinates.  
+        """
+        if not isinstance(camera_coordinates, list) or not isinstance(distance_camera_carbody, float) or not isinstance(distance_camera_ground, float):
+            return self.ReturnCode.TYPE_ERROR
+        
+        z = round(distance_camera_ground - camera_coordinates[2], 2)
+        A = [1.5, abs(distance_camera_carbody), z]
+        B = [25, abs(distance_camera_carbody), z]
+        C = [1.5, (abs(distance_camera_carbody) + 4.5), z]
+        D = [10, (abs(distance_camera_carbody) + 15), z]
+        E = [25, (abs(distance_camera_carbody) + 15), z]
+                
+        return [A, B, C, D, E]
                 
     def coordinate_transform(self, A: list, B: list) -> list:
         """
@@ -52,7 +90,7 @@ class CalculateModel:
         if not len(A) == len(B):
             return self.ReturnCode.VALUE_ERROR
         
-        B_convert = [B[0] - A[0], B[1] - A[1], B[2] - A[2]]
+        B_convert = [round(B[0] - A[0], 2), round(B[1] - A[1], 2), round(B[2] - A[2], 2)]
         return B_convert
     
     def point_transform_coordinates(self, point: list, old_original_point: list, new_original_point) -> list:

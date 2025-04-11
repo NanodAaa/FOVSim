@@ -90,9 +90,9 @@ class FovSimController:
         elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_II_PASSANGER.value:
             return self._get_regulation_points_II_passanger_ep(camera_coordinates, distance_camera_carbody, distance_camera_ground)
         elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_IV_DRIVER.value:
-            return self.get_regulation_points_IV_driver_ep(camera_coordinates, distance_camera_carbody, distance_camera_ground)
+            return self._get_regulation_points_IV_driver_ep(camera_coordinates, distance_camera_carbody, distance_camera_ground)
         elif profile == self.config_model.ProfileSelectionComboboxIndexs.CLASS_IV_PASSANGER.value:
-            return self.get_regulation_points_IV_passanger_ep(camera_coordinates, distance_camera_carbody, distance_camera_ground)
+            return self._get_regulation_points_IV_passanger_ep(camera_coordinates, distance_camera_carbody, distance_camera_ground)
         else:
             LOGGER.error('Error when get regulation points! - Profile not found.')
             return None
@@ -147,17 +147,61 @@ class FovSimController:
         
         return regulation_points
     
-    def get_regulation_points_IV_driver_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
-        pass
+    def _get_regulation_points_IV_driver_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+        """ 
+        Get 4 regulation points relative to EP.
+        `camera_coordinates`: Camera coordinates relative to E.P. [x, y, z].    
+        `distance_camera_carbody`: Distance between camera and carbody. y.  
+        `distance_camera_ground`: Distance between camera and ground. z.  
+        Return list of 4 Points coordinates.  
+        Return DATA_TYPE_ERROR when input data type is error.  
+        Return DATA_VALUE_ERROR when input data value is error.  
+        """
+        if not isinstance(camera_coordinates, list) or not isinstance(distance_camera_carbody, float) or not isinstance(distance_camera_ground, float):
+            LOGGER.error(f'Input data type error - camera_coordinates, distance_camera_carbody, distance_camera_ground. Data: {camera_coordinates}, {distance_camera_carbody}, {distance_camera_ground}.')
+            return self.ReturnCode.DATA_TYPE_ERROR
+        
+        if not len(camera_coordinates) == 3:
+            LOGGER.error(f'Input data value error - camera_coordinates should be a list of 3 elements. Data: {camera_coordinates}.')
+            return self.ReturnCode.DATA_VALUE_ERROR
+        
+        regulation_points = self.cal_model.get_regulation_points_IV_driver(camera_coordinates, distance_camera_carbody, distance_camera_ground)
+        if regulation_points == self.cal_model.ReturnCode.TYPE_ERROR:
+            LOGGER.error(f'Input data type error - camera_coordinates, distance_camera_carbody, distance_camera_ground. Data: {camera_coordinates}, {distance_camera_carbody}, {distance_camera_ground}.')
+            return self.ReturnCode.DATA_TYPE_ERROR
+        
+        return regulation_points
     
-    def get_regulation_points_IV_passanger_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
-        pass
+    def _get_regulation_points_IV_passanger_ep(self, camera_coordinates: list, distance_camera_carbody: float, distance_camera_ground: float) -> list:
+        """ 
+        Get 4 regulation points relative to EP.
+        `camera_coordinates`: Camera coordinates relative to E.P. [x, y, z].    
+        `distance_camera_carbody`: Distance between camera and carbody. y.  
+        `distance_camera_ground`: Distance between camera and ground. z.  
+        Return list of 4 Points coordinates.  
+        Return DATA_TYPE_ERROR when input data type is error.  
+        Return DATA_VALUE_ERROR when input data value is error.  
+        """
+        if not isinstance(camera_coordinates, list) or not isinstance(distance_camera_carbody, float) or not isinstance(distance_camera_ground, float):
+            LOGGER.error(f'Input data type error - camera_coordinates, distance_camera_carbody, distance_camera_ground. Data: {camera_coordinates}, {distance_camera_carbody}, {distance_camera_ground}.')
+            return self.ReturnCode.DATA_TYPE_ERROR
+        
+        if not len(camera_coordinates) == 3:
+            LOGGER.error(f'Input data value error - camera_coordinates should be a list of 3 elements. Data: {camera_coordinates}.')
+            return self.ReturnCode.DATA_VALUE_ERROR
+        
+        regulation_points = self.cal_model.get_regulation_points_IV_passanger(camera_coordinates, distance_camera_carbody, distance_camera_ground)
+        if regulation_points == self.cal_model.ReturnCode.TYPE_ERROR:
+            LOGGER.error(f'Input data type error - camera_coordinates, distance_camera_carbody, distance_camera_ground. Data: {camera_coordinates}, {distance_camera_carbody}, {distance_camera_ground}.')
+            return self.ReturnCode.DATA_TYPE_ERROR
+        
+        return regulation_points
         
     def transfrom_regulation_points_into_cam_coordinates(self, camera_coordinates: list, regulation_points: list) -> list:
         """ 
         Transform regulation points from E.P. coordinates into camera coordinates.  
         `camera_coordinates`: Camera coordinates.  
-        `regulation_points`: List of regulation points - [A, B, C, D]  
+        `regulation_points`: List of regulation points - [A, B, C, D, .....]  
         Return list of regulation points coordinates relative to camera.  
         Return DATA_TYPE_ERROR when input data type is error.  
         Return DATA_VALUE_ERROR when input data value is error.  
@@ -190,7 +234,7 @@ class FovSimController:
         # Make params from list into dict
         camera_pose_dict = { 'pitch' : camera_pose[0], 'yaw' : camera_pose[1], 'roll' : camera_pose[2], }
         sensor_params_dict = { 'width' : sensor_params[0], 'height' : sensor_params[1], 'pixel size' : sensor_params[2], }
-        monitor_params_dict = { 'width' : monitor_params[0], 'height' : monitor_params[1], 'pixel size' : monitor_params[2], }
+        #monitor_params_dict = { 'width' : monitor_params[0], 'height' : monitor_params[1], 'pixel size' : monitor_params[2], }
         fitting_func_coefs_dict = { 'x5' : fitting_func_coefs[0], 'x4' : fitting_func_coefs[1], 'x3' : fitting_func_coefs[2], 'x2' : fitting_func_coefs[3], 'x1' : fitting_func_coefs[4], 'x0' : fitting_func_coefs[5], }
         
         # Transform point from world into sensor coordinates.

@@ -61,6 +61,9 @@ class FOVSimWindow(tk.Tk):
         self.profile_list = self.config_model.profile_selection_combobox_values
         self.profile_var = tk.StringVar(value=self.profile_list[0])
 
+        self.setting_window = None
+        self.edit_simulation_points_window = None
+
         self._init_setting_data()
         self._init_gui()
         self.protocol('WM_DELETE_WINDOW', self._onclose)
@@ -107,10 +110,12 @@ class FOVSimWindow(tk.Tk):
         self.result_table.grid(row=self.result_table_position_dict['row'], column=self.result_table_position_dict['column'], sticky=self.config_model.table_format_dict[self.config_model.TableFormatKeys.STICKY.value])
         
     def _onclick_menu_settings(self):
-        setting_window = SettingWindow(self, self.profile_list, self.profile_var)
+        if self.setting_window is None or not self.setting_window.winfo_exists():
+            self.setting_window = SettingWindow(self, self.profile_list, self.profile_var)
     
     def _onclick_menu_edit_simulation_points(self):
-        edit_simulation_points_window = EditSimulationPointsWindow(self)
+        if self.edit_simulation_points_window is None or not self.edit_simulation_points_window.winfo_exists():
+            self.edit_simulation_points_window = EditSimulationPointsWindow(self)
     
     def _onclick_menu_run(self):
         """
@@ -229,8 +234,8 @@ class FOVSimWindow(tk.Tk):
         
         # Update result table.
         self._clear_result_table()
-        points_name = ['A', 'B', 'C', 'D']
-        for index in range(0, 4):
+        points_name = ['A', 'B', 'C', 'D', 'E']
+        for index in range(0, len(regulation_points_camera_coordinates)):
             if regulation_points_sensor_coordinates[index][0] in range(data[self.config_model.Keys.CROP_REGION.value][0], data[self.config_model.Keys.CROP_REGION.value][0] + data[self.config_model.Keys.CROP_REGION.value][2]) and regulation_points_sensor_coordinates[index][1] in range(data[self.config_model.Keys.CROP_REGION.value][1], data[self.config_model.Keys.CROP_REGION.value][1] + data[self.config_model.Keys.CROP_REGION.value][3]):
                 result = 'OK'
             else:

@@ -69,9 +69,9 @@ class SettingWindow(tk.Toplevel):
         self.profile_list = profile_list
         self.profile_var = profile_var
 
+        self.help_window = None
+
         self._init_gui()
-        #self._set_modal()
-        #self.protocol('WM_DELETE_WINDOW', self._onclick_close)
         
     def _init_setting_data(self):
         self.swc.init_setting_data()
@@ -403,8 +403,8 @@ class SettingWindow(tk.Toplevel):
         Open help window.
         """
         LOGGER.info('User clicked menu-help')
-        help_window = HelpWindow(self)
-        help_window.set_modal()
+        if self.help_window is None or not self.help_window.winfo_exists():
+            self.help_window = HelpWindow(self)
         
     def _create_description_label(self, text: str, **kwargs) -> tk.Label:
         return tk.Label(self, text=text, font=self.label_format_dict['font'], width=self.label_format_dict['width'], anchor='e',**kwargs)

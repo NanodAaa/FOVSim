@@ -182,6 +182,10 @@ def world_sensor_transform(world_coordinates: dict, camera_pose: dict, sensor_pa
 def move_orignal_point_center_to_leftop(point: list, width: int, height: int) -> list:
     """ 
     Move point coordinate original point from center to lefttop.  
+    `point`: The coordinate of the point to be moved.  
+    `width`: The width of the image.  
+    `height`: The height of the image.  
+    return: The coordinate of the point after moving. [x, y]   
     """
     if not isinstance(point, list) or not isinstance(width, int) or not isinstance(height, int):
         return -1
