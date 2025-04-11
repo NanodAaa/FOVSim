@@ -101,7 +101,7 @@ class SettingWindow(tk.Toplevel):
         self._grid_entry(self.camera_position_z_entry, **self.camera_position_widgets_position_dict['z entry'])
 
         # Distance between camera & car body.
-        self.distance_cam_carbody_label = self._create_description_label('Cam-Carbody: ')
+        self.distance_cam_carbody_label = self._create_description_label('E.P.-Carbody: ')
         self._grid_description_label(self.distance_cam_carbody_label, **self.distance_cam_carbody_position_dict['label'])
         
         self.distance_cam_carbody_y_entry = self._create_entry()

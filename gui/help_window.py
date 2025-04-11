@@ -15,7 +15,7 @@ class HelpWindow(tk.Toplevel):
         self.geometry('600x400')
         
         self.camera_position_label = self._create_insturctions_label('Camera Position: 摄像机位置 (x, y, z)')
-        self.distance_cam_carbody_label = self._create_insturctions_label('Distance Cam Carbody: 摄像机到车身的距离 (m)')
+        self.distance_cam_carbody_label = self._create_insturctions_label('Distance E.P. Carbody: 眼点到车身的距离 (m)')
         self.distance_cam_ground_label = self._create_insturctions_label('Distance Cam Ground: 摄像机到地面的距离 (m)')
         self.fitting_func_coefs_label = self._create_insturctions_label('Fitting Func Coefs: 拟合函数系数 (a, b, c, d, e, f)')
         self.fitting_func_coefs_reverse_label = self._create_insturctions_label('Fitting Func Coefs Reverse: 拟合函数反转系数 (a, b, c, d, e, f)')

@@ -5264,3 +5264,25 @@ User clicked menu-run.
 2025-04-11 10:50:05,549 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[755, 1634], [768, 1006], [-509, 1248], [-297, 1032], [159, 1001]]
 
 2025-04-11 10:50:05,550 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[755, 768, -509, -297, 159], canvas0_y_data=[1634, 1006, 1248, 1032, 1001], canvas0_data_label='Regulation points', crop_region=[550, 451, 540, 720], sensor_width=1536, sensor_height=1920, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[205, 218, -1059, -847, -391], canvas1_y_data=[1183, 555, 797, 581, 550], canvas1_data_label='Regulation points', monitor_width=540, monitor_height=720)
+2025-04-11 14:12:47,162 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-11 14:12:47,163 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-11 14:12:47,164 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-11 14:12:47,191 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-11 14:12:47,192 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
+2025-04-11 14:12:49,630 - INFO - logger.py:40 - 
+User clicked menu-run.
+
+2025-04-11 14:12:49,632 - DEBUG - logger.py:37 - Done getting data. Data: {'camera position': [-0.01, -0.05, 0.02], 'distance cam carbody': 0.05, 'distance cam ground': 1.0, 'camera pose': [0.0, 0.0, 0.0], 'sensor params': [1536, 1920, 0.003], 'monitor params': [540, 720, 0.1521], 'fitting func coefs': [-6.84e-11, 5.14e-09, -1.12e-06, 4.13e-06, 0.0599, 4.95e-05], 'fitting func coefs reverse': [0.0103, -0.0589, 0.215, -0.154, 16.8, -0.00596], 'crop region': [600, 800, 540, 720]}
+
+2025-04-11 14:12:49,633 - DEBUG - logger.py:37 - Done getting regulation points. Points: [[4, -0.05, 0.98], [4, -1.05, 0.98], [30, -0.05, 0.98], [30, -5.05, 0.98]]
+
+2025-04-11 14:12:49,635 - DEBUG - logger.py:37 - Done getting regulation points' coordinates relative to camera. Data: [[4.01, 0.0, 0.96], [4.01, -1.0, 0.96], [30.01, 0.0, 0.96], [30.01, -5.0, 0.96]]
+
+2025-04-11 14:12:49,637 - DEBUG - logger.py:37 - Done transforming regulation points from world into monitor coordinates. Data: [[768, 1228], [1041, 1222], [768, 996], [956, 996]]
+
+2025-04-11 14:12:49,638 - DEBUG - logger.py:37 - Showing canvas. Data: FOVSimWindow.ShowCanvasParams(canvas0_title='Sensor', canvas0_x_label='Width', canvas0_y_label='Height', canvas0_x_data=[768, 1041, 768, 956], canvas0_y_data=[1228, 1222, 996, 996], canvas0_data_label='Regulation points', crop_region=[600, 800, 540, 720], sensor_width=1536, sensor_height=1920, canvas1_title='Monitor', canvas1_x_label='Width', canvas1_y_label='Height', canvas1_x_data=[168, 441, 168, 356], canvas1_y_data=[428, 422, 196, 196], canvas1_data_label='Regulation points', monitor_width=540, monitor_height=720)
+2025-04-11 14:28:51,638 - DEBUG - logger.py:37 - Canvas0 Width and height are not set.
+2025-04-11 14:28:51,640 - DEBUG - logger.py:37 - Crop region is not set.
+2025-04-11 14:28:51,641 - DEBUG - logger.py:37 - Canvas0 X data, Y data or data label is not set.
+2025-04-11 14:28:51,666 - DEBUG - logger.py:37 - Canvas1 Width and height are not set.
+2025-04-11 14:28:51,669 - DEBUG - logger.py:37 - Canvas1 X data, Y data or data label is not set.
